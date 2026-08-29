@@ -11,40 +11,44 @@
 			background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
 			min-height: 100vh;
 			color: #e8e8e8;
-			padding: 16px 16px 72px;
+			padding: 70px 16px 72px;
 			display: flex;
 			justify-content: center;
 		}
-		.app { width: 100%; max-width: 440px; position: relative; }
+		.app { width: 100%; max-width: 440px; }
 
-		/* Кнопка модуля кошельков — верхний угол */
-		.top-bar {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 12px;
-		}
-		.crypto-wallets-btn {
-			background: #fff;
-			border: none;
-			border-radius: 12px;
-			padding: 8px 12px;
-			font-size: 0.8rem;
-			font-weight: 700;
-			color: #1a1a2e;
+		/* КРУПНАЯ кнопка кошельков — зафиксирована слева сверху */
+		#btnCryptoWallets {
+			position: fixed;
+			top: 12px;
+			left: 12px;
+			z-index: 150;
+			background: #ffffff;
+			color: #111;
+			border: 3px solid #7c5cff;
+			border-radius: 14px;
+			padding: 12px 16px;
+			font-size: 15px;
+			font-weight: 800;
 			cursor: pointer;
+			box-shadow: 0 4px 20px rgba(124, 92, 255, 0.5);
 			display: flex;
 			align-items: center;
-			gap: 6px;
+			gap: 8px;
 		}
-		.crypto-wallets-btn svg { width: 18px; height: 18px; fill: #1a1a2e; }
+		#btnCryptoWallets:hover {
+			background: #f0ebff;
+		}
+		#btnCryptoWallets svg {
+			width: 22px;
+			height: 22px;
+			fill: #7c5cff;
+			flex-shrink: 0;
+		}
 
 		.wallets-panel { margin-bottom: 14px; }
-		.wallets-panel-head {
-			display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
-		}
 		.wallets-panel-title {
-			font-size: 0.72rem; color: #8b8b9e; text-transform: uppercase; letter-spacing: 0.05em;
+			font-size: 0.72rem; color: #8b8b9e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
 		}
 		.wallets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 		.wallet-card {
@@ -173,10 +177,9 @@
 		.app-wallet-row span { color: #8b8b9e; }
 		.app-total { margin-top: 12px; text-align: center; font-size: 0.85rem; color: #a78bfa; }
 
-		/* Модалки */
 		.modal-overlay {
-			display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65);
-			z-index: 200; align-items: center; justify-content: center; padding: 16px;
+			display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+			z-index: 300; align-items: center; justify-content: center; padding: 16px;
 		}
 		.modal-overlay.open { display: flex; }
 		.modal {
@@ -190,7 +193,7 @@
 		}
 		.modal-head h2 { font-size: 1rem; color: #fff; }
 		.modal-close {
-			background: transparent; border: none; color: #8b8b9e; font-size: 1.4rem;
+			background: transparent; border: none; color: #8b8b9e; font-size: 1.5rem;
 			cursor: pointer; line-height: 1; padding: 4px 8px;
 		}
 		.modal-body { padding: 14px 16px; overflow-y: auto; flex: 1; }
@@ -199,8 +202,8 @@
 		}
 		.btn-primary {
 			width: 100%; background: linear-gradient(90deg, #7c5cff, #5b8def);
-			border: none; color: #fff; padding: 12px; border-radius: 12px;
-			font-weight: 600; cursor: pointer; margin-top: 12px;
+			border: none; color: #fff; padding: 14px; border-radius: 12px;
+			font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 12px;
 		}
 		.connected-wallet-row {
 			display: flex; align-items: center; justify-content: space-between;
@@ -230,7 +233,6 @@
 		.catalog-item .info .n { font-weight: 600; color: #fff; }
 		.catalog-item .info .u { font-size: 0.7rem; color: #8b8b9e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-		/* Фрейм кошелька */
 		.iframe-modal .modal { max-width: 960px; height: 90vh; max-height: 90vh; }
 		.iframe-toolbar {
 			display: flex; gap: 8px; align-items: center; padding: 10px 14px;
@@ -249,9 +251,7 @@
 			background: #12121f; color: #b0b0c8; gap: 12px;
 		}
 		.iframe-fallback.show { display: flex; }
-		.iframe-fallback a {
-			color: #00d4ff; font-weight: 600;
-		}
+		.iframe-fallback a { color: #00d4ff; font-weight: 600; }
 
 		.bottom-nav {
 			position: fixed; bottom: 0; left: 0; right: 0;
@@ -272,21 +272,16 @@
 	</style>
 </head>
 <body>
-	<div class="app">
-		<div class="top-bar">
-			<button type="button" class="crypto-wallets-btn" id="btnCryptoWallets" title="Криптокошельки пользователя">
-				<svg viewBox="0 0 24 24"><path d="M21 7H3a1 1 0 0 0-1 1v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1zm-1 10H4V9h16v8zm1-12H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2z"/><circle cx="17" cy="13" r="1.5"/></svg>
-				Кошельки
-			</button>
-			<span style="font-size:0.7rem;color:#6b6b80">модуль</span>
-		</div>
+	<!-- Кнопка ВСЕГДА видна — левый верхний угол экрана -->
+	<button type="button" id="btnCryptoWallets">
+		<svg viewBox="0 0 24 24"><path d="M21 7H3a1 1 0 0 0-1 1v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1zm-1 10H4V9h16v8zm1-12H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2z"/><circle cx="17" cy="13" r="1.5"/></svg>
+		Кошельки
+	</button>
 
-		<!-- ===== ОБМЕН ===== -->
+	<div class="app">
 		<div class="screen active" id="screenExchange">
 			<div class="wallets-panel">
-				<div class="wallets-panel-head">
-					<div class="wallets-panel-title">Балансы (виртуальные)</div>
-				</div>
+				<div class="wallets-panel-title">Балансы (виртуальные)</div>
 				<div class="wallets-grid" id="walletsGrid"></div>
 			</div>
 
@@ -340,7 +335,6 @@
 		</div>
 	</div>
 
-	<!-- Модалка: подключённые кошельки -->
 	<div class="modal-overlay" id="modalConnected">
 		<div class="modal">
 			<div class="modal-head">
@@ -354,7 +348,6 @@
 		</div>
 	</div>
 
-	<!-- Модалка: каталог -->
 	<div class="modal-overlay" id="modalCatalog">
 		<div class="modal">
 			<div class="modal-head">
@@ -368,7 +361,6 @@
 		</div>
 	</div>
 
-	<!-- Модалка: iframe сайта кошелька -->
 	<div class="modal-overlay iframe-modal" id="modalIframe">
 		<div class="modal">
 			<div class="iframe-toolbar">
@@ -379,7 +371,7 @@
 			<div class="iframe-wrap">
 				<iframe id="walletFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox" title="Wallet site"></iframe>
 				<div class="iframe-fallback" id="iframeFallback">
-					<p>Сайт кошелька может блокировать встраивание во фрейм (X-Frame-Options).</p>
+					<p>Сайт может блокировать фрейм. Откройте в новой вкладке:</p>
 					<a id="iframeFallbackLink" href="#" target="_blank" rel="noopener">Открыть сайт кошелька</a>
 				</div>
 			</div>
@@ -398,7 +390,6 @@
 		const CG_IDS = { BTC: 'bitcoin', ETH: 'ethereum', USDT: 'tether', USDC: 'usd-coin', SOL: 'solana', BNB: 'binancecoin' }
 		const FEE_FROM = 0.005, FEE_TO = 0.005
 
-		/** Каталог популярных кошельков */
 		const WALLET_CATALOG = [
 			{ id: 'metamask', name: 'MetaMask', url: 'https://metamask.io' },
 			{ id: 'trust', name: 'Trust Wallet', url: 'https://trustwallet.com' },
@@ -417,7 +408,6 @@
 			{ id: 'zerion', name: 'Zerion', url: 'https://zerion.io' },
 		]
 
-		// Подключённые пользователем (из каталога) — изначально пусто
 		let connectedCryptoWallets = JSON.parse(localStorage.getItem('nemo_connected_wallets') || '[]')
 
 		let wallets = [
@@ -491,9 +481,7 @@
 
 		function renderCatalog(filter = '') {
 			const q = filter.trim().toLowerCase()
-			const list = WALLET_CATALOG.filter(w =>
-				!q || w.name.toLowerCase().includes(q) || w.id.includes(q)
-			)
+			const list = WALLET_CATALOG.filter(w => !q || w.name.toLowerCase().includes(q) || w.id.includes(q))
 			$('catalogList').innerHTML = list.map(w => {
 				const added = connectedCryptoWallets.some(c => c.id === w.id)
 				const initials = w.name.slice(0, 2).toUpperCase()
@@ -510,7 +498,7 @@
 					if (!connectedCryptoWallets.some(c => c.id === w.id)) {
 						connectedCryptoWallets.push({ ...w })
 						saveConnected()
-						log(`Добавлен кошелёк: ${w.name}`)
+						log('Добавлен кошелёк: ' + w.name)
 					}
 					renderConnectedList()
 					closeModal('modalCatalog')
@@ -532,23 +520,15 @@
 			$('iframeTitle').textContent = w.name
 			$('iframeOpenExt').href = w.url
 			$('iframeFallbackLink').href = w.url
-			const frame = $('walletFrame')
 			$('iframeFallback').classList.remove('show')
-			frame.src = w.url
+			$('walletFrame').src = w.url
 			openModal('modalIframe')
-			log(`Открыт сайт кошелька: ${w.name}`)
-			// Многие сайты блокируют iframe — показываем подсказку через 2.5с
+			log('Открыт сайт: ' + w.name)
 			setTimeout(() => {
-				try {
-					// если нет доступа к document — часто признак блокировки/cross-origin (нормально)
-					void frame.contentWindow.location.href
-				} catch (_) { /* cross-origin ok */ }
-				// Показываем fallback-ссылку всегда как запасной вариант
 				$('iframeFallback').classList.add('show')
 				$('iframeFallback').style.pointerEvents = 'none'
 				$('iframeFallback').style.opacity = '0'
-				// если iframe «пустой» визуально — пользователь может открыть вкладку
-			}, 2500)
+			}, 2000)
 		}
 
 		$('btnCryptoWallets').addEventListener('click', () => {
@@ -687,7 +667,6 @@
 				const x = pad.l + ((p.t - tMin) / tSpan) * plotW, y = pad.t + plotH - (p.y / yMax) * plotH
 				ctx.fillStyle = '#00d4ff'; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill()
 			})
-			ctx.fillStyle = '#6b6b80'; ctx.textAlign = 'center'; ctx.fillText('время →', pad.l + plotW / 2, H - 6)
 		}
 		function renderOrders() {
 			if (!orders.length) { $('ordersBlock').style.display = 'none'; drawChart(); return }
@@ -735,7 +714,7 @@
 		COINS.forEach(c => { $('from').add(new Option(c, c)); $('to').add(new Option(c, c)) })
 		$('from').value = 'ETH'; $('to').value = 'USDT'
 		renderUserWallets(); renderAppWallets(); drawChart()
-		log('Модуль «Криптокошельки» — кнопка слева вверху')
+		log('Кнопка «Кошельки» — слева вверху (белая с фиолетовой рамкой)')
 		renderRate('flat'); refreshRates(); setInterval(refreshRates, 8000)
 		;(() => {
 			const rect = $('dealsChart').parentElement.getBoundingClientRect()
