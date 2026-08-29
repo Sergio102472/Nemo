@@ -3,21 +3,45 @@ $nemo_exchange $mol_view
 	sub /
 		<= Title $mol_text
 			text <= title
-		<= From_row $mol_view
+		<= From_block $mol_view
 			sub /
-				<= From_currency $mol_button_major
-					title <= from_currency \BTC
-					click?event <=> choose_from?event null
-				<= From_amount $mol_number
-					value?val <=> from_amount?val 0
-					hint \Сумма
-		<= To_row $mol_view
+				<= From_label $mol_text
+					text \Отдаёте
+				<= From_head $mol_view
+					sub /
+						<= From_currency $mol_button_major
+							title <= from_currency \BTC
+							click?event <=> choose_from?event null
+						<= From_balance $mol_text
+							text <= from_balance_text \
+				<= From_body $mol_view
+					sub /
+						<= From_amount $mol_number
+							value?val <=> from_amount?val 0
+							hint \0.0
+						<= From_rate $mol_text
+							text <= from_rate_text \
+		<= To_block $mol_view
 			sub /
-				<= To_currency $mol_button_major
-					title <= to_currency \USDT
-					click?event <=> choose_to?event null
-				<= To_amount $mol_number
-					value?val <=> to_amount?val 0
-					hint \Сумма
+				<= To_label $mol_text
+					text \Получаете
+				<= To_head $mol_view
+					sub /
+						<= To_currency $mol_button_major
+							title <= to_currency \USDT
+							click?event <=> choose_to?event null
+						<= To_balance $mol_text
+							text <= to_balance_text \
+				<= To_body $mol_view
+					sub /
+						<= To_amount $mol_number
+							value?val <=> to_amount?val 0
+							hint \0.0
+						<= To_rate $mol_text
+							text <= to_rate_text \
 		<= Fee $mol_text
 			text \Комиссия 2%
+		<= Swap $mol_button_major
+			title \Обменять
+			click?event <=> do_swap?event null
+			enabled <= can_swap false
