@@ -18,34 +18,79 @@
 		}
 		.app { width: 100%; max-width: 440px; }
 
-		/* ——— Меню кошельков ——— */
-		.wallets-bar {
-			display: flex;
-			justify-content: flex-end;
-			align-items: center;
-			margin-bottom: 12px;
-			position: relative;
+		/* Панель кошельков — всегда видна */
+		.wallets-panel {
+			margin-bottom: 16px;
 		}
+		.wallets-panel-head {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 10px;
+		}
+		.wallets-panel-title {
+			font-size: 0.75rem;
+			color: #8b8b9e;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+		}
+		.wallets-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 10px;
+		}
+		.wallet-card {
+			background: rgba(255,255,255,0.06);
+			border: 1px solid rgba(255,255,255,0.2);
+			border-radius: 14px;
+			padding: 12px 14px;
+		}
+		.wallet-card-name {
+			font-weight: 700;
+			font-size: 0.95rem;
+			color: #fff;
+			margin-bottom: 8px;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+		}
+		.wallet-card-name .dot {
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background: #22c55e;
+		}
+		.wallet-card-bal {
+			font-family: ui-monospace, monospace;
+			font-size: 0.72rem;
+			color: #c8c8d8;
+			line-height: 1.55;
+		}
+		.wallet-card-bal span {
+			color: #8b8b9e;
+		}
+
+		/* Иконка + выпадающее меню */
+		.wallet-menu-wrap { position: relative; }
 		.wallet-menu-btn {
-			background: transparent;
-			border: 1px solid rgba(255,255,255,0.35);
+			background: #fff;
+			border: none;
 			border-radius: 10px;
-			width: 40px;
-			height: 40px;
+			width: 36px;
+			height: 36px;
 			cursor: pointer;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			padding: 0;
 		}
-		.wallet-menu-btn:hover { border-color: #fff; background: rgba(255,255,255,0.06); }
-		.wallet-menu-btn svg { width: 22px; height: 22px; fill: #fff; }
+		.wallet-menu-btn svg { width: 20px; height: 20px; fill: #1a1a2e; }
 		.wallet-dropdown {
 			display: none;
 			position: absolute;
-			top: 48px;
+			top: 44px;
 			right: 0;
-			width: 280px;
+			width: 260px;
 			background: #1a1a2e;
 			border: 1px solid #3a3a5c;
 			border-radius: 14px;
@@ -54,34 +99,20 @@
 			box-shadow: 0 12px 32px rgba(0,0,0,0.45);
 		}
 		.wallet-dropdown.open { display: block; }
-		.wallet-item {
-			padding: 12px;
-			border-radius: 10px;
-			margin-bottom: 6px;
-			background: rgba(255,255,255,0.03);
-			border: 1px solid transparent;
-		}
-		.wallet-item:last-child { margin-bottom: 0; }
-		.wallet-item-name {
-			font-weight: 600;
-			font-size: 0.95rem;
-			margin-bottom: 6px;
-			color: #fff;
-		}
-		.wallet-item-bal {
-			font-size: 0.75rem;
-			color: #9a9ab0;
-			font-family: ui-monospace, monospace;
-			line-height: 1.4;
-		}
 		.wallet-dropdown-title {
 			font-size: 0.7rem;
 			color: #6b6b80;
-			text-transform: uppercase;
-			letter-spacing: 0.04em;
 			margin-bottom: 8px;
-			padding: 0 4px;
 		}
+		.wallet-item {
+			padding: 10px;
+			border-radius: 10px;
+			margin-bottom: 6px;
+			background: rgba(255,255,255,0.04);
+		}
+		.wallet-item:last-child { margin-bottom: 0; }
+		.wallet-item-name { font-weight: 600; color: #fff; margin-bottom: 4px; font-size: 0.9rem; }
+		.wallet-item-bal { font-size: 0.72rem; color: #9a9ab0; font-family: ui-monospace, monospace; line-height: 1.4; }
 
 		h1 {
 			text-align: center;
@@ -95,14 +126,14 @@
 			text-align: center;
 			color: #8b8b9e;
 			font-size: 0.9rem;
-			margin-bottom: 16px;
+			margin-bottom: 14px;
 		}
 		.log {
 			background: #1a1a2e;
 			border: 1px solid #3a3a5c;
 			border-radius: 12px;
 			padding: 10px 14px;
-			max-height: 120px;
+			max-height: 110px;
 			overflow-y: auto;
 			font-family: ui-monospace, monospace;
 			font-size: 0.7rem;
@@ -243,18 +274,24 @@
 </head>
 <body>
 	<div class="app">
-		<!-- Белая иконка меню кошельков -->
-		<div class="wallets-bar">
-			<button type="button" class="wallet-menu-btn" id="walletMenuBtn" aria-label="Кошельки" title="Подключённые кошельки">
-				<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-					<path d="M21 7H3a1 1 0 0 0-1 1v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1zm-1 10H4V9h16v8zm1-12H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2z"/>
-					<circle cx="17" cy="13" r="1.5" fill="#fff"/>
-				</svg>
-			</button>
-			<div class="wallet-dropdown" id="walletDropdown">
-				<div class="wallet-dropdown-title">Подключённые кошельки</div>
-				<div id="walletList"></div>
+		<!-- Кошельки всегда на экране -->
+		<div class="wallets-panel">
+			<div class="wallets-panel-head">
+				<div class="wallets-panel-title">Подключённые кошельки</div>
+				<div class="wallet-menu-wrap">
+					<button type="button" class="wallet-menu-btn" id="walletMenuBtn" title="Список кошельков">
+						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+							<path d="M21 7H3a1 1 0 0 0-1 1v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1zm-1 10H4V9h16v8zm1-12H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2z"/>
+							<circle cx="17" cy="13" r="1.5"/>
+						</svg>
+					</button>
+					<div class="wallet-dropdown" id="walletDropdown">
+						<div class="wallet-dropdown-title">Детали балансов</div>
+						<div id="walletListMenu"></div>
+					</div>
+				</div>
 			</div>
+			<div class="wallets-grid" id="walletsGrid"></div>
 		</div>
 
 		<h1>Nemo</h1>
@@ -320,7 +357,6 @@
 			USDC: 'usd-coin', SOL: 'solana', BNB: 'binancecoin',
 		}
 
-		// Два виртуальных кошелька
 		let wallets = [
 			{
 				id: 'w1',
@@ -358,7 +394,8 @@
 		const ordersList = document.getElementById('ordersList')
 		const walletMenuBtn = document.getElementById('walletMenuBtn')
 		const walletDropdown = document.getElementById('walletDropdown')
-		const walletList = document.getElementById('walletList')
+		const walletListMenu = document.getElementById('walletListMenu')
+		const walletsGrid = document.getElementById('walletsGrid')
 
 		function log(msg) {
 			const time = new Date().toLocaleTimeString('ru-RU')
@@ -374,12 +411,31 @@
 			return x.toFixed(6).replace(/\.?0+$/, '')
 		}
 
-		function renderWalletList() {
-			walletList.innerHTML = wallets.map(w => {
-				const lines = Object.entries(w.balances)
-					.filter(([, v]) => v > 0)
-					.map(([c, v]) => `${c}: ${fmtBal(v)}`)
-					.join(' · ') || 'пусто'
+		function balLines(w) {
+			return Object.entries(w.balances)
+				.filter(([, v]) => v > 0)
+				.map(([c, v]) => `${c}: ${fmtBal(v)}`)
+		}
+
+		/** Карточки кошельков всегда на экране */
+		function renderWallets() {
+			walletsGrid.innerHTML = wallets.map(w => {
+				const lines = balLines(w)
+				const html = lines.length
+					? lines.map(l => {
+							const [c, v] = l.split(': ')
+							return `<div><span>${c}</span> ${v}</div>`
+						}).join('')
+					: '<div>пусто</div>'
+				return `<div class="wallet-card">
+					<div class="wallet-card-name"><span class="dot"></span>${w.name}</div>
+					<div class="wallet-card-bal">${html}</div>
+				</div>`
+			}).join('')
+
+			// Меню (дублирует детали)
+			walletListMenu.innerHTML = wallets.map(w => {
+				const lines = balLines(w).join(' · ') || 'пусто'
 				return `<div class="wallet-item">
 					<div class="wallet-item-name">${w.name}</div>
 					<div class="wallet-item-bal">${lines}</div>
@@ -391,14 +447,12 @@
 			return wallets.reduce((s, w) => s + (w.balances[coin] || 0), 0)
 		}
 
-		/** Кошелёк-источник: тот, где есть from-валюта */
 		function pickSourceWallet(coin, amount) {
 			return wallets.find(w => (w.balances[coin] || 0) >= amount)
 				|| wallets.find(w => (w.balances[coin] || 0) > 0)
 				|| wallets[0]
 		}
 
-		/** Кошелёк-получатель: другой */
 		function pickDestWallet(sourceId) {
 			return wallets.find(w => w.id !== sourceId) || wallets[1] || wallets[0]
 		}
@@ -464,15 +518,10 @@
 			const src = pickSourceWallet(fromEl.value, fromAmt)
 			const dst = pickDestWallet(src.id)
 			reserve = {
-				from: fromEl.value,
-				to: toEl.value,
-				fromAmt,
-				toAmt: toStr,
-				rate: getPairRate(),
-				sourceId: src.id,
-				destId: dst.id,
-				sourceName: src.name,
-				destName: dst.name,
+				from: fromEl.value, to: toEl.value,
+				fromAmt, toAmt: toStr, rate: getPairRate(),
+				sourceId: src.id, destId: dst.id,
+				sourceName: src.name, destName: dst.name,
 			}
 			reserveEl.textContent = `Резерв: ${fromAmt} ${fromEl.value} с «${src.name}» → ${toStr} ${toEl.value} на «${dst.name}»`
 			reserveEl.className = 'reserve active'
@@ -489,7 +538,6 @@
 		}
 
 		function applyRates(newRates, sourceLive) {
-			const before = getPairRate()
 			ratesUsd = { ...ratesUsd, ...newRates }
 			const after = getPairRate()
 			lastUpdate = new Date()
@@ -546,10 +594,9 @@
 			).join('')
 		}
 
-		// Меню кошельков
 		walletMenuBtn.addEventListener('click', (e) => {
 			e.stopPropagation()
-			renderWalletList()
+			renderWallets()
 			walletDropdown.classList.toggle('open')
 		})
 		document.addEventListener('click', () => walletDropdown.classList.remove('open'))
@@ -584,34 +631,27 @@
 			const dst = wallets.find(w => w.id === reserve.destId)
 			if (!src || !dst) return
 
-			// Проверка баланса на момент нажатия
 			if ((src.balances[from] || 0) < fromAmt) {
 				log(`Ошибка: на «${src.name}» недостаточно ${from}`)
 				updateReserve()
 				return
 			}
 
-			// Списание с исходного кошелька
 			src.balances[from] = +((src.balances[from] || 0) - fromAmt).toFixed(8)
-			// Зачисление на другой кошелёк
 			dst.balances[to] = +((dst.balances[to] || 0) + toAmtNum).toFixed(8)
 
 			const token = buildToken(quantum, from, fromAmt, to, toAmtStr)
-			const order = {
-				id: quantum,
-				token,
-				timeHuman: formatHumanTime(quantum),
+			orders.unshift({
+				id: quantum, token, timeHuman: formatHumanTime(quantum),
 				from, fromAmt, to, toAmt: toAmtStr,
-				sourceName: src.name,
-				destName: dst.name,
-			}
-			orders.unshift(order)
+				sourceName: src.name, destName: dst.name,
+			})
 			renderOrders()
-			renderWalletList()
+			renderWallets()
 
 			tokenCard.style.display = 'block'
 			tokenBody.innerHTML =
-				`<span class="token-time">${order.timeHuman}</span><br>${fromAmt} ${from} → ${toAmtStr} ${to}`
+				`<span class="token-time">${formatHumanTime(quantum)}</span><br>${fromAmt} ${from} → ${toAmtStr} ${to}`
 			transferInfo.innerHTML =
 				`<span class="out">− ${fromAmt} ${from}</span> списано с «${src.name}»<br>` +
 				`<span class="in">+ ${toAmtStr} ${to}</span> зачислено на «${dst.name}»`
@@ -627,9 +667,8 @@
 		})
 
 		fillSelects()
-		renderWalletList()
-		log('Модуль 1: 2 виртуальных кошелька подключены')
-		log('Alpha и Beta — смотри иконку кошелька справа вверху')
+		renderWallets()
+		log('Кошельки Alpha и Beta подключены — балансы сверху')
 		renderRate('flat')
 		refreshRates()
 		setInterval(refreshRates, 8000)
