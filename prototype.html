@@ -14,9 +14,75 @@
 			display: flex;
 			justify-content: center;
 			align-items: flex-start;
-			padding: 24px 16px;
+			padding: 16px;
 		}
 		.app { width: 100%; max-width: 440px; }
+
+		/* ——— Меню кошельков ——— */
+		.wallets-bar {
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			margin-bottom: 12px;
+			position: relative;
+		}
+		.wallet-menu-btn {
+			background: transparent;
+			border: 1px solid rgba(255,255,255,0.35);
+			border-radius: 10px;
+			width: 40px;
+			height: 40px;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0;
+		}
+		.wallet-menu-btn:hover { border-color: #fff; background: rgba(255,255,255,0.06); }
+		.wallet-menu-btn svg { width: 22px; height: 22px; fill: #fff; }
+		.wallet-dropdown {
+			display: none;
+			position: absolute;
+			top: 48px;
+			right: 0;
+			width: 280px;
+			background: #1a1a2e;
+			border: 1px solid #3a3a5c;
+			border-radius: 14px;
+			padding: 10px;
+			z-index: 50;
+			box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+		}
+		.wallet-dropdown.open { display: block; }
+		.wallet-item {
+			padding: 12px;
+			border-radius: 10px;
+			margin-bottom: 6px;
+			background: rgba(255,255,255,0.03);
+			border: 1px solid transparent;
+		}
+		.wallet-item:last-child { margin-bottom: 0; }
+		.wallet-item-name {
+			font-weight: 600;
+			font-size: 0.95rem;
+			margin-bottom: 6px;
+			color: #fff;
+		}
+		.wallet-item-bal {
+			font-size: 0.75rem;
+			color: #9a9ab0;
+			font-family: ui-monospace, monospace;
+			line-height: 1.4;
+		}
+		.wallet-dropdown-title {
+			font-size: 0.7rem;
+			color: #6b6b80;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin-bottom: 8px;
+			padding: 0 4px;
+		}
+
 		h1 {
 			text-align: center;
 			font-size: 1.75rem;
@@ -29,19 +95,19 @@
 			text-align: center;
 			color: #8b8b9e;
 			font-size: 0.9rem;
-			margin-bottom: 20px;
+			margin-bottom: 16px;
 		}
 		.log {
 			background: #1a1a2e;
 			border: 1px solid #3a3a5c;
 			border-radius: 12px;
 			padding: 10px 14px;
-			max-height: 130px;
+			max-height: 120px;
 			overflow-y: auto;
 			font-family: ui-monospace, monospace;
-			font-size: 0.72rem;
+			font-size: 0.7rem;
 			color: #9a9ab0;
-			margin-bottom: 16px;
+			margin-bottom: 14px;
 			line-height: 1.5;
 		}
 		.log div { margin-bottom: 2px; }
@@ -49,16 +115,12 @@
 			background: rgba(30, 30, 50, 0.9);
 			border: 1px solid #2a2a45;
 			border-radius: 20px;
-			padding: 24px 20px;
+			padding: 22px 18px;
 		}
-		.row {
-			display: flex;
-			gap: 14px;
-			margin-bottom: 16px;
-		}
+		.row { display: flex; gap: 12px; margin-bottom: 14px; }
 		.field { flex: 1; display: flex; flex-direction: column; gap: 6px; }
 		label {
-			font-size: 0.75rem;
+			font-size: 0.72rem;
 			color: #8b8b9e;
 			text-transform: uppercase;
 			letter-spacing: 0.04em;
@@ -67,7 +129,7 @@
 			background: #1a1a2e;
 			border: 1px solid #3a3a5c;
 			color: #e8e8e8;
-			padding: 12px 14px;
+			padding: 11px 12px;
 			border-radius: 12px;
 			font-size: 1rem;
 			outline: none;
@@ -75,97 +137,105 @@
 		}
 		select { cursor: pointer; }
 		select:focus, input:focus { border-color: #7c5cff; }
-		input[type="number"] { font-size: 1.2rem; font-weight: 600; }
-		input[type="number"]::placeholder { color: #5a5a70; font-weight: 400; }
+		input[type="number"] { font-size: 1.15rem; font-weight: 600; }
 		input[readonly] { opacity: 0.85; cursor: default; }
 		.reserve {
-			font-size: 0.75rem;
+			font-size: 0.72rem;
 			color: #8b8b9e;
 			text-align: center;
-			margin-bottom: 12px;
+			margin-bottom: 10px;
 			min-height: 1.2em;
 		}
 		.reserve.active { color: #fbbf24; }
 		.rate {
 			text-align: center;
-			padding: 14px 12px;
+			padding: 12px;
 			background: rgba(124, 92, 255, 0.1);
 			border-radius: 12px;
-			margin-bottom: 16px;
-			font-size: 0.95rem;
+			margin-bottom: 14px;
+			font-size: 0.92rem;
 			color: #b0b0c8;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			gap: 6px;
+			gap: 4px;
 		}
-		.rate-main strong { color: #00d4ff; font-size: 1.05rem; }
-		.rate-tick { font-size: 0.85rem; font-weight: 600; }
+		.rate-main strong { color: #00d4ff; }
+		.rate-tick { font-size: 0.82rem; font-weight: 600; }
 		.rate-tick.up { color: #22c55e; }
 		.rate-tick.down { color: #ef4444; }
 		.rate-tick.flat { color: #8b8b9e; }
-		.rate-meta { font-size: 0.7rem; color: #6b6b80; }
-		button {
+		.rate-meta { font-size: 0.68rem; color: #6b6b80; }
+		button.swap {
 			width: 100%;
 			background: linear-gradient(90deg, #7c5cff, #5b8def);
 			border: none;
 			color: white;
-			padding: 15px;
+			padding: 14px;
 			border-radius: 14px;
-			font-size: 1.1rem;
+			font-size: 1.05rem;
 			font-weight: 600;
 			cursor: pointer;
 		}
-		button:hover { opacity: 0.92; }
-		button:disabled { opacity: 0.4; cursor: not-allowed; }
+		button.swap:hover { opacity: 0.92; }
+		button.swap:disabled { opacity: 0.4; cursor: not-allowed; }
+
 		.token-card {
-			margin-top: 20px;
+			margin-top: 16px;
 			background: rgba(0, 212, 255, 0.08);
 			border: 1px solid rgba(0, 212, 255, 0.3);
 			border-radius: 16px;
-			padding: 16px 18px;
+			padding: 14px 16px;
 		}
 		.token-title {
-			font-size: 0.75rem;
+			font-size: 0.72rem;
 			color: #00d4ff;
 			text-transform: uppercase;
 			letter-spacing: 0.05em;
-			margin-bottom: 10px;
+			margin-bottom: 8px;
 			text-align: center;
 		}
 		.token-body {
 			font-family: ui-monospace, monospace;
-			font-size: 0.9rem;
+			font-size: 0.85rem;
 			line-height: 1.55;
 			color: #e8e8e8;
-			word-break: break-word;
 		}
 		.token-time { color: #fbbf24; }
-		.orders {
-			margin-top: 20px;
-		}
-		.orders h3 {
+		.transfer-info {
+			margin-top: 10px;
+			padding-top: 10px;
+			border-top: 1px solid rgba(255,255,255,0.08);
 			font-size: 0.8rem;
+			color: #b0b0c8;
+			line-height: 1.5;
+		}
+		.transfer-info .out { color: #ef4444; }
+		.transfer-info .in { color: #22c55e; }
+
+		.orders { margin-top: 16px; }
+		.orders h3 {
+			font-size: 0.78rem;
 			color: #8b8b9e;
 			text-align: center;
-			margin-bottom: 10px;
+			margin-bottom: 8px;
 		}
 		.orders ul { list-style: none; }
 		.orders li {
 			background: rgba(30, 30, 50, 0.7);
 			border: 1px solid #2a2a45;
 			border-radius: 12px;
-			padding: 12px 14px;
-			margin-bottom: 8px;
+			padding: 10px 12px;
+			margin-bottom: 6px;
 			font-family: ui-monospace, monospace;
-			font-size: 0.78rem;
+			font-size: 0.72rem;
 			line-height: 1.45;
 			color: #c8c8d8;
 		}
 		.footer {
-			margin-top: 18px;
+			margin-top: 16px;
 			text-align: center;
-			font-size: 0.72rem;
+			font-size: 0.7rem;
 			color: #5a5a70;
 			line-height: 1.4;
 		}
@@ -173,8 +243,22 @@
 </head>
 <body>
 	<div class="app">
+		<!-- Белая иконка меню кошельков -->
+		<div class="wallets-bar">
+			<button type="button" class="wallet-menu-btn" id="walletMenuBtn" aria-label="Кошельки" title="Подключённые кошельки">
+				<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+					<path d="M21 7H3a1 1 0 0 0-1 1v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1zm-1 10H4V9h16v8zm1-12H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2z"/>
+					<circle cx="17" cy="13" r="1.5" fill="#fff"/>
+				</svg>
+			</button>
+			<div class="wallet-dropdown" id="walletDropdown">
+				<div class="wallet-dropdown-title">Подключённые кошельки</div>
+				<div id="walletList"></div>
+			</div>
+		</div>
+
 		<h1>Nemo</h1>
-		<p class="subtitle">Резерв → кнопка = ордер · токен = время сделки</p>
+		<p class="subtitle">2 кошелька · резерв → ордер · токен времени</p>
 
 		<div class="log" id="log"></div>
 
@@ -209,12 +293,13 @@
 				<div class="rate-meta" id="rateMeta">загрузка курса...</div>
 			</div>
 
-			<button id="swap" disabled>Обменять</button>
+			<button type="button" class="swap" id="swap" disabled>Обменять</button>
 		</div>
 
 		<div class="token-card" id="tokenCard" style="display:none">
 			<div class="token-title">Токен ордера (открыт)</div>
 			<div class="token-body" id="tokenBody"></div>
+			<div class="transfer-info" id="transferInfo"></div>
 		</div>
 
 		<div class="orders" id="ordersBlock" style="display:none">
@@ -223,8 +308,8 @@
 		</div>
 
 		<p class="footer">
-			До кнопки — только резерв (кошельки не трогаем).<br>
-			Нажатие «Обменять» = мгновенный внутренний обмен + токен времени.
+			Списание с одного кошелька → зачисление на другой.<br>
+			До кнопки — только резерв. Ордер = момент нажатия.
 		</p>
 	</div>
 
@@ -235,11 +320,25 @@
 			USDC: 'usd-coin', SOL: 'solana', BNB: 'binancecoin',
 		}
 
+		// Два виртуальных кошелька
+		let wallets = [
+			{
+				id: 'w1',
+				name: 'Кошелёк Alpha',
+				balances: { BTC: 0.15, ETH: 3.2, USDT: 500, SOL: 20 },
+			},
+			{
+				id: 'w2',
+				name: 'Кошелёк Beta',
+				balances: { ETH: 1.0, USDC: 800, BNB: 5, USDT: 200 },
+			},
+		]
+
 		let ratesUsd = { BTC: 95000, ETH: 3200, USDT: 1, USDC: 1, SOL: 180, BNB: 580 }
 		let prevPairRate = null
 		let lastUpdate = null
 		let liveMode = false
-		let reserve = null  // { from, to, fromAmt, toAmt, rate } — ещё не ордер
+		let reserve = null
 		let orders = []
 
 		const logEl = document.getElementById('log')
@@ -254,15 +353,54 @@
 		const reserveEl = document.getElementById('reserve')
 		const tokenCard = document.getElementById('tokenCard')
 		const tokenBody = document.getElementById('tokenBody')
+		const transferInfo = document.getElementById('transferInfo')
 		const ordersBlock = document.getElementById('ordersBlock')
 		const ordersList = document.getElementById('ordersList')
+		const walletMenuBtn = document.getElementById('walletMenuBtn')
+		const walletDropdown = document.getElementById('walletDropdown')
+		const walletList = document.getElementById('walletList')
 
 		function log(msg) {
 			const time = new Date().toLocaleTimeString('ru-RU')
 			const line = document.createElement('div')
 			line.textContent = `[${time}] ${msg}`
 			logEl.prepend(line)
-			while (logEl.children.length > 30) logEl.lastChild.remove()
+			while (logEl.children.length > 35) logEl.lastChild.remove()
+		}
+
+		function fmtBal(n) {
+			const x = Number(n)
+			if (!x) return '0'
+			return x.toFixed(6).replace(/\.?0+$/, '')
+		}
+
+		function renderWalletList() {
+			walletList.innerHTML = wallets.map(w => {
+				const lines = Object.entries(w.balances)
+					.filter(([, v]) => v > 0)
+					.map(([c, v]) => `${c}: ${fmtBal(v)}`)
+					.join(' · ') || 'пусто'
+				return `<div class="wallet-item">
+					<div class="wallet-item-name">${w.name}</div>
+					<div class="wallet-item-bal">${lines}</div>
+				</div>`
+			}).join('')
+		}
+
+		function totalBalance(coin) {
+			return wallets.reduce((s, w) => s + (w.balances[coin] || 0), 0)
+		}
+
+		/** Кошелёк-источник: тот, где есть from-валюта */
+		function pickSourceWallet(coin, amount) {
+			return wallets.find(w => (w.balances[coin] || 0) >= amount)
+				|| wallets.find(w => (w.balances[coin] || 0) > 0)
+				|| wallets[0]
+		}
+
+		/** Кошелёк-получатель: другой */
+		function pickDestWallet(sourceId) {
+			return wallets.find(w => w.id !== sourceId) || wallets[1] || wallets[0]
 		}
 
 		function fillSelects() {
@@ -289,32 +427,22 @@
 			return result
 		}
 
-		/** Человекочитаемое время: доля сек · сек · мин · час · день · месяц · год */
 		function formatHumanTime(ms) {
 			const d = new Date(ms)
 			const pad = (n, len = 2) => String(n).padStart(len, '0')
-			const year = d.getFullYear()
-			const month = pad(d.getMonth() + 1)
-			const day = pad(d.getDate())
-			const hour = pad(d.getHours())
-			const min = pad(d.getMinutes())
-			const sec = pad(d.getSeconds())
-			const frac = pad(d.getMilliseconds(), 3) // доля секунды (мс)
-			// формат: ГГГГ.ММ.ДД ЧЧ:ММ:СС.ммм
-			return `${year}.${month}.${day} ${hour}:${min}:${sec}.${frac}`
+			return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}.${pad(d.getMilliseconds(), 3)}`
 		}
 
-		/** Лаконичный токен ордера */
 		function buildToken(ms, from, fromAmt, to, toAmt) {
-			const t = formatHumanTime(ms)
-			return `${t} | ${fromAmt} ${from} → ${toAmt} ${to}`
+			return `${formatHumanTime(ms)} | ${fromAmt} ${from} → ${toAmt} ${to}`
 		}
 
 		function updateReserve() {
 			const fromAmt = parseFloat(fromAmountEl.value)
-			const toAmt = calcToAmount()
+			calcToAmount()
 			const same = fromEl.value === toEl.value
 			const valid = fromAmt > 0 && !same
+			const available = totalBalance(fromEl.value)
 
 			if (!valid) {
 				reserve = null
@@ -324,51 +452,57 @@
 				return
 			}
 
-			const rate = getPairRate()
+			if (fromAmt > available) {
+				reserve = null
+				reserveEl.textContent = `Недостаточно ${fromEl.value}: доступно ${fmtBal(available)}`
+				reserveEl.className = 'reserve'
+				swapBtn.disabled = true
+				return
+			}
+
 			const toStr = toAmountEl.value
+			const src = pickSourceWallet(fromEl.value, fromAmt)
+			const dst = pickDestWallet(src.id)
 			reserve = {
 				from: fromEl.value,
 				to: toEl.value,
-				fromAmt: fromAmt,
+				fromAmt,
 				toAmt: toStr,
-				rate: rate,
+				rate: getPairRate(),
+				sourceId: src.id,
+				destId: dst.id,
+				sourceName: src.name,
+				destName: dst.name,
 			}
-			reserveEl.textContent = `Резерв: ${fromAmt} ${fromEl.value} → ${toStr} ${toEl.value} (кошельки не тронуты)`
+			reserveEl.textContent = `Резерв: ${fromAmt} ${fromEl.value} с «${src.name}» → ${toStr} ${toEl.value} на «${dst.name}»`
 			reserveEl.className = 'reserve active'
 			swapBtn.disabled = false
 		}
 
 		function renderRate(tickDir) {
-			const from = fromEl.value
-			const to = toEl.value
 			const r = getPairRate()
-			rateMain.innerHTML = `1 ${from} ≈ <strong>${r.toFixed(6)}</strong> ${to}`
+			rateMain.innerHTML = `1 ${fromEl.value} ≈ <strong>${r.toFixed(6)}</strong> ${toEl.value}`
 			rateTick.className = 'rate-tick ' + (tickDir || 'flat')
 			rateTick.textContent = tickDir === 'up' ? '▲ вверх' : tickDir === 'down' ? '▼ вниз' : '● без изменений'
-			const src = liveMode ? 'CoinGecko (live)' : 'демо'
-			const t = lastUpdate ? lastUpdate.toLocaleTimeString('ru-RU') : '—'
-			rateMeta.textContent = `${src} · обновлено ${t}`
-			updateReserve() // курс изменился → резерв и «получаете» обновляются
+			rateMeta.textContent = `${liveMode ? 'CoinGecko' : 'демо'} · ${lastUpdate ? lastUpdate.toLocaleTimeString('ru-RU') : '—'}`
+			updateReserve()
 		}
 
 		function applyRates(newRates, sourceLive) {
-			const pairBefore = getPairRate()
+			const before = getPairRate()
 			ratesUsd = { ...ratesUsd, ...newRates }
-			const pairAfter = getPairRate()
+			const after = getPairRate()
 			lastUpdate = new Date()
 			liveMode = sourceLive
-
 			let dir = 'flat'
 			if (prevPairRate !== null) {
-				const diff = pairAfter - prevPairRate
-				if (diff > 1e-12) dir = 'up'
-				else if (diff < -1e-12) dir = 'down'
+				if (after > prevPairRate + 1e-12) dir = 'up'
+				else if (after < prevPairRate - 1e-12) dir = 'down'
 			}
-			prevPairRate = pairAfter
+			prevPairRate = after
 			renderRate(dir)
-
-			if (dir === 'up') log(`Тик ▲ 1 ${fromEl.value} = ${pairAfter.toFixed(6)} ${toEl.value}`)
-			else if (dir === 'down') log(`Тик ▼ 1 ${fromEl.value} = ${pairAfter.toFixed(6)} ${toEl.value}`)
+			if (dir === 'up') log(`Тик ▲ 1 ${fromEl.value} = ${after.toFixed(6)} ${toEl.value}`)
+			else if (dir === 'down') log(`Тик ▼ 1 ${fromEl.value} = ${after.toFixed(6)} ${toEl.value}`)
 		}
 
 		function simulateTick() {
@@ -395,97 +529,107 @@
 					return true
 				}
 			} catch (e) {
-				log(`API: ${e.message} → симуляция тиков`)
+				log(`API: ${e.message} → симуляция`)
 			}
 			return false
 		}
 
 		async function refreshRates() {
-			const ok = await fetchLiveRates()
-			if (!ok) simulateTick()
+			if (!(await fetchLiveRates())) simulateTick()
 		}
 
 		function renderOrders() {
-			if (!orders.length) {
-				ordersBlock.style.display = 'none'
-				return
-			}
+			if (!orders.length) { ordersBlock.style.display = 'none'; return }
 			ordersBlock.style.display = 'block'
 			ordersList.innerHTML = orders.map(o =>
-				`<li><span class="token-time">${o.token}</span></li>`
+				`<li>${o.token}<br><span style="color:#8b8b9e">− ${o.fromAmt} ${o.from} ← ${o.sourceName} · + ${o.toAmt} ${o.to} → ${o.destName}</span></li>`
 			).join('')
 		}
 
-		// ——— События ———
+		// Меню кошельков
+		walletMenuBtn.addEventListener('click', (e) => {
+			e.stopPropagation()
+			renderWalletList()
+			walletDropdown.classList.toggle('open')
+		})
+		document.addEventListener('click', () => walletDropdown.classList.remove('open'))
+		walletDropdown.addEventListener('click', e => e.stopPropagation())
+
 		fromEl.addEventListener('change', () => {
-			log(`Выбрана валюта «из»: ${fromEl.value}`)
+			log(`Валюта «из»: ${fromEl.value}`)
 			prevPairRate = null
 			renderRate('flat')
-			if (reserve) log(`Резерв обновлён (валюта)`)
 		})
 		toEl.addEventListener('change', () => {
-			log(`Выбрана валюта «в»: ${toEl.value}`)
+			log(`Валюта «в»: ${toEl.value}`)
 			prevPairRate = null
 			renderRate('flat')
-			if (reserve) log(`Резерв обновлён (валюта)`)
 		})
-
 		fromAmountEl.addEventListener('input', () => {
 			updateReserve()
-			if (reserve) {
-				log(`Резерв: ${reserve.fromAmt} ${reserve.from} → ${reserve.toAmt} ${reserve.to}`)
-			}
+			if (reserve) log(`Резерв: ${reserve.fromAmt} ${reserve.from} (${reserve.sourceName}) → ${reserve.toAmt} ${reserve.to} (${reserve.destName})`)
 		})
 
-		/** Ордер открывается ТОЛЬКО здесь — момент нажатия */
 		swapBtn.addEventListener('click', () => {
 			if (!reserve) return
 
-			// 1. Фиксируем момент нажатия
 			const quantum = Date.now()
-
-			// 2. Берём актуальный курс и суммы на этот момент (резерв уже пересчитан тиками)
 			const fromAmt = reserve.fromAmt
-			const toAmtNum = parseFloat(toAmountEl.value) || (fromAmt * getPairRate())
-			const toAmtStr = toAmountEl.value || toAmtNum.toFixed(8).replace(/\.?0+$/, '')
+			const toAmtStr = toAmountEl.value || String(+(fromAmt * getPairRate()).toFixed(8))
+			const toAmtNum = parseFloat(toAmtStr)
 			const from = reserve.from
 			const to = reserve.to
 
-			// 3. Человекочитаемый токен
-			const token = buildToken(quantum, from, fromAmt, to, toAmtStr)
+			const src = wallets.find(w => w.id === reserve.sourceId)
+			const dst = wallets.find(w => w.id === reserve.destId)
+			if (!src || !dst) return
 
+			// Проверка баланса на момент нажатия
+			if ((src.balances[from] || 0) < fromAmt) {
+				log(`Ошибка: на «${src.name}» недостаточно ${from}`)
+				updateReserve()
+				return
+			}
+
+			// Списание с исходного кошелька
+			src.balances[from] = +((src.balances[from] || 0) - fromAmt).toFixed(8)
+			// Зачисление на другой кошелёк
+			dst.balances[to] = +((dst.balances[to] || 0) + toAmtNum).toFixed(8)
+
+			const token = buildToken(quantum, from, fromAmt, to, toAmtStr)
 			const order = {
 				id: quantum,
 				token,
 				timeHuman: formatHumanTime(quantum),
 				from, fromAmt, to, toAmt: toAmtStr,
-				rate: getPairRate(),
+				sourceName: src.name,
+				destName: dst.name,
 			}
-
-			// 4. Мгновенный внутренний обмен (демо) + архив
 			orders.unshift(order)
 			renderOrders()
+			renderWalletList()
 
 			tokenCard.style.display = 'block'
 			tokenBody.innerHTML =
-				`<span class="token-time">${order.timeHuman}</span><br>` +
-				`${fromAmt} ${from} → ${toAmtStr} ${to}`
+				`<span class="token-time">${order.timeHuman}</span><br>${fromAmt} ${from} → ${toAmtStr} ${to}`
+			transferInfo.innerHTML =
+				`<span class="out">− ${fromAmt} ${from}</span> списано с «${src.name}»<br>` +
+				`<span class="in">+ ${toAmtStr} ${to}</span> зачислено на «${dst.name}»`
 
-			log(`Ордер открыт`)
-			log(`Токен: ${token}`)
-			log(`Внутренний обмен выполнен (кошельки обновлены в демо)`)
+			log(`Ордер открыт: ${token}`)
+			log(`Списано ${fromAmt} ${from} с «${src.name}»`)
+			log(`Зачислено ${toAmtStr} ${to} на «${dst.name}»`)
 
-			// 5. Резерв сброшен — сделка уже не «в запасе»
 			reserve = null
 			fromAmountEl.value = ''
 			toAmountEl.value = ''
 			updateReserve()
 		})
 
-		// init
 		fillSelects()
-		log('Модуль 1 загружен')
-		log('До кнопки «Обменять» — только резерв, ордер не создаётся')
+		renderWalletList()
+		log('Модуль 1: 2 виртуальных кошелька подключены')
+		log('Alpha и Beta — смотри иконку кошелька справа вверху')
 		renderRate('flat')
 		refreshRates()
 		setInterval(refreshRates, 8000)
