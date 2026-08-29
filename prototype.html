@@ -9,270 +9,108 @@
 		body {
 			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 			background: linear-gradient(160deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
-			min-height: 100vh;
-			color: #e8e8e8;
-			padding: 70px 16px 72px;
-			display: flex;
-			justify-content: center;
+			min-height: 100vh; color: #e8e8e8;
+			padding: 70px 16px 72px; display: flex; justify-content: center;
 		}
 		.app { width: 100%; max-width: 440px; }
-
-		/* КРУПНАЯ кнопка кошельков — зафиксирована слева сверху */
 		#btnCryptoWallets {
-			position: fixed;
-			top: 12px;
-			left: 12px;
-			z-index: 150;
-			background: #ffffff;
-			color: #111;
-			border: 3px solid #7c5cff;
-			border-radius: 14px;
-			padding: 12px 16px;
-			font-size: 15px;
-			font-weight: 800;
-			cursor: pointer;
-			box-shadow: 0 4px 20px rgba(124, 92, 255, 0.5);
-			display: flex;
-			align-items: center;
-			gap: 8px;
+			position: fixed; top: 12px; left: 12px; z-index: 150;
+			background: #fff; color: #111; border: 3px solid #7c5cff;
+			border-radius: 14px; padding: 12px 16px; font-size: 15px; font-weight: 800;
+			cursor: pointer; box-shadow: 0 4px 20px rgba(124,92,255,0.5);
+			display: flex; align-items: center; gap: 8px;
 		}
-		#btnCryptoWallets:hover {
-			background: #f0ebff;
-		}
-		#btnCryptoWallets svg {
-			width: 22px;
-			height: 22px;
-			fill: #7c5cff;
-			flex-shrink: 0;
-		}
-
+		#btnCryptoWallets svg { width: 22px; height: 22px; fill: #7c5cff; }
 		.wallets-panel { margin-bottom: 14px; }
-		.wallets-panel-title {
-			font-size: 0.72rem; color: #8b8b9e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;
-		}
+		.wallets-panel-title { font-size: 0.72rem; color: #8b8b9e; text-transform: uppercase; margin-bottom: 8px; }
 		.wallets-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-		.wallet-card {
-			background: rgba(255,255,255,0.06);
-			border: 1px solid rgba(255,255,255,0.18);
-			border-radius: 14px;
-			padding: 12px;
-		}
-		.wallet-card-name {
-			font-weight: 700; font-size: 0.9rem; color: #fff; margin-bottom: 6px;
-			display: flex; align-items: center; gap: 6px;
-		}
-		.wallet-card-name .dot {
-			width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
-		}
-		.wallet-card-bal {
-			font-family: ui-monospace, monospace; font-size: 0.7rem; color: #c8c8d8; line-height: 1.5;
-		}
+		.wallet-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18); border-radius: 14px; padding: 12px; }
+		.wallet-card-name { font-weight: 700; font-size: 0.9rem; color: #fff; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+		.wallet-card-name .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+		.wallet-card-bal { font-family: ui-monospace, monospace; font-size: 0.7rem; color: #c8c8d8; line-height: 1.5; }
 		.wallet-card-bal span { color: #8b8b9e; }
-
-		h1 {
-			text-align: center; font-size: 1.7rem;
-			background: linear-gradient(90deg, #7c5cff, #00d4ff);
-			-webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px;
-		}
+		h1 { text-align: center; font-size: 1.7rem; background: linear-gradient(90deg,#7c5cff,#00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 4px; }
 		.subtitle { text-align: center; color: #8b8b9e; font-size: 0.85rem; margin-bottom: 12px; }
-
-		.screen { display: none; }
-		.screen.active { display: block; }
-
-		.log {
-			background: #1a1a2e; border: 1px solid #3a3a5c; border-radius: 12px;
-			padding: 10px 12px; max-height: 90px; overflow-y: auto;
-			font-family: ui-monospace, monospace; font-size: 0.68rem; color: #9a9ab0;
-			margin-bottom: 12px; line-height: 1.45;
-		}
-
-		.card {
-			background: rgba(30, 30, 50, 0.9); border: 1px solid #2a2a45;
-			border-radius: 18px; padding: 18px 16px;
-		}
+		.screen { display: none; } .screen.active { display: block; }
+		.log { background: #1a1a2e; border: 1px solid #3a3a5c; border-radius: 12px; padding: 10px 12px; max-height: 90px; overflow-y: auto; font-family: ui-monospace, monospace; font-size: 0.68rem; color: #9a9ab0; margin-bottom: 12px; }
+		.card { background: rgba(30,30,50,0.9); border: 1px solid #2a2a45; border-radius: 18px; padding: 18px 16px; }
 		.row { display: flex; gap: 10px; margin-bottom: 12px; }
 		.field { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-		label { font-size: 0.7rem; color: #8b8b9e; text-transform: uppercase; letter-spacing: 0.04em; }
-		select, input[type="number"], input[type="search"], input[type="text"] {
-			background: #1a1a2e; border: 1px solid #3a3a5c; color: #e8e8e8;
-			padding: 10px 12px; border-radius: 12px; font-size: 1rem; outline: none; width: 100%;
-		}
-		select { cursor: pointer; }
-		select:focus, input:focus { border-color: #7c5cff; }
+		label { font-size: 0.7rem; color: #8b8b9e; text-transform: uppercase; }
+		select, input { background: #1a1a2e; border: 1px solid #3a3a5c; color: #e8e8e8; padding: 10px 12px; border-radius: 12px; font-size: 1rem; outline: none; width: 100%; }
 		input[type="number"] { font-size: 1.1rem; font-weight: 600; }
-		input[readonly] { opacity: 0.85; }
-
 		.fee-hint { font-size: 0.7rem; color: #a78bfa; text-align: center; margin-bottom: 8px; }
-		.reserve { font-size: 0.7rem; color: #8b8b9e; text-align: center; margin-bottom: 8px; min-height: 1.1em; }
+		.reserve { font-size: 0.7rem; color: #8b8b9e; text-align: center; margin-bottom: 8px; }
 		.reserve.active { color: #fbbf24; }
-
-		.rate {
-			text-align: center; padding: 10px; background: rgba(124, 92, 255, 0.1);
-			border-radius: 12px; margin-bottom: 12px; font-size: 0.9rem; color: #b0b0c8;
-			display: flex; flex-direction: column; align-items: center; gap: 3px;
-		}
+		.rate { text-align: center; padding: 10px; background: rgba(124,92,255,0.1); border-radius: 12px; margin-bottom: 12px; font-size: 0.9rem; color: #b0b0c8; }
 		.rate-main strong { color: #00d4ff; }
-		.rate-tick { font-size: 0.8rem; font-weight: 600; }
-		.rate-tick.up { color: #22c55e; }
-		.rate-tick.down { color: #ef4444; }
-		.rate-tick.flat { color: #8b8b9e; }
-		.rate-meta { font-size: 0.65rem; color: #6b6b80; }
-
-		button.swap {
-			width: 100%; background: linear-gradient(90deg, #7c5cff, #5b8def);
-			border: none; color: white; padding: 13px; border-radius: 14px;
-			font-size: 1.05rem; font-weight: 600; cursor: pointer;
-		}
-		button.swap:disabled { opacity: 0.4; cursor: not-allowed; }
-
-		.chart-wrap {
-			margin-top: 16px; background: rgba(30, 30, 50, 0.9);
-			border: 1px solid #2a2a45; border-radius: 16px; padding: 14px;
-		}
-		.chart-title {
-			font-size: 0.75rem; color: #8b8b9e; text-align: center; margin-bottom: 10px;
-			text-transform: uppercase; letter-spacing: 0.04em;
-		}
+		button.swap { width: 100%; background: linear-gradient(90deg,#7c5cff,#5b8def); border: none; color: #fff; padding: 13px; border-radius: 14px; font-size: 1.05rem; font-weight: 600; cursor: pointer; }
+		button.swap:disabled { opacity: 0.4; }
+		.chart-wrap { margin-top: 16px; background: rgba(30,30,50,0.9); border: 1px solid #2a2a45; border-radius: 16px; padding: 14px; }
+		.chart-title { font-size: 0.75rem; color: #8b8b9e; text-align: center; margin-bottom: 10px; }
 		.chart-canvas-wrap { position: relative; width: 100%; height: 180px; }
-		#dealsChart { width: 100%; height: 100%; display: block; }
-		.chart-empty {
-			position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-			font-size: 0.8rem; color: #5a5a70;
-		}
-
-		.token-card {
-			margin-top: 14px; background: rgba(0, 212, 255, 0.08);
-			border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 14px; padding: 12px 14px;
-		}
-		.token-title { font-size: 0.7rem; color: #00d4ff; text-transform: uppercase; text-align: center; margin-bottom: 6px; }
-		.token-body { font-family: ui-monospace, monospace; font-size: 0.82rem; line-height: 1.5; }
+		#dealsChart { width: 100%; height: 100%; }
+		.chart-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #5a5a70; }
+		.token-card { margin-top: 14px; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.3); border-radius: 14px; padding: 12px; }
 		.token-time { color: #fbbf24; }
-		.transfer-info {
-			margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);
-			font-size: 0.75rem; color: #b0b0c8; line-height: 1.45;
-		}
-		.transfer-info .out { color: #ef4444; }
-		.transfer-info .in { color: #22c55e; }
-		.transfer-info .fee { color: #a78bfa; }
-
+		.transfer-info { margin-top: 8px; font-size: 0.75rem; color: #b0b0c8; }
+		.transfer-info .out { color: #ef4444; } .transfer-info .in { color: #22c55e; } .transfer-info .fee { color: #a78bfa; }
 		.orders { margin-top: 14px; }
-		.orders h3 { font-size: 0.75rem; color: #8b8b9e; text-align: center; margin-bottom: 8px; }
-		.orders li {
-			list-style: none; background: rgba(30,30,50,0.7); border: 1px solid #2a2a45;
-			border-radius: 12px; padding: 10px; margin-bottom: 6px;
-			font-family: ui-monospace, monospace; font-size: 0.7rem; color: #c8c8d8; line-height: 1.4;
-		}
-
-		.app-balance-title { text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
+		.orders li { list-style: none; background: rgba(30,30,50,0.7); border: 1px solid #2a2a45; border-radius: 12px; padding: 10px; margin-bottom: 6px; font-family: ui-monospace, monospace; font-size: 0.7rem; }
+		.app-balance-title { text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
 		.app-balance-sub { text-align: center; font-size: 0.8rem; color: #8b8b9e; margin-bottom: 16px; }
-		.app-wallet {
-			background: rgba(167, 139, 250, 0.1); border: 1px solid rgba(167, 139, 250, 0.35);
-			border-radius: 16px; padding: 16px; margin-bottom: 12px;
-		}
-		.app-wallet-name { font-weight: 700; color: #c4b5fd; margin-bottom: 10px; font-size: 1rem; }
-		.app-wallet-row {
-			display: flex; justify-content: space-between;
-			font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 4px 0; color: #e8e8e8;
-		}
-		.app-wallet-row span { color: #8b8b9e; }
-		.app-total { margin-top: 12px; text-align: center; font-size: 0.85rem; color: #a78bfa; }
+		.app-wallet { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.35); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
+		.app-wallet-name { font-weight: 700; color: #c4b5fd; margin-bottom: 10px; }
+		.app-wallet-row { display: flex; justify-content: space-between; font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 4px 0; }
+		.app-total { text-align: center; color: #a78bfa; margin-top: 12px; }
 
-		.modal-overlay {
-			display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-			z-index: 300; align-items: center; justify-content: center; padding: 16px;
+		.mm-box {
+			background: rgba(246,133,27,0.12);
+			border: 1px solid rgba(246,133,27,0.45);
+			border-radius: 14px; padding: 14px; margin-bottom: 14px;
 		}
+		.mm-box h3 { font-size: 0.9rem; color: #f6851b; margin-bottom: 8px; }
+		.mm-status { font-size: 0.78rem; color: #c8c8d8; margin-bottom: 10px; line-height: 1.4; word-break: break-all; }
+		.mm-status.ok { color: #22c55e; }
+		.mm-status.err { color: #ef4444; }
+		.btn-mm {
+			width: 100%; background: #f6851b; border: none; color: #111;
+			padding: 12px; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 0.95rem;
+		}
+		.btn-mm:disabled { opacity: 0.5; cursor: not-allowed; }
+		.btn-mm-secondary {
+			width: 100%; margin-top: 8px; background: transparent; border: 1px solid #f6851b;
+			color: #f6851b; padding: 10px; border-radius: 12px; font-weight: 600; cursor: pointer;
+		}
+		.mm-note { font-size: 0.68rem; color: #8b8b9e; margin-top: 8px; line-height: 1.35; }
+
+		.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 300; align-items: center; justify-content: center; padding: 16px; }
 		.modal-overlay.open { display: flex; }
-		.modal {
-			background: #1a1a2e; border: 1px solid #3a3a5c; border-radius: 18px;
-			width: 100%; max-width: 420px; max-height: 85vh; display: flex; flex-direction: column;
-			overflow: hidden;
-		}
-		.modal-head {
-			display: flex; align-items: center; justify-content: space-between;
-			padding: 14px 16px; border-bottom: 1px solid #2a2a45;
-		}
+		.modal { background: #1a1a2e; border: 1px solid #3a3a5c; border-radius: 18px; width: 100%; max-width: 420px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; }
+		.modal-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #2a2a45; }
 		.modal-head h2 { font-size: 1rem; color: #fff; }
-		.modal-close {
-			background: transparent; border: none; color: #8b8b9e; font-size: 1.5rem;
-			cursor: pointer; line-height: 1; padding: 4px 8px;
-		}
+		.modal-close { background: transparent; border: none; color: #8b8b9e; font-size: 1.5rem; cursor: pointer; }
 		.modal-body { padding: 14px 16px; overflow-y: auto; flex: 1; }
-		.modal-empty {
-			text-align: center; color: #6b6b80; padding: 24px 12px; font-size: 0.9rem;
-		}
-		.btn-primary {
-			width: 100%; background: linear-gradient(90deg, #7c5cff, #5b8def);
-			border: none; color: #fff; padding: 14px; border-radius: 12px;
-			font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 12px;
-		}
-		.connected-wallet-row {
-			display: flex; align-items: center; justify-content: space-between;
-			padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05);
-			margin-bottom: 8px; cursor: pointer; border: 1px solid transparent;
-		}
-		.connected-wallet-row:hover { border-color: #7c5cff; }
+		.modal-empty { text-align: center; color: #6b6b80; padding: 20px; }
+		.btn-primary { width: 100%; background: linear-gradient(90deg,#7c5cff,#5b8def); border: none; color: #fff; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 12px; }
+		.connected-wallet-row { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 12px; background: rgba(255,255,255,0.05); margin-bottom: 8px; cursor: pointer; }
 		.connected-wallet-row .name { font-weight: 600; color: #fff; }
-		.connected-wallet-row .url { font-size: 0.7rem; color: #8b8b9e; margin-top: 2px; }
-		.connected-wallet-row .open-hint { font-size: 0.75rem; color: #00d4ff; }
-
-		.catalog-search { margin-bottom: 12px; }
-		.catalog-item {
-			display: flex; align-items: center; gap: 12px;
-			padding: 12px; border-radius: 12px; cursor: pointer;
-			background: rgba(255,255,255,0.04); margin-bottom: 6px;
-			border: 1px solid transparent;
-		}
-		.catalog-item:hover { border-color: #7c5cff; background: rgba(124,92,255,0.12); }
-		.catalog-item .icon {
-			width: 36px; height: 36px; border-radius: 10px;
-			background: linear-gradient(135deg, #7c5cff, #00d4ff);
-			display: flex; align-items: center; justify-content: center;
-			font-weight: 700; font-size: 0.75rem; color: #fff; flex-shrink: 0;
-		}
-		.catalog-item .info { flex: 1; min-width: 0; }
-		.catalog-item .info .n { font-weight: 600; color: #fff; }
-		.catalog-item .info .u { font-size: 0.7rem; color: #8b8b9e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-		.iframe-modal .modal { max-width: 960px; height: 90vh; max-height: 90vh; }
-		.iframe-toolbar {
-			display: flex; gap: 8px; align-items: center; padding: 10px 14px;
-			border-bottom: 1px solid #2a2a45; flex-wrap: wrap;
-		}
-		.iframe-toolbar .title { flex: 1; font-weight: 600; color: #fff; font-size: 0.9rem; }
-		.iframe-toolbar a, .iframe-toolbar button {
-			font-size: 0.75rem; padding: 6px 10px; border-radius: 8px; cursor: pointer;
-			border: 1px solid #3a3a5c; background: transparent; color: #c8c8d8; text-decoration: none;
-		}
-		.iframe-wrap { flex: 1; position: relative; background: #0f0f1a; min-height: 0; }
+		.connected-wallet-row .url { font-size: 0.7rem; color: #8b8b9e; }
+		.catalog-item { display: flex; gap: 12px; padding: 12px; border-radius: 12px; cursor: pointer; background: rgba(255,255,255,0.04); margin-bottom: 6px; }
+		.catalog-item .icon { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg,#7c5cff,#00d4ff); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.75rem; color: #fff; }
+		.iframe-modal .modal { max-width: 960px; height: 90vh; }
+		.iframe-toolbar { display: flex; gap: 8px; padding: 10px 14px; border-bottom: 1px solid #2a2a45; flex-wrap: wrap; align-items: center; }
+		.iframe-toolbar .title { flex: 1; font-weight: 600; }
+		.iframe-toolbar a, .iframe-toolbar button { font-size: 0.75rem; padding: 6px 10px; border-radius: 8px; border: 1px solid #3a3a5c; background: transparent; color: #c8c8d8; text-decoration: none; cursor: pointer; }
+		.iframe-wrap { flex: 1; position: relative; min-height: 0; }
 		.iframe-wrap iframe { width: 100%; height: 100%; border: none; }
-		.iframe-fallback {
-			position: absolute; inset: 0; display: none; flex-direction: column;
-			align-items: center; justify-content: center; padding: 24px; text-align: center;
-			background: #12121f; color: #b0b0c8; gap: 12px;
-		}
-		.iframe-fallback.show { display: flex; }
-		.iframe-fallback a { color: #00d4ff; font-weight: 600; }
-
-		.bottom-nav {
-			position: fixed; bottom: 0; left: 0; right: 0;
-			background: rgba(15, 15, 26, 0.95); border-top: 1px solid #2a2a45;
-			display: flex; justify-content: center;
-			padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
-			z-index: 100; backdrop-filter: blur(12px);
-		}
+		.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(15,15,26,0.95); border-top: 1px solid #2a2a45; display: flex; justify-content: center; padding: 8px 16px; z-index: 100; }
 		.bottom-nav-inner { width: 100%; max-width: 440px; display: flex; gap: 8px; }
-		.nav-btn {
-			flex: 1; background: transparent; border: 1px solid #3a3a5c;
-			color: #8b8b9e; border-radius: 12px; padding: 12px 8px;
-			font-size: 0.78rem; font-weight: 600; cursor: pointer;
-		}
-		.nav-btn.active {
-			background: rgba(124, 92, 255, 0.2); border-color: #7c5cff; color: #fff;
-		}
+		.nav-btn { flex: 1; background: transparent; border: 1px solid #3a3a5c; color: #8b8b9e; border-radius: 12px; padding: 12px; font-weight: 600; cursor: pointer; }
+		.nav-btn.active { background: rgba(124,92,255,0.2); border-color: #7c5cff; color: #fff; }
 	</style>
 </head>
 <body>
-	<!-- Кнопка ВСЕГДА видна — левый верхний угол экрана -->
 	<button type="button" id="btnCryptoWallets">
 		<svg viewBox="0 0 24 24"><path d="M21 7H3a1 1 0 0 0-1 1v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1zm-1 10H4V9h16v8zm1-12H3a1 1 0 0 0 0 2h18a1 1 0 0 0 0-2z"/><circle cx="17" cy="13" r="1.5"/></svg>
 		Кошельки
@@ -284,11 +122,9 @@
 				<div class="wallets-panel-title">Балансы (виртуальные)</div>
 				<div class="wallets-grid" id="walletsGrid"></div>
 			</div>
-
 			<h1>Nemo</h1>
-			<p class="subtitle">Комиссия 1% · токен времени</p>
+			<p class="subtitle">MetaMask connect · комиссия 1%</p>
 			<div class="log" id="log"></div>
-
 			<div class="card">
 				<div class="row">
 					<div class="field"><label>Отдаёте</label><select id="from"></select></div>
@@ -300,36 +136,25 @@
 				</div>
 				<div class="fee-hint" id="feeHint">Комиссия: 0.5% + 0.5%</div>
 				<div class="reserve" id="reserve">Нет резерва</div>
-				<div class="rate">
-					<div class="rate-main" id="rateMain">—</div>
-					<div class="rate-tick flat" id="rateTick">—</div>
-					<div class="rate-meta" id="rateMeta">—</div>
-				</div>
+				<div class="rate"><div class="rate-main" id="rateMain">—</div><div id="rateTick">—</div><div id="rateMeta">—</div></div>
 				<button type="button" class="swap" id="swap" disabled>Обменять</button>
 			</div>
-
 			<div class="chart-wrap">
-				<div class="chart-title">График · X: время · Y: сумма USD</div>
+				<div class="chart-title">График сделок</div>
 				<div class="chart-canvas-wrap">
 					<canvas id="dealsChart" width="400" height="180"></canvas>
 					<div class="chart-empty" id="chartEmpty">Пока нет сделок</div>
 				</div>
 			</div>
-
 			<div class="token-card" id="tokenCard" style="display:none">
-				<div class="token-title">Токен ордера</div>
-				<div class="token-body" id="tokenBody"></div>
+				<div id="tokenBody"></div>
 				<div class="transfer-info" id="transferInfo"></div>
 			</div>
-			<div class="orders" id="ordersBlock" style="display:none">
-				<h3>Архив ордеров</h3>
-				<ul id="ordersList"></ul>
-			</div>
+			<div class="orders" id="ordersBlock" style="display:none"><ul id="ordersList"></ul></div>
 		</div>
-
 		<div class="screen" id="screenAppBalance">
 			<div class="app-balance-title">Баланс приложения</div>
-			<p class="app-balance-sub">Комиссия 1% с каждой сделки</p>
+			<p class="app-balance-sub">Комиссия 1%</p>
 			<div id="appWalletsList"></div>
 			<div class="app-total" id="appTotalUsd">—</div>
 		</div>
@@ -338,24 +163,28 @@
 	<div class="modal-overlay" id="modalConnected">
 		<div class="modal">
 			<div class="modal-head">
-				<h2>Криптокошельки пользователя</h2>
+				<h2>Криптокошельки</h2>
 				<button type="button" class="modal-close" data-close="modalConnected">×</button>
 			</div>
 			<div class="modal-body">
+				<div class="mm-box">
+					<h3>🦊 MetaMask</h3>
+					<div class="mm-status" id="mmStatus">Проверка расширения...</div>
+					<button type="button" class="btn-mm" id="btnConnectMM">Подключить MetaMask</button>
+					<button type="button" class="btn-mm-secondary" id="btnInstallMM" style="display:none">Установить MetaMask</button>
+					<p class="mm-note">Создать новый кошелёк MetaMask внутри Nemo нельзя — только подключить уже существующий. Создание аккаунта — только в приложении MetaMask.</p>
+				</div>
 				<div id="connectedList"></div>
-				<button type="button" class="btn-primary" id="btnAddWallet">+ Добавить кошелёк</button>
+				<button type="button" class="btn-primary" id="btnAddWallet">+ Добавить из каталога</button>
 			</div>
 		</div>
 	</div>
 
 	<div class="modal-overlay" id="modalCatalog">
 		<div class="modal">
-			<div class="modal-head">
-				<h2>Добавить кошелёк</h2>
-				<button type="button" class="modal-close" data-close="modalCatalog">×</button>
-			</div>
+			<div class="modal-head"><h2>Каталог</h2><button type="button" class="modal-close" data-close="modalCatalog">×</button></div>
 			<div class="modal-body">
-				<input type="search" class="catalog-search" id="walletSearch" placeholder="Поиск кошелька..." autocomplete="off" />
+				<input type="search" id="walletSearch" placeholder="Поиск..." style="margin-bottom:12px" />
 				<div id="catalogList"></div>
 			</div>
 		</div>
@@ -365,363 +194,322 @@
 		<div class="modal">
 			<div class="iframe-toolbar">
 				<span class="title" id="iframeTitle">Кошелёк</span>
-				<a id="iframeOpenExt" href="#" target="_blank" rel="noopener">Открыть в новой вкладке</a>
+				<a id="iframeOpenExt" href="#" target="_blank" rel="noopener">Новая вкладка</a>
 				<button type="button" data-close="modalIframe">Закрыть</button>
 			</div>
-			<div class="iframe-wrap">
-				<iframe id="walletFrame" sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox" title="Wallet site"></iframe>
-				<div class="iframe-fallback" id="iframeFallback">
-					<p>Сайт может блокировать фрейм. Откройте в новой вкладке:</p>
-					<a id="iframeFallbackLink" href="#" target="_blank" rel="noopener">Открыть сайт кошелька</a>
-				</div>
-			</div>
+			<div class="iframe-wrap"><iframe id="walletFrame" title="wallet"></iframe></div>
 		</div>
 	</div>
 
-	<nav class="bottom-nav">
-		<div class="bottom-nav-inner">
-			<button type="button" class="nav-btn active" data-screen="screenExchange">Обмен</button>
-			<button type="button" class="nav-btn" data-screen="screenAppBalance">Баланс приложения</button>
-		</div>
-	</nav>
+	<nav class="bottom-nav"><div class="bottom-nav-inner">
+		<button type="button" class="nav-btn active" data-screen="screenExchange">Обмен</button>
+		<button type="button" class="nav-btn" data-screen="screenAppBalance">Баланс приложения</button>
+	</div></nav>
 
 	<script>
-		const COINS = ['BTC', 'ETH', 'USDT', 'USDC', 'SOL', 'BNB']
-		const CG_IDS = { BTC: 'bitcoin', ETH: 'ethereum', USDT: 'tether', USDC: 'usd-coin', SOL: 'solana', BNB: 'binancecoin' }
+		const COINS = ['BTC','ETH','USDT','USDC','SOL','BNB']
+		const CG_IDS = { BTC:'bitcoin', ETH:'ethereum', USDT:'tether', USDC:'usd-coin', SOL:'solana', BNB:'binancecoin' }
 		const FEE_FROM = 0.005, FEE_TO = 0.005
-
 		const WALLET_CATALOG = [
-			{ id: 'metamask', name: 'MetaMask', url: 'https://metamask.io' },
-			{ id: 'trust', name: 'Trust Wallet', url: 'https://trustwallet.com' },
-			{ id: 'phantom', name: 'Phantom', url: 'https://phantom.app' },
-			{ id: 'coinbase', name: 'Coinbase Wallet', url: 'https://www.coinbase.com/wallet' },
-			{ id: 'exodus', name: 'Exodus', url: 'https://www.exodus.com' },
-			{ id: 'ledger', name: 'Ledger', url: 'https://www.ledger.com' },
-			{ id: 'trezor', name: 'Trezor', url: 'https://trezor.io' },
-			{ id: 'binance', name: 'Binance Wallet', url: 'https://www.binance.com/en/web3wallet' },
-			{ id: 'okx', name: 'OKX Wallet', url: 'https://www.okx.com/web3' },
-			{ id: 'rabby', name: 'Rabby', url: 'https://rabby.io' },
-			{ id: 'rainbow', name: 'Rainbow', url: 'https://rainbow.me' },
-			{ id: 'keplr', name: 'Keplr', url: 'https://www.keplr.app' },
-			{ id: 'tonkeeper', name: 'Tonkeeper', url: 'https://tonkeeper.com' },
-			{ id: 'solflare', name: 'Solflare', url: 'https://solflare.com' },
-			{ id: 'zerion', name: 'Zerion', url: 'https://zerion.io' },
+			{ id:'metamask', name:'MetaMask', url:'https://metamask.io' },
+			{ id:'trust', name:'Trust Wallet', url:'https://trustwallet.com' },
+			{ id:'phantom', name:'Phantom', url:'https://phantom.app' },
+			{ id:'coinbase', name:'Coinbase Wallet', url:'https://www.coinbase.com/wallet' },
+			{ id:'exodus', name:'Exodus', url:'https://www.exodus.com' },
+			{ id:'ledger', name:'Ledger', url:'https://www.ledger.com' },
+			{ id:'okx', name:'OKX Wallet', url:'https://www.okx.com/web3' },
+			{ id:'rabby', name:'Rabby', url:'https://rabby.io' },
 		]
 
 		let connectedCryptoWallets = JSON.parse(localStorage.getItem('nemo_connected_wallets') || '[]')
+		let mmAccount = null, mmBalanceEth = null
 
 		let wallets = [
-			{ id: 'w1', name: 'Кошелёк Alpha', balances: { BTC: 0.15, ETH: 3.2, USDT: 500, SOL: 20 } },
-			{ id: 'w2', name: 'Кошелёк Beta', balances: { ETH: 1.0, USDC: 800, BNB: 5, USDT: 200 } },
+			{ id:'w1', name:'Кошелёк Alpha', balances:{ BTC:0.15, ETH:3.2, USDT:500, SOL:20 } },
+			{ id:'w2', name:'Кошелёк Beta', balances:{ ETH:1, USDC:800, BNB:5, USDT:200 } },
 		]
 		let appWallets = [
-			{ id: 'app1', name: 'Nemo Treasury A', balances: {} },
-			{ id: 'app2', name: 'Nemo Treasury B', balances: {} },
+			{ id:'app1', name:'Nemo Treasury A', balances:{} },
+			{ id:'app2', name:'Nemo Treasury B', balances:{} },
 		]
-
-		let ratesUsd = { BTC: 95000, ETH: 3200, USDT: 1, USDC: 1, SOL: 180, BNB: 580 }
-		let prevPairRate = null, lastUpdate = null, liveMode = false, reserve = null, orders = [], feeToggle = 0
-
+		let ratesUsd = { BTC:95000, ETH:3200, USDT:1, USDC:1, SOL:180, BNB:580 }
+		let prevPairRate=null, lastUpdate=null, liveMode=false, reserve=null, orders=[], feeToggle=0
 		const $ = id => document.getElementById(id)
 
 		function log(msg) {
-			const line = document.createElement('div')
-			line.textContent = `[${new Date().toLocaleTimeString('ru-RU')}] ${msg}`
-			$('log').prepend(line)
+			const el = document.createElement('div')
+			el.textContent = `[${new Date().toLocaleTimeString('ru-RU')}] ${msg}`
+			$('log').prepend(el)
 		}
-		function fmtBal(n) {
-			const x = Number(n)
-			return !x ? '0' : (+x.toFixed(8)).toString()
-		}
-		function balHtml(w) {
-			const e = Object.entries(w.balances).filter(([, v]) => v > 1e-12)
-			return e.length ? e.map(([c, v]) => `<div><span>${c}</span> ${fmtBal(v)}</div>`).join('') : '<div>пусто</div>'
-		}
-		function renderUserWallets() {
-			$('walletsGrid').innerHTML = wallets.map(w =>
-				`<div class="wallet-card"><div class="wallet-card-name"><span class="dot"></span>${w.name}</div><div class="wallet-card-bal">${balHtml(w)}</div></div>`
-			).join('')
-		}
-		function renderAppWallets() {
-			let totalUsd = 0
-			$('appWalletsList').innerHTML = appWallets.map(w => {
-				const e = Object.entries(w.balances).filter(([, v]) => v > 1e-12)
-				e.forEach(([c, v]) => { totalUsd += v * (ratesUsd[c] || 0) })
-				const rows = e.length ? e.map(([c, v]) => `<div class="app-wallet-row"><span>${c}</span><b>${fmtBal(v)}</b></div>`).join('') : '<div class="app-wallet-row"><span>пусто</span><b>0</b></div>'
-				return `<div class="app-wallet"><div class="app-wallet-name">${w.name}</div>${rows}</div>`
-			}).join('')
-			$('appTotalUsd').textContent = `Всего ≈ $${totalUsd.toFixed(2)} USD`
+		function fmtBal(n) { const x=+n; return !x?'0':(+x.toFixed(8)).toString() }
+
+		/* ——— MetaMask ——— */
+		function getEthereum() {
+			if (typeof window.ethereum === 'undefined') return null
+			// EIP-6963 / multi-provider: предпочитаем MetaMask
+			if (window.ethereum.providers?.length) {
+				return window.ethereum.providers.find(p => p.isMetaMask) || window.ethereum.providers[0]
+			}
+			return window.ethereum
 		}
 
-		function saveConnected() {
+		function shortAddr(a) {
+			if (!a) return ''
+			return a.slice(0, 6) + '…' + a.slice(-4)
+		}
+
+		async function refreshMMStatus() {
+			const eth = getEthereum()
+			const status = $('mmStatus')
+			const btn = $('btnConnectMM')
+			const install = $('btnInstallMM')
+			if (!eth) {
+				status.className = 'mm-status err'
+				status.textContent = 'MetaMask не найден. Установите расширение.'
+				btn.style.display = 'none'
+				install.style.display = 'block'
+				return
+			}
+			install.style.display = 'none'
+			btn.style.display = 'block'
+			try {
+				const accs = await eth.request({ method: 'eth_accounts' })
+				if (accs && accs[0]) {
+					mmAccount = accs[0]
+					const balHex = await eth.request({ method: 'eth_getBalance', params: [mmAccount, 'latest'] })
+					mmBalanceEth = Number(BigInt(balHex)) / 1e18
+					status.className = 'mm-status ok'
+					status.innerHTML = `Подключён: <b>${shortAddr(mmAccount)}</b><br>Баланс: <b>${mmBalanceEth.toFixed(6)} ETH</b>`
+					btn.textContent = 'Обновить баланс MetaMask'
+					addMMToList()
+				} else {
+					mmAccount = null
+					status.className = 'mm-status'
+					status.textContent = 'MetaMask установлен. Нажмите «Подключить».'
+					btn.textContent = 'Подключить MetaMask'
+				}
+			} catch (e) {
+				status.className = 'mm-status err'
+				status.textContent = 'Ошибка: ' + (e.message || e)
+			}
+		}
+
+		function addMMToList() {
+			if (!mmAccount) return
+			const id = 'mm-' + mmAccount.toLowerCase()
+			if (connectedCryptoWallets.some(w => w.id === id)) return
+			connectedCryptoWallets.unshift({
+				id,
+				name: 'MetaMask ' + shortAddr(mmAccount),
+				url: 'https://metamask.io',
+				address: mmAccount,
+				balanceEth: mmBalanceEth,
+				real: true,
+			})
 			localStorage.setItem('nemo_connected_wallets', JSON.stringify(connectedCryptoWallets))
+			renderConnectedList()
+		}
+
+		async function connectMetaMask() {
+			const eth = getEthereum()
+			if (!eth) {
+				window.open('https://metamask.io/download/', '_blank')
+				return
+			}
+			const btn = $('btnConnectMM')
+			btn.disabled = true
+			try {
+				const accounts = await eth.request({ method: 'eth_requestAccounts' })
+				if (!accounts?.length) throw new Error('Нет аккаунтов')
+				mmAccount = accounts[0]
+				const balHex = await eth.request({ method: 'eth_getBalance', params: [mmAccount, 'latest'] })
+				mmBalanceEth = Number(BigInt(balHex)) / 1e18
+				log('MetaMask подключён: ' + shortAddr(mmAccount) + ' · ' + mmBalanceEth.toFixed(4) + ' ETH')
+				addMMToList()
+				await refreshMMStatus()
+			} catch (e) {
+				if (e.code === 4001) log('Пользователь отклонил подключение MetaMask')
+				else log('MetaMask ошибка: ' + (e.message || e))
+				$('mmStatus').className = 'mm-status err'
+				$('mmStatus').textContent = e.code === 4001 ? 'Подключение отклонено' : (e.message || String(e))
+			} finally {
+				btn.disabled = false
+			}
 		}
 
 		function renderConnectedList() {
 			const box = $('connectedList')
 			if (!connectedCryptoWallets.length) {
-				box.innerHTML = '<div class="modal-empty">Список пуст.<br>Нажмите «Добавить кошелёк»</div>'
+				box.innerHTML = '<div class="modal-empty">Список пуст</div>'
 				return
 			}
 			box.innerHTML = connectedCryptoWallets.map(w => `
-				<div class="connected-wallet-row" data-open-wallet="${w.id}">
+				<div class="connected-wallet-row" data-id="${w.id}">
 					<div>
-						<div class="name">${w.name}</div>
-						<div class="url">${w.url}</div>
+						<div class="name">${w.name}${w.real ? ' · live' : ''}</div>
+						<div class="url">${w.address || w.url}${w.balanceEth != null ? ' · ' + (+w.balanceEth).toFixed(4) + ' ETH' : ''}</div>
 					</div>
-					<span class="open-hint">открыть →</span>
+					<span style="color:#00d4ff;font-size:0.75rem">→</span>
 				</div>`).join('')
-			box.querySelectorAll('[data-open-wallet]').forEach(el => {
-				el.addEventListener('click', () => {
-					const w = connectedCryptoWallets.find(x => x.id === el.dataset.openWallet)
+			box.querySelectorAll('[data-id]').forEach(el => {
+				el.onclick = () => {
+					const w = connectedCryptoWallets.find(x => x.id === el.dataset.id)
 					if (w) openWalletFrame(w)
-				})
+				}
 			})
 		}
 
-		function renderCatalog(filter = '') {
-			const q = filter.trim().toLowerCase()
-			const list = WALLET_CATALOG.filter(w => !q || w.name.toLowerCase().includes(q) || w.id.includes(q))
-			$('catalogList').innerHTML = list.map(w => {
-				const added = connectedCryptoWallets.some(c => c.id === w.id)
-				const initials = w.name.slice(0, 2).toUpperCase()
-				return `<div class="catalog-item" data-add="${w.id}">
-					<div class="icon">${initials}</div>
-					<div class="info"><div class="n">${w.name}${added ? ' ✓' : ''}</div><div class="u">${w.url}</div></div>
-				</div>`
-			}).join('') || '<div class="modal-empty">Ничего не найдено</div>'
-
+		function renderCatalog(q='') {
+			const list = WALLET_CATALOG.filter(w => !q || w.name.toLowerCase().includes(q.toLowerCase()))
+			$('catalogList').innerHTML = list.map(w => `
+				<div class="catalog-item" data-add="${w.id}">
+					<div class="icon">${w.name.slice(0,2).toUpperCase()}</div>
+					<div><div class="name" style="font-weight:600;color:#fff">${w.name}</div><div class="url">${w.url}</div></div>
+				</div>`).join('')
 			$('catalogList').querySelectorAll('[data-add]').forEach(el => {
-				el.addEventListener('click', () => {
+				el.onclick = () => {
 					const w = WALLET_CATALOG.find(x => x.id === el.dataset.add)
 					if (!w) return
+					if (w.id === 'metamask') {
+						closeModal('modalCatalog')
+						connectMetaMask()
+						return
+					}
 					if (!connectedCryptoWallets.some(c => c.id === w.id)) {
-						connectedCryptoWallets.push({ ...w })
-						saveConnected()
-						log('Добавлен кошелёк: ' + w.name)
+						connectedCryptoWallets.push({...w})
+						localStorage.setItem('nemo_connected_wallets', JSON.stringify(connectedCryptoWallets))
 					}
 					renderConnectedList()
 					closeModal('modalCatalog')
 					openWalletFrame(w)
-				})
+				}
 			})
 		}
 
 		function openModal(id) { $(id).classList.add('open') }
 		function closeModal(id) {
 			$(id).classList.remove('open')
-			if (id === 'modalIframe') {
-				$('walletFrame').src = 'about:blank'
-				$('iframeFallback').classList.remove('show')
-			}
+			if (id === 'modalIframe') $('walletFrame').src = 'about:blank'
 		}
-
 		function openWalletFrame(w) {
 			$('iframeTitle').textContent = w.name
-			$('iframeOpenExt').href = w.url
-			$('iframeFallbackLink').href = w.url
-			$('iframeFallback').classList.remove('show')
-			$('walletFrame').src = w.url
+			$('iframeOpenExt').href = w.url || 'https://metamask.io'
+			$('walletFrame').src = w.url || 'https://metamask.io'
 			openModal('modalIframe')
-			log('Открыт сайт: ' + w.name)
-			setTimeout(() => {
-				$('iframeFallback').classList.add('show')
-				$('iframeFallback').style.pointerEvents = 'none'
-				$('iframeFallback').style.opacity = '0'
-			}, 2000)
 		}
 
-		$('btnCryptoWallets').addEventListener('click', () => {
-			renderConnectedList()
-			openModal('modalConnected')
-		})
-		$('btnAddWallet').addEventListener('click', () => {
-			$('walletSearch').value = ''
-			renderCatalog()
-			openModal('modalCatalog')
-		})
-		$('walletSearch').addEventListener('input', e => renderCatalog(e.target.value))
+		$('btnCryptoWallets').onclick = () => { renderConnectedList(); refreshMMStatus(); openModal('modalConnected') }
+		$('btnConnectMM').onclick = connectMetaMask
+		$('btnInstallMM').onclick = () => window.open('https://metamask.io/download/', '_blank')
+		$('btnAddWallet').onclick = () => { $('walletSearch').value=''; renderCatalog(); openModal('modalCatalog') }
+		$('walletSearch').oninput = e => renderCatalog(e.target.value)
+		document.querySelectorAll('[data-close]').forEach(b => b.onclick = () => closeModal(b.dataset.close))
+		document.querySelectorAll('.modal-overlay').forEach(ov => ov.onclick = e => { if (e.target === ov) closeModal(ov.id) })
 
-		document.querySelectorAll('[data-close]').forEach(btn => {
-			btn.addEventListener('click', () => closeModal(btn.dataset.close))
-		})
-		document.querySelectorAll('.modal-overlay').forEach(ov => {
-			ov.addEventListener('click', e => { if (e.target === ov) closeModal(ov.id) })
-		})
+		const eth = getEthereum()
+		if (eth) {
+			eth.on?.('accountsChanged', (accs) => {
+				mmAccount = accs?.[0] || null
+				refreshMMStatus()
+				log(mmAccount ? 'Смена аккаунта: ' + shortAddr(mmAccount) : 'MetaMask отключён')
+			})
+		}
 
-		function totalBalance(coin) { return wallets.reduce((s, w) => s + (w.balances[coin] || 0), 0) }
-		function pickSourceWallet(coin, amount) {
-			return wallets.find(w => (w.balances[coin] || 0) >= amount) || wallets.find(w => (w.balances[coin] || 0) > 0) || wallets[0]
+		function renderUserWallets() {
+			$('walletsGrid').innerHTML = wallets.map(w => {
+				const e = Object.entries(w.balances).filter(([,v])=>v>1e-12)
+				const h = e.map(([c,v])=>`<div><span>${c}</span> ${fmtBal(v)}</div>`).join('') || '<div>пусто</div>'
+				return `<div class="wallet-card"><div class="wallet-card-name"><span class="dot"></span>${w.name}</div><div class="wallet-card-bal">${h}</div></div>`
+			}).join('')
 		}
-		function pickDestWallet(sourceId) { return wallets.find(w => w.id !== sourceId) || wallets[1] }
-		function creditFee(coin, amount) {
-			if (amount <= 0) return
-			const tw = appWallets[feeToggle++ % appWallets.length]
-			tw.balances[coin] = +((tw.balances[coin] || 0) + amount).toFixed(10)
+		function renderAppWallets() {
+			let t=0
+			$('appWalletsList').innerHTML = appWallets.map(w => {
+				const e = Object.entries(w.balances).filter(([,v])=>v>1e-12)
+				e.forEach(([c,v])=>{ t += v*(ratesUsd[c]||0) })
+				const rows = e.length ? e.map(([c,v])=>`<div class="app-wallet-row"><span>${c}</span><b>${fmtBal(v)}</b></div>`).join('') : '<div class="app-wallet-row"><span>пусто</span><b>0</b></div>'
+				return `<div class="app-wallet"><div class="app-wallet-name">${w.name}</div>${rows}</div>`
+			}).join('')
+			$('appTotalUsd').textContent = `Всего ≈ $${t.toFixed(2)}`
 		}
-		function getPairRate() { return (ratesUsd[$('from').value] || 1) / (ratesUsd[$('to').value] || 1) }
-		function calcWithFee(fromAmt) {
-			const rate = getPairRate()
-			const feeFrom = fromAmt * FEE_FROM
-			const netFrom = fromAmt - feeFrom
-			const grossTo = netFrom * rate
-			const feeTo = grossTo * FEE_TO
-			return { feeFrom, netFrom, grossTo, feeTo, netTo: grossTo - feeTo, rate }
+		function totalBalance(c){ return wallets.reduce((s,w)=>s+(w.balances[c]||0),0) }
+		function pickSource(c,a){ return wallets.find(w=>(w.balances[c]||0)>=a)||wallets[0] }
+		function pickDest(id){ return wallets.find(w=>w.id!==id)||wallets[1] }
+		function creditFee(c,a){ if(a<=0)return; const tw=appWallets[feeToggle++%appWallets.length]; tw.balances[c]=+((tw.balances[c]||0)+a).toFixed(10) }
+		function getPairRate(){ return (ratesUsd[$('from').value]||1)/(ratesUsd[$('to').value]||1) }
+		function calcWithFee(fromAmt){
+			const rate=getPairRate(), feeFrom=fromAmt*FEE_FROM, netFrom=fromAmt-feeFrom, grossTo=netFrom*rate, feeTo=grossTo*FEE_TO
+			return { feeFrom, netFrom, feeTo, netTo: grossTo-feeTo, rate }
 		}
-		function calcToAmount() {
-			const amount = parseFloat($('fromAmount').value)
-			if (!amount || amount <= 0) {
-				$('toAmount').value = ''
-				$('feeHint').textContent = 'Комиссия: 0.5% + 0.5%'
-				return null
-			}
-			const c = calcWithFee(amount)
-			$('toAmount').value = fmtBal(c.netTo)
-			$('feeHint').textContent = `Комиссия: −${fmtBal(c.feeFrom)} ${$('from').value} и −${fmtBal(c.feeTo)} ${$('to').value}`
-			return c
+		function updateReserve(){
+			const fromAmt=parseFloat($('fromAmount').value)
+			if(!fromAmt||fromAmt<=0||$('from').value===$('to').value){ reserve=null; $('reserve').textContent='Нет резерва'; $('swap').disabled=true; $('toAmount').value=''; return }
+			const c=calcWithFee(fromAmt)
+			$('toAmount').value=fmtBal(c.netTo)
+			$('feeHint').textContent=`Комиссия: −${fmtBal(c.feeFrom)} ${$('from').value} и −${fmtBal(c.feeTo)} ${$('to').value}`
+			if(fromAmt>totalBalance($('from').value)){ reserve=null; $('reserve').textContent='Недостаточно средств'; $('swap').disabled=true; return }
+			const src=pickSource($('from').value,fromAmt), dst=pickDest(src.id)
+			reserve={ from:$('from').value, to:$('to').value, fromAmt, ...c, sourceId:src.id, destId:dst.id, sourceName:src.name, destName:dst.name }
+			$('reserve').textContent=`Резерв: ${fromAmt} → ${fmtBal(c.netTo)}`; $('reserve').className='reserve active'; $('swap').disabled=false
 		}
-		function formatHumanTime(ms) {
-			const d = new Date(ms), p = (n, l = 2) => String(n).padStart(l, '0')
-			return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}.${p(d.getMilliseconds(), 3)}`
-		}
-		function updateReserve() {
-			const fromAmt = parseFloat($('fromAmount').value)
-			const calc = calcToAmount()
-			const same = $('from').value === $('to').value
-			const available = totalBalance($('from').value)
-			if (!fromAmt || fromAmt <= 0 || same || !calc) {
-				reserve = null; $('reserve').textContent = 'Нет резерва'; $('reserve').className = 'reserve'; $('swap').disabled = true; return
-			}
-			if (fromAmt > available) {
-				reserve = null; $('reserve').textContent = `Недостаточно ${$('from').value}: ${fmtBal(available)}`; $('reserve').className = 'reserve'; $('swap').disabled = true; return
-			}
-			const src = pickSourceWallet($('from').value, fromAmt)
-			const dst = pickDestWallet(src.id)
-			reserve = { from: $('from').value, to: $('to').value, fromAmt, ...calc, sourceId: src.id, destId: dst.id, sourceName: src.name, destName: dst.name }
-			$('reserve').textContent = `Резерв: ${fromAmt} ${$('from').value} → ${fmtBal(calc.netTo)} ${$('to').value}`
-			$('reserve').className = 'reserve active'
-			$('swap').disabled = false
-		}
-		function renderRate(tickDir) {
-			const r = getPairRate()
-			$('rateMain').innerHTML = `1 ${$('from').value} ≈ <strong>${r.toFixed(6)}</strong> ${$('to').value}`
-			$('rateTick').className = 'rate-tick ' + (tickDir || 'flat')
-			$('rateTick').textContent = tickDir === 'up' ? '▲' : tickDir === 'down' ? '▼' : '●'
-			$('rateMeta').textContent = `${liveMode ? 'CoinGecko' : 'демо'} · ${lastUpdate ? lastUpdate.toLocaleTimeString('ru-RU') : '—'}`
+		function renderRate(){
+			const r=getPairRate()
+			$('rateMain').innerHTML=`1 ${$('from').value} ≈ <strong>${r.toFixed(6)}</strong> ${$('to').value}`
 			updateReserve()
 		}
-		function applyRates(newRates, sourceLive) {
-			ratesUsd = { ...ratesUsd, ...newRates }
-			const after = getPairRate()
-			lastUpdate = new Date(); liveMode = sourceLive
-			let dir = 'flat'
-			if (prevPairRate != null) {
-				if (after > prevPairRate + 1e-12) dir = 'up'
-				else if (after < prevPairRate - 1e-12) dir = 'down'
+		function applyRates(nr, live){ ratesUsd={...ratesUsd,...nr}; lastUpdate=new Date(); liveMode=live; renderRate() }
+		async function refreshRates(){
+			try{
+				const res=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${Object.values(CG_IDS).join(',')}&vs_currencies=usd`)
+				const data=await res.json(); const m={}
+				for(const [s,id] of Object.entries(CG_IDS)) if(data[id]?.usd!=null) m[s]=data[id].usd
+				if(Object.keys(m).length) applyRates(m,true)
+			}catch(e){
+				const n={...ratesUsd}; Object.keys(n).forEach(k=>{ if(k!=='USDT'&&k!=='USDC') n[k]=+(ratesUsd[k]*(1+(Math.random()-0.5)*0.004)).toFixed(4) }); applyRates(n,false)
 			}
-			prevPairRate = after
-			renderRate(dir)
 		}
-		function simulateTick() {
-			const next = { ...ratesUsd }
-			Object.keys(next).forEach(k => { if (k !== 'USDT' && k !== 'USDC') next[k] = +(ratesUsd[k] * (1 + (Math.random() - 0.5) * 0.004)).toFixed(4) })
-			applyRates(next, false)
+		function drawChart(){
+			const canvas=$('dealsChart'), ctx=canvas.getContext('2d'), W=canvas.width, H=canvas.height
+			ctx.clearRect(0,0,W,H)
+			if(!orders.length){ $('chartEmpty').style.display='flex'; return }
+			$('chartEmpty').style.display='none'
+			const pad={l:42,r:12,t:12,b:28}, plotW=W-pad.l-pad.r, plotH=H-pad.t-pad.b
+			const pts=orders.slice().reverse().map(o=>({t:o.id,y:o.fromAmt*(ratesUsd[o.from]||1)}))
+			const tMin=pts[0].t, tSpan=Math.max(pts[pts.length-1].t-tMin,1000), yMax=Math.max(...pts.map(p=>p.y),1)*1.15
+			ctx.strokeStyle='#7c5cff'; ctx.lineWidth=2; ctx.beginPath()
+			pts.forEach((p,i)=>{ const x=pad.l+((p.t-tMin)/tSpan)*plotW, y=pad.t+plotH-(p.y/yMax)*plotH; i?ctx.lineTo(x,y):ctx.moveTo(x,y) }); ctx.stroke()
 		}
-		async function fetchLiveRates() {
-			try {
-				const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${Object.values(CG_IDS).join(',')}&vs_currencies=usd`)
-				if (!res.ok) throw new Error('HTTP ' + res.status)
-				const data = await res.json()
-				const mapped = {}
-				for (const [sym, id] of Object.entries(CG_IDS)) if (data[id]?.usd != null) mapped[sym] = data[id].usd
-				if (Object.keys(mapped).length) { applyRates(mapped, true); return true }
-			} catch (e) { log('API: ' + e.message) }
-			return false
-		}
-		async function refreshRates() { if (!(await fetchLiveRates())) simulateTick() }
+		function formatHumanTime(ms){ const d=new Date(ms),p=(n,l=2)=>String(n).padStart(l,'0'); return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}.${p(d.getMilliseconds(),3)}` }
 
-		function drawChart() {
-			const canvas = $('dealsChart'), ctx = canvas.getContext('2d')
-			const W = canvas.width, H = canvas.height
-			ctx.clearRect(0, 0, W, H)
-			if (!orders.length) { $('chartEmpty').style.display = 'flex'; return }
-			$('chartEmpty').style.display = 'none'
-			const pad = { l: 42, r: 12, t: 12, b: 28 }
-			const plotW = W - pad.l - pad.r, plotH = H - pad.t - pad.b
-			const points = orders.slice().reverse().map(o => ({ t: o.id, y: o.fromAmt * (ratesUsd[o.from] || 1) }))
-			const tMin = points[0].t, tSpan = Math.max(points[points.length - 1].t - tMin, 1000)
-			const yMax = Math.max(...points.map(p => p.y), 1) * 1.15
-			ctx.strokeStyle = '#3a3a5c'; ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, pad.t + plotH); ctx.lineTo(pad.l + plotW, pad.t + plotH); ctx.stroke()
-			ctx.fillStyle = '#6b6b80'; ctx.font = '10px sans-serif'; ctx.textAlign = 'right'
-			for (let i = 0; i <= 4; i++) {
-				const v = (yMax * i) / 4, y = pad.t + plotH - (plotH * i) / 4
-				ctx.fillText(v >= 1000 ? (v / 1000).toFixed(1) + 'k' : v.toFixed(0), pad.l - 4, y + 3)
-			}
-			ctx.strokeStyle = '#7c5cff'; ctx.lineWidth = 2; ctx.beginPath()
-			points.forEach((p, i) => {
-				const x = pad.l + ((p.t - tMin) / tSpan) * plotW, y = pad.t + plotH - (p.y / yMax) * plotH
-				i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)
-			})
-			ctx.stroke()
-			points.forEach(p => {
-				const x = pad.l + ((p.t - tMin) / tSpan) * plotW, y = pad.t + plotH - (p.y / yMax) * plotH
-				ctx.fillStyle = '#00d4ff'; ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill()
-			})
-		}
-		function renderOrders() {
-			if (!orders.length) { $('ordersBlock').style.display = 'none'; drawChart(); return }
-			$('ordersBlock').style.display = 'block'
-			$('ordersList').innerHTML = orders.map(o =>
-				`<li>${o.token}<br><span style="color:#8b8b9e">комиссия ${fmtBal(o.feeFrom)} ${o.from} + ${fmtBal(o.feeTo)} ${o.to}</span></li>`
-			).join('')
-			drawChart()
-		}
-
-		document.querySelectorAll('.nav-btn').forEach(btn => {
-			btn.addEventListener('click', () => {
-				document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'))
-				document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'))
-				btn.classList.add('active')
-				$(btn.dataset.screen).classList.add('active')
-				if (btn.dataset.screen === 'screenAppBalance') renderAppWallets()
-			})
+		document.querySelectorAll('.nav-btn').forEach(btn=>{
+			btn.onclick=()=>{ document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); btn.classList.add('active'); $(btn.dataset.screen).classList.add('active'); if(btn.dataset.screen==='screenAppBalance') renderAppWallets() }
 		})
+		$('from').onchange=$('to').onchange=()=>renderRate()
+		$('fromAmount').oninput=updateReserve
+		$('swap').onclick=()=>{
+			if(!reserve) return
+			const q=Date.now(), {from,to,fromAmt,feeFrom,feeTo,netTo,sourceId,destId,sourceName,destName}=reserve
+			const src=wallets.find(w=>w.id===sourceId), dst=wallets.find(w=>w.id===destId)
+			if(!src||!dst||(src.balances[from]||0)<fromAmt) return
+			src.balances[from]=+((src.balances[from]||0)-fromAmt).toFixed(10)
+			creditFee(from,feeFrom); creditFee(to,feeTo)
+			dst.balances[to]=+((dst.balances[to]||0)+netTo).toFixed(10)
+			const token=`${formatHumanTime(q)} | ${fromAmt} ${from} → ${fmtBal(netTo)} ${to}`
+			orders.unshift({id:q,token,from,fromAmt,to,netTo,feeFrom,feeTo})
+			drawChart(); renderUserWallets(); renderAppWallets()
+			$('tokenCard').style.display='block'
+			$('tokenBody').innerHTML=`<span class="token-time">${formatHumanTime(q)}</span><br>${fromAmt} ${from} → ${fmtBal(netTo)} ${to}`
+			$('transferInfo').innerHTML=`<span class="out">−${fromAmt} ${from}</span> · <span class="in">+${fmtBal(netTo)} ${to}</span> · <span class="fee">fee→Nemo</span>`
+			log('Ордер: '+token)
+			reserve=null; $('fromAmount').value=''; updateReserve()
+		}
 
-		$('from').addEventListener('change', () => { prevPairRate = null; renderRate('flat') })
-		$('to').addEventListener('change', () => { prevPairRate = null; renderRate('flat') })
-		$('fromAmount').addEventListener('input', updateReserve)
-
-		$('swap').addEventListener('click', () => {
-			if (!reserve) return
-			const quantum = Date.now()
-			const { from, to, fromAmt, feeFrom, feeTo, netTo, sourceId, destId, sourceName, destName } = reserve
-			const src = wallets.find(w => w.id === sourceId)
-			const dst = wallets.find(w => w.id === destId)
-			if (!src || !dst || (src.balances[from] || 0) < fromAmt) return
-			src.balances[from] = +((src.balances[from] || 0) - fromAmt).toFixed(10)
-			creditFee(from, feeFrom); creditFee(to, feeTo)
-			dst.balances[to] = +((dst.balances[to] || 0) + netTo).toFixed(10)
-			const token = `${formatHumanTime(quantum)} | ${fromAmt} ${from} → ${fmtBal(netTo)} ${to}`
-			orders.unshift({ id: quantum, token, from, fromAmt, to, netTo, feeFrom, feeTo, sourceName, destName })
-			renderOrders(); renderUserWallets(); renderAppWallets()
-			$('tokenCard').style.display = 'block'
-			$('tokenBody').innerHTML = `<span class="token-time">${formatHumanTime(quantum)}</span><br>${fromAmt} ${from} → ${fmtBal(netTo)} ${to}`
-			$('transferInfo').innerHTML = `<span class="out">− ${fromAmt} ${from}</span> с «${sourceName}»<br><span class="in">+ ${fmtBal(netTo)} ${to}</span> на «${destName}»<br><span class="fee">комиссия → Nemo</span>`
-			log('Ордер: ' + token)
-			reserve = null; $('fromAmount').value = ''; $('toAmount').value = ''; updateReserve()
-		})
-
-		COINS.forEach(c => { $('from').add(new Option(c, c)); $('to').add(new Option(c, c)) })
-		$('from').value = 'ETH'; $('to').value = 'USDT'
+		COINS.forEach(c=>{ $('from').add(new Option(c,c)); $('to').add(new Option(c,c)) })
+		$('from').value='ETH'; $('to').value='USDT'
 		renderUserWallets(); renderAppWallets(); drawChart()
-		log('Кнопка «Кошельки» — слева вверху (белая с фиолетовой рамкой)')
-		renderRate('flat'); refreshRates(); setInterval(refreshRates, 8000)
-		;(() => {
-			const rect = $('dealsChart').parentElement.getBoundingClientRect()
-			$('dealsChart').width = Math.floor(rect.width) || 400
-			$('dealsChart').height = 180
-			drawChart()
-		})()
+		log('MetaMask: кнопка «Кошельки» → «Подключить MetaMask»')
+		renderRate(); refreshRates(); setInterval(refreshRates,8000)
+		;(()=>{ const r=$('dealsChart').parentElement.getBoundingClientRect(); $('dealsChart').width=Math.floor(r.width)||400; $('dealsChart').height=180; drawChart() })()
 	</script>
 </body>
 </html>
