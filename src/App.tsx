@@ -137,16 +137,16 @@ export default function App() {
       let remainingToDeduct = amount
       return prev.map((w) => {
         const newBalances = { ...w.balances }
+        let canTake = 0
 
-        // Списание fromCoin пропорционально (или полностью с первого подходящего)
+        // Списание fromCoin
         if (remainingToDeduct > 0 && (newBalances[fromCoin] || 0) > 0) {
-          const canTake = Math.min(newBalances[fromCoin], remainingToDeduct)
+          canTake = Math.min(newBalances[fromCoin], remainingToDeduct)
           newBalances[fromCoin] = +(newBalances[fromCoin] - canTake).toFixed(8)
           remainingToDeduct -= canTake
         }
 
-        // Зачисление toCoin (на первый кошелёк для простоты, или распределяем)
-        // Здесь зачисляем на тот же кошелёк, с которого списали
+        // Зачисление toCoin на тот же кошелёк пропорционально списанному
         if (canTake > 0) {
           const proportion = canTake / amount
           newBalances[toCoin] = +((newBalances[toCoin] || 0) + received * proportion).toFixed(8)
