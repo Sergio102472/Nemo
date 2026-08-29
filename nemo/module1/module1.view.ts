@@ -21,6 +21,15 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
+		from_amount( next?: number ) {
+			if ( next !== undefined ) {
+				if ( next > 0 ) this.log( `Введена сумма: ${next} ${this.from_currency()}` )
+				return next
+			}
+			return 0
+		}
+
+		@ $mol_mem
 		currency_options() {
 			return [
 				'BTC',
@@ -32,7 +41,6 @@ namespace $.$$ {
 			]
 		}
 
-		// Демо-курсы в USD (позже — реальный API)
 		@ $mol_mem
 		rates_usd() {
 			return {
@@ -60,11 +68,17 @@ namespace $.$$ {
 		}
 
 		@ $mol_mem
-		can_swap() {
-			return this.from_currency() !== this.to_currency()
+		to_amount() {
+			const amount = this.from_amount()
+			if ( !amount || amount <= 0 ) return 0
+			return +( amount * this.rate() ).toFixed( 8 )
 		}
 
-		// ——— Лог действий (информационное окошко) ———
+		@ $mol_mem
+		can_swap() {
+			return this.from_currency() !== this.to_currency() && this.from_amount() > 0
+		}
+
 		@ $mol_mem
 		logs( next?: string[] ) {
 			return next ?? [ 'Модуль 1 загружен', 'Ожидание действий пользователя...' ]
@@ -92,9 +106,12 @@ namespace $.$$ {
 			if ( next === undefined ) return null as any
 
 			const quantum = Date.now()
+			const fromAmt = this.from_amount()
+			const toAmt = this.to_amount()
+
 			this.log( `Нажата кнопка «Обменять»` )
 			this.log( `Создан токен (квант времени): ${quantum}` )
-			this.log( `Ордер: ${this.from_currency()} → ${this.to_currency()} по курсу ${this.rate().toFixed(6)}` )
+			this.log( `Ордер: ${fromAmt} ${this.from_currency()} → ${toAmt} ${this.to_currency()}` )
 			this.log( `Внутренний обмен выполнен (демо)` )
 
 			return null as any

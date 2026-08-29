@@ -15,6 +15,15 @@ $nemo_module1 $mol_page
 							value? <=> to_currency?
 							options <= currency_options
 							hint \Получаете
+				<= Amounts $mol_row
+					sub /
+						<= From_amount $mol_number
+							value? <=> from_amount?
+							hint \Сумма
+						<= To_amount $mol_number
+							value <= to_amount
+							hint \Сумма
+							enabled \false
 				<= Rate $mol_text
 					text <= rate_text
 				<= Swap $mol_button_major
