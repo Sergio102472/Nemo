@@ -1,0 +1,33 @@
+$nemo_app $mol_page
+	title \Nemo
+	body /
+		<= Log $mol_list
+			rows <= log_rows
+		<= Swap_form $mol_form
+			form_fields /
+				<= From_row $mol_row
+					sub /
+						<= From_select $mol_select
+							value? <=> from_currency?
+							options <= currency_options
+							dictionary <= currency_dict
+						<= From_amount $mol_number
+							value? <=> from_amount?
+							hint \Сумма
+				<= To_row $mol_row
+					sub /
+						<= To_select $mol_select
+							value? <=> to_currency?
+							options <= currency_options
+							dictionary <= currency_dict
+						<= To_amount $mol_string
+							value <= to_amount_text
+							enabled \false
+				<= Rate_row $mol_view
+					sub /
+						<= Rate_label $mol_text
+							text <= rate_text
+		<= Action $mol_button_major
+			title \Обменять
+			click? <=> exchange_click?
+			enabled <= can_exchange
