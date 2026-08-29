@@ -54,7 +54,7 @@
 		.row {
 			display: flex;
 			gap: 14px;
-			margin-bottom: 14px;
+			margin-bottom: 16px;
 		}
 		.field { flex: 1; display: flex; flex-direction: column; gap: 6px; }
 		label {
@@ -79,20 +79,16 @@
 		input[type="number"]::placeholder { color: #5a5a70; font-weight: 400; }
 		input[readonly] { opacity: 0.85; cursor: default; }
 		.reserve {
-			font-size: 0.78rem;
-			color: #a78bfa;
-			background: rgba(167, 139, 250, 0.08);
-			border: 1px dashed rgba(167, 139, 250, 0.35);
-			border-radius: 10px;
-			padding: 10px 12px;
-			margin-bottom: 14px;
-			line-height: 1.45;
-			min-height: 2.4em;
+			font-size: 0.75rem;
+			color: #8b8b9e;
+			text-align: center;
+			margin-bottom: 12px;
+			min-height: 1.2em;
 		}
-		.reserve.empty { color: #5a5a70; border-style: solid; border-color: #2a2a45; background: transparent; }
+		.reserve.active { color: #fbbf24; }
 		.rate {
 			text-align: center;
-			padding: 12px;
+			padding: 14px 12px;
 			background: rgba(124, 92, 255, 0.1);
 			border-radius: 12px;
 			margin-bottom: 16px;
@@ -101,9 +97,9 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			gap: 4px;
+			gap: 6px;
 		}
-		.rate strong { color: #00d4ff; }
+		.rate-main strong { color: #00d4ff; font-size: 1.05rem; }
 		.rate-tick { font-size: 0.85rem; font-weight: 600; }
 		.rate-tick.up { color: #22c55e; }
 		.rate-tick.down { color: #ef4444; }
@@ -122,51 +118,49 @@
 		}
 		button:hover { opacity: 0.92; }
 		button:disabled { opacity: 0.4; cursor: not-allowed; }
-		.token-box {
-			margin-top: 18px;
-			background: rgba(0, 212, 255, 0.07);
-			border: 1px solid rgba(0, 212, 255, 0.28);
-			border-radius: 14px;
-			padding: 14px 16px;
+		.token-card {
+			margin-top: 20px;
+			background: rgba(0, 212, 255, 0.08);
+			border: 1px solid rgba(0, 212, 255, 0.3);
+			border-radius: 16px;
+			padding: 16px 18px;
 		}
-		.token-box h3 {
+		.token-title {
 			font-size: 0.75rem;
 			color: #00d4ff;
 			text-transform: uppercase;
 			letter-spacing: 0.05em;
-			margin-bottom: 8px;
+			margin-bottom: 10px;
+			text-align: center;
 		}
-		.token-id {
+		.token-body {
 			font-family: ui-monospace, monospace;
-			font-size: 0.95rem;
-			color: #e8e8e8;
-			word-break: break-all;
-			line-height: 1.5;
-		}
-		.token-deal {
-			margin-top: 8px;
 			font-size: 0.9rem;
-			color: #b0b0c8;
+			line-height: 1.55;
+			color: #e8e8e8;
+			word-break: break-word;
 		}
+		.token-time { color: #fbbf24; }
 		.orders {
 			margin-top: 20px;
 		}
 		.orders h3 {
 			font-size: 0.8rem;
 			color: #8b8b9e;
-			margin-bottom: 10px;
 			text-align: center;
+			margin-bottom: 10px;
 		}
-		.order {
+		.orders ul { list-style: none; }
+		.orders li {
 			background: rgba(30, 30, 50, 0.7);
 			border: 1px solid #2a2a45;
 			border-radius: 12px;
-			padding: 10px 14px;
+			padding: 12px 14px;
 			margin-bottom: 8px;
 			font-family: ui-monospace, monospace;
 			font-size: 0.78rem;
-			color: #c8c8d8;
 			line-height: 1.45;
+			color: #c8c8d8;
 		}
 		.footer {
 			margin-top: 18px;
@@ -180,7 +174,7 @@
 <body>
 	<div class="app">
 		<h1>Nemo</h1>
-		<p class="subtitle">резерв → квант времени → мгновенный обмен</p>
+		<p class="subtitle">Резерв → кнопка = ордер · токен = время сделки</p>
 
 		<div class="log" id="log"></div>
 
@@ -207,34 +201,30 @@
 				</div>
 			</div>
 
-			<!-- Резерв сделки (до нажатия кнопки) -->
-			<div class="reserve empty" id="reserve">Резерв пуст — выберите валюты и сумму</div>
+			<div class="reserve" id="reserve">Нет резерва — введите сумму</div>
 
 			<div class="rate">
-				<div id="rateMain">—</div>
+				<div class="rate-main" id="rateMain">—</div>
 				<div class="rate-tick flat" id="rateTick">—</div>
-				<div class="rate-meta" id="rateMeta">загрузка...</div>
+				<div class="rate-meta" id="rateMeta">загрузка курса...</div>
 			</div>
 
 			<button id="swap" disabled>Обменять</button>
 		</div>
 
-		<!-- Последний токен -->
-		<div class="token-box" id="tokenBox" style="display:none">
-			<h3>Токен ордера (квант времени)</h3>
-			<div class="token-id" id="tokenId"></div>
-			<div class="token-deal" id="tokenDeal"></div>
+		<div class="token-card" id="tokenCard" style="display:none">
+			<div class="token-title">Токен ордера (открыт)</div>
+			<div class="token-body" id="tokenBody"></div>
 		</div>
 
-		<!-- Архив -->
-		<div class="orders" id="ordersWrap" style="display:none">
+		<div class="orders" id="ordersBlock" style="display:none">
 			<h3>Архив ордеров</h3>
-			<div id="ordersList"></div>
+			<ul id="ordersList"></ul>
 		</div>
 
 		<p class="footer">
-			До кнопки — только резерв (обрыва сети не страшен).<br>
-			Нажатие = фиксация времени + мгновенный внутренний обмен.
+			До кнопки — только резерв (кошельки не трогаем).<br>
+			Нажатие «Обменять» = мгновенный внутренний обмен + токен времени.
 		</p>
 	</div>
 
@@ -249,20 +239,23 @@
 		let prevPairRate = null
 		let lastUpdate = null
 		let liveMode = false
-		let reserve = null   // { from, to, fromAmt, toAmt, rate } — до нажатия
+		let reserve = null  // { from, to, fromAmt, toAmt, rate } — ещё не ордер
 		let orders = []
 
-		const $ = id => document.getElementById(id)
-		const logEl = $('log')
-		const fromEl = $('from')
-		const toEl = $('to')
-		const fromAmountEl = $('fromAmount')
-		const toAmountEl = $('toAmount')
-		const reserveEl = $('reserve')
-		const rateMain = $('rateMain')
-		const rateTick = $('rateTick')
-		const rateMeta = $('rateMeta')
-		const swapBtn = $('swap')
+		const logEl = document.getElementById('log')
+		const fromEl = document.getElementById('from')
+		const toEl = document.getElementById('to')
+		const fromAmountEl = document.getElementById('fromAmount')
+		const toAmountEl = document.getElementById('toAmount')
+		const rateMain = document.getElementById('rateMain')
+		const rateTick = document.getElementById('rateTick')
+		const rateMeta = document.getElementById('rateMeta')
+		const swapBtn = document.getElementById('swap')
+		const reserveEl = document.getElementById('reserve')
+		const tokenCard = document.getElementById('tokenCard')
+		const tokenBody = document.getElementById('tokenBody')
+		const ordersBlock = document.getElementById('ordersBlock')
+		const ordersList = document.getElementById('ordersList')
 
 		function log(msg) {
 			const time = new Date().toLocaleTimeString('ru-RU')
@@ -270,26 +263,6 @@
 			line.textContent = `[${time}] ${msg}`
 			logEl.prepend(line)
 			while (logEl.children.length > 30) logEl.lastChild.remove()
-		}
-
-		/** Человекочитаемый квант времени: ГГГГ-ММ-ДД ЧЧ:ММ:СС.ммм */
-		function formatQuantum(ms) {
-			const d = new Date(ms)
-			const pad = (n, len = 2) => String(n).padStart(len, '0')
-			const y = d.getFullYear()
-			const mo = pad(d.getMonth() + 1)
-			const day = pad(d.getDate())
-			const h = pad(d.getHours())
-			const mi = pad(d.getMinutes())
-			const s = pad(d.getSeconds())
-			const ms3 = pad(d.getMilliseconds(), 3)
-			return `${y}-${mo}-${day} ${h}:${mi}:${s}.${ms3}`
-		}
-
-		/** Лаконичный токен: время | сумма FROM → сумма TO */
-		function buildToken(quantumMs, fromAmt, fromCoin, toAmt, toCoin) {
-			const time = formatQuantum(quantumMs)
-			return `${time} | ${fromAmt} ${fromCoin} → ${toAmt} ${toCoin}`
 		}
 
 		function fillSelects() {
@@ -309,71 +282,93 @@
 			const amount = parseFloat(fromAmountEl.value)
 			if (!amount || isNaN(amount) || amount <= 0) {
 				toAmountEl.value = ''
-				return null
+				return 0
 			}
 			const result = amount * getPairRate()
-			const formatted = result.toFixed(8).replace(/\.?0+$/, '')
-			toAmountEl.value = formatted
-			return formatted
+			toAmountEl.value = result.toFixed(8).replace(/\.?0+$/, '')
+			return result
 		}
 
-		/** Резерв: данные сделки без действий на кошельках */
+		/** Человекочитаемое время: доля сек · сек · мин · час · день · месяц · год */
+		function formatHumanTime(ms) {
+			const d = new Date(ms)
+			const pad = (n, len = 2) => String(n).padStart(len, '0')
+			const year = d.getFullYear()
+			const month = pad(d.getMonth() + 1)
+			const day = pad(d.getDate())
+			const hour = pad(d.getHours())
+			const min = pad(d.getMinutes())
+			const sec = pad(d.getSeconds())
+			const frac = pad(d.getMilliseconds(), 3) // доля секунды (мс)
+			// формат: ГГГГ.ММ.ДД ЧЧ:ММ:СС.ммм
+			return `${year}.${month}.${day} ${hour}:${min}:${sec}.${frac}`
+		}
+
+		/** Лаконичный токен ордера */
+		function buildToken(ms, from, fromAmt, to, toAmt) {
+			const t = formatHumanTime(ms)
+			return `${t} | ${fromAmt} ${from} → ${toAmt} ${to}`
+		}
+
 		function updateReserve() {
 			const fromAmt = parseFloat(fromAmountEl.value)
-			const toAmtStr = calcToAmount()
+			const toAmt = calcToAmount()
 			const same = fromEl.value === toEl.value
+			const valid = fromAmt > 0 && !same
 
-			if (!fromAmt || fromAmt <= 0 || same || !toAmtStr) {
+			if (!valid) {
 				reserve = null
-				reserveEl.className = 'reserve empty'
-				reserveEl.textContent = 'Резерв пуст — выберите валюты и сумму'
+				reserveEl.textContent = 'Нет резерва — введите сумму'
+				reserveEl.className = 'reserve'
 				swapBtn.disabled = true
 				return
 			}
 
 			const rate = getPairRate()
+			const toStr = toAmountEl.value
 			reserve = {
 				from: fromEl.value,
 				to: toEl.value,
 				fromAmt: fromAmt,
-				toAmt: parseFloat(toAmtStr),
-				toAmtStr,
-				rate,
+				toAmt: toStr,
+				rate: rate,
 			}
-
-			reserveEl.className = 'reserve'
-			reserveEl.innerHTML =
-				`<strong>Резерв:</strong> ${fromAmt} ${reserve.from} → ${toAmtStr} ${reserve.to}` +
-				`<br><span style="opacity:.75">на кошельках ещё ничего не сделано</span>`
+			reserveEl.textContent = `Резерв: ${fromAmt} ${fromEl.value} → ${toStr} ${toEl.value} (кошельки не тронуты)`
+			reserveEl.className = 'reserve active'
 			swapBtn.disabled = false
 		}
 
 		function renderRate(tickDir) {
+			const from = fromEl.value
+			const to = toEl.value
 			const r = getPairRate()
-			rateMain.innerHTML = `1 ${fromEl.value} ≈ <strong>${r.toFixed(6)}</strong> ${toEl.value}`
+			rateMain.innerHTML = `1 ${from} ≈ <strong>${r.toFixed(6)}</strong> ${to}`
 			rateTick.className = 'rate-tick ' + (tickDir || 'flat')
 			rateTick.textContent = tickDir === 'up' ? '▲ вверх' : tickDir === 'down' ? '▼ вниз' : '● без изменений'
-			const src = liveMode ? 'CoinGecko' : 'демо'
+			const src = liveMode ? 'CoinGecko (live)' : 'демо'
 			const t = lastUpdate ? lastUpdate.toLocaleTimeString('ru-RU') : '—'
-			rateMeta.textContent = `${src} · ${t}`
-			updateReserve()
+			rateMeta.textContent = `${src} · обновлено ${t}`
+			updateReserve() // курс изменился → резерв и «получаете» обновляются
 		}
 
 		function applyRates(newRates, sourceLive) {
-			const before = getPairRate()
+			const pairBefore = getPairRate()
 			ratesUsd = { ...ratesUsd, ...newRates }
-			const after = getPairRate()
+			const pairAfter = getPairRate()
 			lastUpdate = new Date()
 			liveMode = sourceLive
+
 			let dir = 'flat'
 			if (prevPairRate !== null) {
-				if (after > prevPairRate + 1e-12) dir = 'up'
-				else if (after < prevPairRate - 1e-12) dir = 'down'
+				const diff = pairAfter - prevPairRate
+				if (diff > 1e-12) dir = 'up'
+				else if (diff < -1e-12) dir = 'down'
 			}
-			prevPairRate = after
+			prevPairRate = pairAfter
 			renderRate(dir)
-			if (dir === 'up') log(`Тик ▲ 1 ${fromEl.value} = ${after.toFixed(6)} ${toEl.value}`)
-			else if (dir === 'down') log(`Тик ▼ 1 ${fromEl.value} = ${after.toFixed(6)} ${toEl.value}`)
+
+			if (dir === 'up') log(`Тик ▲ 1 ${fromEl.value} = ${pairAfter.toFixed(6)} ${toEl.value}`)
+			else if (dir === 'down') log(`Тик ▼ 1 ${fromEl.value} = ${pairAfter.toFixed(6)} ${toEl.value}`)
 		}
 
 		function simulateTick() {
@@ -400,7 +395,7 @@
 					return true
 				}
 			} catch (e) {
-				log(`API недоступен, симуляция тиков`)
+				log(`API: ${e.message} → симуляция тиков`)
 			}
 			return false
 		}
@@ -411,78 +406,86 @@
 		}
 
 		function renderOrders() {
-			if (!orders.length) return
-			$('ordersWrap').style.display = 'block'
-			$('ordersList').innerHTML = orders.map(o =>
-				`<div class="order">${o.token}</div>`
+			if (!orders.length) {
+				ordersBlock.style.display = 'none'
+				return
+			}
+			ordersBlock.style.display = 'block'
+			ordersList.innerHTML = orders.map(o =>
+				`<li><span class="token-time">${o.token}</span></li>`
 			).join('')
 		}
 
-		/** Нажатие «Обменять» = открытие ордера */
-		function executeSwap() {
+		// ——— События ———
+		fromEl.addEventListener('change', () => {
+			log(`Выбрана валюта «из»: ${fromEl.value}`)
+			prevPairRate = null
+			renderRate('flat')
+			if (reserve) log(`Резерв обновлён (валюта)`)
+		})
+		toEl.addEventListener('change', () => {
+			log(`Выбрана валюта «в»: ${toEl.value}`)
+			prevPairRate = null
+			renderRate('flat')
+			if (reserve) log(`Резерв обновлён (валюта)`)
+		})
+
+		fromAmountEl.addEventListener('input', () => {
+			updateReserve()
+			if (reserve) {
+				log(`Резерв: ${reserve.fromAmt} ${reserve.from} → ${reserve.toAmt} ${reserve.to}`)
+			}
+		})
+
+		/** Ордер открывается ТОЛЬКО здесь — момент нажатия */
+		swapBtn.addEventListener('click', () => {
 			if (!reserve) return
 
-			// 1. Фиксируем квант времени — момент нажатия
+			// 1. Фиксируем момент нажатия
 			const quantum = Date.now()
 
-			// 2. Берём актуальный курс на этот момент (из резерва / пересчёт)
-			const rate = getPairRate()
+			// 2. Берём актуальный курс и суммы на этот момент (резерв уже пересчитан тиками)
 			const fromAmt = reserve.fromAmt
-			const toAmtStr = (fromAmt * rate).toFixed(8).replace(/\.?0+$/, '')
+			const toAmtNum = parseFloat(toAmountEl.value) || (fromAmt * getPairRate())
+			const toAmtStr = toAmountEl.value || toAmtNum.toFixed(8).replace(/\.?0+$/, '')
 			const from = reserve.from
 			const to = reserve.to
 
-			// 3. Лаконичный человекочитаемый токен
-			const token = buildToken(quantum, fromAmt, from, toAmtStr, to)
+			// 3. Человекочитаемый токен
+			const token = buildToken(quantum, from, fromAmt, to, toAmtStr)
 
 			const order = {
-				quantum,
+				id: quantum,
 				token,
-				from, to,
-				fromAmt,
-				toAmt: parseFloat(toAmtStr),
-				rate,
+				timeHuman: formatHumanTime(quantum),
+				from, fromAmt, to, toAmt: toAmtStr,
+				rate: getPairRate(),
 			}
 
+			// 4. Мгновенный внутренний обмен (демо) + архив
 			orders.unshift(order)
-
-			// UI токена
-			$('tokenBox').style.display = 'block'
-			$('tokenId').textContent = formatQuantum(quantum)
-			$('tokenDeal').textContent = `${fromAmt} ${from} → ${toAmtStr} ${to}`
-
 			renderOrders()
 
-			log(`Резерв → ордер открыт`)
-			log(`Токен: ${token}`)
-			log(`Мгновенный внутренний обмен выполнен`)
+			tokenCard.style.display = 'block'
+			tokenBody.innerHTML =
+				`<span class="token-time">${order.timeHuman}</span><br>` +
+				`${fromAmt} ${from} → ${toAmtStr} ${to}`
 
-			// Очищаем форму и резерв (сделка уже в архиве)
+			log(`Ордер открыт`)
+			log(`Токен: ${token}`)
+			log(`Внутренний обмен выполнен (кошельки обновлены в демо)`)
+
+			// 5. Резерв сброшен — сделка уже не «в запасе»
+			reserve = null
 			fromAmountEl.value = ''
 			toAmountEl.value = ''
-			reserve = null
 			updateReserve()
-		}
+		})
 
-		fromEl.addEventListener('change', () => {
-			log(`Валюта «из»: ${fromEl.value}`)
-			prevPairRate = null
-			renderRate('flat')
-		})
-		toEl.addEventListener('change', () => {
-			log(`Валюта «в»: ${toEl.value}`)
-			prevPairRate = null
-			renderRate('flat')
-		})
-		fromAmountEl.addEventListener('input', () => {
-			updateReserve()
-			if (reserve) log(`Резерв: ${reserve.fromAmt} ${reserve.from} → ${reserve.toAmtStr} ${reserve.to}`)
-		})
-		swapBtn.addEventListener('click', executeSwap)
-
+		// init
 		fillSelects()
 		log('Модуль 1 загружен')
-		log('До кнопки — только резерв, без действий на кошельках')
+		log('До кнопки «Обменять» — только резерв, ордер не создаётся')
 		renderRate('flat')
 		refreshRates()
 		setInterval(refreshRates, 8000)
