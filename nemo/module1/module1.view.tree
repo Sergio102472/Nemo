@@ -1,0 +1,23 @@
+$nemo_module1 $mol_page
+	title \Nemo — Модуль 1
+	body /
+		<= Log $mol_list
+			rows <= log_rows /
+		<= Form $mol_form
+			fields /
+				<= Selects $mol_row
+					sub /
+						<= From $mol_select
+							value? <=> from_currency?
+							options <= currency_options
+							hint \Отдаёте
+						<= To $mol_select
+							value? <=> to_currency?
+							options <= currency_options
+							hint \Получаете
+				<= Rate $mol_text
+					text <= rate_text
+				<= Swap $mol_button_major
+					title \Обменять
+					click? <=> event_swap?
+					enabled <= can_swap
