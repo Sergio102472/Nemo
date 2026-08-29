@@ -14,7 +14,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: flex-start;
-			padding: 32px 16px;
+			padding: 28px 16px 40px;
 		}
 		.box {
 			width: 100%;
@@ -22,15 +22,21 @@
 			background: #1a1a2e;
 			border: 1px solid #2a2a45;
 			border-radius: 16px;
-			padding: 24px 20px;
+			padding: 22px 18px;
 		}
 		h1 {
 			text-align: center;
 			font-size: 1.5rem;
-			margin-bottom: 20px;
+			margin-bottom: 6px;
 			background: linear-gradient(90deg, #7c5cff, #00d4ff);
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
+		}
+		.sub {
+			text-align: center;
+			font-size: 0.75rem;
+			color: #6b6b80;
+			margin-bottom: 16px;
 		}
 		.block {
 			background: #12121f;
@@ -62,7 +68,6 @@
 			background: #252540;
 			color: #fff;
 			font-weight: 700;
-			font-size: 0.95rem;
 			cursor: pointer;
 		}
 		button.currency:hover { border-color: #7c5cff; }
@@ -70,7 +75,7 @@
 			flex: 1;
 			text-align: right;
 			font-family: ui-monospace, monospace;
-			font-size: 0.9rem;
+			font-size: 0.88rem;
 			color: #9a9ab0;
 		}
 		.balance b { color: #e8e8e8; }
@@ -86,25 +91,39 @@
 			outline: none;
 			min-width: 0;
 		}
-		input[type="number"]:focus { border-color: #7c5cff; }
-		.rate {
+		input:focus { border-color: #7c5cff; }
+		.rate-box {
 			flex-shrink: 0;
 			text-align: right;
-			font-size: 0.8rem;
-			color: #00d4ff;
-			font-family: ui-monospace, monospace;
-			line-height: 1.3;
-			max-width: 140px;
+			min-width: 110px;
 		}
-		.rate .tick { font-size: 0.75rem; }
-		.rate .tick.up { color: #22c55e; }
-		.rate .tick.down { color: #ef4444; }
-		.rate .tick.flat { color: #8b8b9e; }
+		.rate-price {
+			font-family: ui-monospace, monospace;
+			font-size: 0.9rem;
+			color: #00d4ff;
+			font-weight: 600;
+		}
+		.rate-tick {
+			font-size: 0.85rem;
+			font-weight: 700;
+			margin-top: 2px;
+		}
+		.rate-tick.up { color: #22c55e; }
+		.rate-tick.down { color: #ef4444; }
+		.rate-tick.flat { color: #6b6b80; }
+		.reserve {
+			font-size: 0.72rem;
+			color: #8b8b9e;
+			text-align: center;
+			margin: 10px 0 6px;
+			min-height: 1.3em;
+		}
+		.reserve.on { color: #fbbf24; }
 		.fee {
 			text-align: center;
-			margin: 12px 0;
 			color: #a78bfa;
-			font-size: 0.95rem;
+			font-size: 0.9rem;
+			margin-bottom: 12px;
 		}
 		button.swap {
 			width: 100%;
@@ -118,14 +137,71 @@
 			cursor: pointer;
 		}
 		button.swap:disabled { opacity: 0.4; cursor: not-allowed; }
-		button.swap:hover:not(:disabled) { opacity: 0.92; }
-		.log {
+		.token-card {
 			margin-top: 14px;
+			padding: 12px 14px;
+			background: rgba(0, 212, 255, 0.08);
+			border: 1px solid rgba(0, 212, 255, 0.3);
+			border-radius: 12px;
+			display: none;
+		}
+		.token-card.show { display: block; }
+		.token-title {
+			font-size: 0.7rem;
+			color: #00d4ff;
+			text-transform: uppercase;
+			margin-bottom: 6px;
+			text-align: center;
+		}
+		.token-body {
+			font-family: ui-monospace, monospace;
+			font-size: 0.78rem;
+			line-height: 1.5;
+			color: #e8e8e8;
+			word-break: break-word;
+		}
+		.token-body .t { color: #fbbf24; }
+		.app-wallet {
+			margin-top: 14px;
+			padding: 12px;
+			background: rgba(167, 139, 250, 0.1);
+			border: 1px solid rgba(167, 139, 250, 0.3);
+			border-radius: 12px;
+			font-size: 0.8rem;
+		}
+		.app-wallet h3 {
+			font-size: 0.75rem;
+			color: #c4b5fd;
+			margin-bottom: 8px;
+			text-align: center;
+		}
+		.app-wallet .row-bal {
+			display: flex;
+			justify-content: space-between;
+			font-family: ui-monospace, monospace;
+			padding: 2px 0;
+			color: #c8c8d8;
+		}
+		.orders {
+			margin-top: 14px;
+		}
+		.orders h3 {
 			font-size: 0.75rem;
 			color: #8b8b9e;
-			font-family: ui-monospace, monospace;
-			min-height: 1.2em;
 			text-align: center;
+			margin-bottom: 8px;
+		}
+		.orders li {
+			list-style: none;
+			font-family: ui-monospace, monospace;
+			font-size: 0.7rem;
+			background: #12121f;
+			border: 1px solid #2a2a45;
+			border-radius: 10px;
+			padding: 10px;
+			margin-bottom: 6px;
+			line-height: 1.4;
+			color: #c8c8d8;
 		}
 		.menu {
 			position: absolute;
@@ -160,8 +236,8 @@
 <body>
 	<div class="box">
 		<h1>Nemo</h1>
+		<p class="sub">Резерв → кнопка = ордер · токен = квант времени</p>
 
-		<!-- ОТДАЁТЕ -->
 		<div class="block">
 			<div class="block-label">Отдаёте</div>
 			<div class="row">
@@ -173,11 +249,13 @@
 			</div>
 			<div class="row">
 				<input type="number" id="fromAmount" placeholder="0.0" min="0" step="any" />
-				<div class="rate" id="fromRate">—</div>
+				<div class="rate-box">
+					<div class="rate-price" id="fromPrice">—</div>
+					<div class="rate-tick flat" id="fromTick">●</div>
+				</div>
 			</div>
 		</div>
 
-		<!-- ПОЛУЧАЕТЕ -->
 		<div class="block">
 			<div class="block-label">Получаете</div>
 			<div class="row">
@@ -189,13 +267,31 @@
 			</div>
 			<div class="row">
 				<input type="number" id="toAmount" placeholder="0.0" min="0" step="any" />
-				<div class="rate" id="toRate">—</div>
+				<div class="rate-box">
+					<div class="rate-price" id="toPrice">—</div>
+					<div class="rate-tick flat" id="toTick">●</div>
+				</div>
 			</div>
 		</div>
 
-		<div class="fee">Комиссия 2%</div>
+		<div class="reserve" id="reserve">Нет резерва — введите сумму</div>
+		<div class="fee">Комиссия 1% → кошелёк приложения</div>
 		<button type="button" class="swap" id="swapBtn" disabled>Обменять</button>
-		<div class="log" id="log"></div>
+
+		<div class="token-card" id="tokenCard">
+			<div class="token-title">Токен ордера (квант времени)</div>
+			<div class="token-body" id="tokenBody"></div>
+		</div>
+
+		<div class="app-wallet">
+			<h3>Кошелёк приложения (монетизация 1%)</h3>
+			<div id="appBal"></div>
+		</div>
+
+		<div class="orders" id="ordersBlock" style="display:none">
+			<h3>Архив ордеров</h3>
+			<ul id="ordersList"></ul>
+		</div>
 	</div>
 
 	<script>
@@ -204,38 +300,54 @@
 			BTC: 'bitcoin', ETH: 'ethereum', USDT: 'tether',
 			USDC: 'usd-coin', SOL: 'solana', BNB: 'binancecoin',
 		}
-		const FEE = 0.02
+		const FEE = 0.01 // 1%
 
-		// Виртуальный баланс кошелька
 		let wallet = { BTC: 0.5, ETH: 4.2, USDT: 2500, USDC: 1000, SOL: 35, BNB: 8 }
+		let appWallet = {} // комиссия 1%
 		let usd = { BTC: 95000, ETH: 3200, USDT: 1, USDC: 1, SOL: 180, BNB: 580 }
 		let prevUsd = { ...usd }
 
 		let fromCoin = 'BTC'
 		let toCoin = 'USDT'
 		let editSide = 'from'
+		let reserve = null // { from, to, fromAmt, toAmt, rate } — до кнопки
+		let orders = []
 
 		const $ = id => document.getElementById(id)
 
-		function fmt(n, digits = 8) {
+		function fmt(n, d = 8) {
 			if (n == null || !isFinite(n)) return '0'
-			return (+Number(n).toFixed(digits)).toString()
+			return (+Number(n).toFixed(d)).toString()
 		}
 
 		function pairRate() {
 			return (usd[fromCoin] || 1) / (usd[toCoin] || 1)
 		}
 
-		function tickClass(coin) {
+		function tickDir(coin) {
 			const a = usd[coin], b = prevUsd[coin]
 			if (b == null) return 'flat'
-			if (a > b) return 'up'
-			if (a < b) return 'down'
+			if (a > b + 1e-12) return 'up'
+			if (a < b - 1e-12) return 'down'
 			return 'flat'
 		}
 
-		function tickSymbol(c) {
-			return c === 'up' ? '▲' : c === 'down' ? '▼' : '●'
+		function tickSym(d) {
+			return d === 'up' ? '▲' : d === 'down' ? '▼' : '●'
+		}
+
+		/** Человекочитаемый токен: мс · сек · мин · час · день · год | сделка */
+		function buildToken(ms, from, fromAmt, rate, to, toAmt) {
+			const d = new Date(ms)
+			const p = (n, l = 2) => String(n).padStart(l, '0')
+			const msec = p(d.getMilliseconds(), 3)
+			const sec = p(d.getSeconds())
+			const min = p(d.getMinutes())
+			const hour = p(d.getHours())
+			const day = p(d.getDate())
+			const year = d.getFullYear()
+			// мс.сек.мин.час.день.год | fromAmt FROM @ rate → toAmt TO
+			return `${msec}.${sec}.${min}.${hour}.${day}.${year} | ${fmt(fromAmt)} ${from} @ ${fmt(rate, 6)} → ${fmt(toAmt)} ${to}`
 		}
 
 		function renderBalances() {
@@ -244,32 +356,78 @@
 		}
 
 		function renderRates() {
-			const tf = tickClass(fromCoin)
-			const tt = tickClass(toCoin)
-			$('fromRate').innerHTML =
-				`$${fmt(usd[fromCoin], 2)}<br><span class="tick ${tf}">${tickSymbol(tf)}</span>`
-			$('toRate').innerHTML =
-				`$${fmt(usd[toCoin], 2)}<br><span class="tick ${tt}">${tickSymbol(tt)}</span>`
+			const df = tickDir(fromCoin)
+			const dt = tickDir(toCoin)
+			$('fromPrice').textContent = `$${fmt(usd[fromCoin], 2)}`
+			$('toPrice').textContent = `$${fmt(usd[toCoin], 2)}`
+			$('fromTick').className = 'rate-tick ' + df
+			$('fromTick').textContent = tickSym(df) + ' курс'
+			$('toTick').className = 'rate-tick ' + dt
+			$('toTick').textContent = tickSym(dt) + ' курс'
+		}
+
+		function renderAppWallet() {
+			const entries = Object.entries(appWallet).filter(([, v]) => v > 1e-12)
+			if (!entries.length) {
+				$('appBal').innerHTML = '<div class="row-bal"><span>пока пусто</span><b>0</b></div>'
+				return
+			}
+			$('appBal').innerHTML = entries.map(([c, v]) =>
+				`<div class="row-bal"><span>${c}</span><b>${fmt(v)}</b></div>`
+			).join('')
+		}
+
+		function updateReserve() {
+			const fromAmt = parseFloat($('fromAmount').value)
+			const toAmt = parseFloat($('toAmount').value)
+			const r = pairRate()
+			const same = fromCoin === toCoin
+			const bal = wallet[fromCoin] || 0
+
+			if (!fromAmt || fromAmt <= 0 || same || !toAmt) {
+				reserve = null
+				$('reserve').textContent = 'Нет резерва — введите сумму'
+				$('reserve').className = 'reserve'
+				$('swapBtn').disabled = true
+				return
+			}
+			if (fromAmt > bal) {
+				reserve = null
+				$('reserve').textContent = `Недостаточно ${fromCoin}: ${fmt(bal)}`
+				$('reserve').className = 'reserve'
+				$('swapBtn').disabled = true
+				return
+			}
+
+			// Резерв: данные сделки собраны, кошельки ещё не тронуты
+			reserve = {
+				from: fromCoin,
+				to: toCoin,
+				fromAmt,
+				toAmt,
+				rate: r,
+			}
+			$('reserve').textContent =
+				`Резерв: ${fmt(fromAmt)} ${fromCoin} → ${fmt(toAmt)} ${toCoin} @ ${fmt(r, 6)}`
+			$('reserve').className = 'reserve on'
+			$('swapBtn').disabled = false
 		}
 
 		function recalc() {
 			const r = pairRate()
 			if (editSide === 'from') {
 				const v = parseFloat($('fromAmount').value)
-				if (!v || v <= 0) { $('toAmount').value = ''; updateSwap(); return }
-				$('toAmount').value = fmt(v * r * (1 - FEE))
+				if (!v || v <= 0) { $('toAmount').value = ''; updateReserve(); return }
+				// пользователь получает net после 1% комиссии с отдаваемой стороны
+				const netFrom = v * (1 - FEE)
+				$('toAmount').value = fmt(netFrom * r)
 			} else {
 				const v = parseFloat($('toAmount').value)
-				if (!v || v <= 0) { $('fromAmount').value = ''; updateSwap(); return }
+				if (!v || v <= 0) { $('fromAmount').value = ''; updateReserve(); return }
+				// сколько нужно отдать, чтобы после 1% получить v
 				$('fromAmount').value = fmt(v / (r * (1 - FEE)))
 			}
-			updateSwap()
-		}
-
-		function updateSwap() {
-			const v = parseFloat($('fromAmount').value)
-			const ok = v > 0 && fromCoin !== toCoin && v <= (wallet[fromCoin] || 0)
-			$('swapBtn').disabled = !ok
+			updateReserve()
 		}
 
 		function fillMenu(menu, current, onPick) {
@@ -289,11 +447,8 @@
 			e.stopPropagation()
 			$('toMenu').classList.remove('open')
 			fillMenu($('fromMenu'), fromCoin, (c) => {
-				fromCoin = c
-				$('fromBtn').textContent = c
-				renderBalances()
-				renderRates()
-				recalc()
+				fromCoin = c; $('fromBtn').textContent = c
+				renderBalances(); renderRates(); recalc()
 			})
 			$('fromMenu').classList.toggle('open')
 		}
@@ -301,11 +456,8 @@
 			e.stopPropagation()
 			$('fromMenu').classList.remove('open')
 			fillMenu($('toMenu'), toCoin, (c) => {
-				toCoin = c
-				$('toBtn').textContent = c
-				renderBalances()
-				renderRates()
-				recalc()
+				toCoin = c; $('toBtn').textContent = c
+				renderBalances(); renderRates(); recalc()
 			})
 			$('toMenu').classList.toggle('open')
 		}
@@ -317,30 +469,61 @@
 		$('fromAmount').addEventListener('input', () => { editSide = 'from'; recalc() })
 		$('toAmount').addEventListener('input', () => { editSide = 'to'; recalc() })
 
+		/** Ордер открывается ТОЛЬКО здесь — момент нажатия = квант времени */
 		$('swapBtn').onclick = () => {
-			const fromAmt = parseFloat($('fromAmount').value)
-			const toAmt = parseFloat($('toAmount').value)
-			if (!fromAmt || fromAmt > (wallet[fromCoin] || 0)) return
+			if (!reserve) return
 
-			wallet[fromCoin] = +(wallet[fromCoin] - fromAmt).toFixed(10)
-			wallet[toCoin] = +((wallet[toCoin] || 0) + toAmt).toFixed(10)
+			// 1. Фиксируем момент нажатия
+			const quantum = Date.now()
 
-			$('log').textContent =
-				`Обмен: −${fmt(fromAmt)} ${fromCoin} → +${fmt(toAmt)} ${toCoin} (комиссия 2%)`
+			// 2. Актуальные данные на этот момент (резерв + текущий курс)
+			const from = reserve.from
+			const to = reserve.to
+			const fromAmt = reserve.fromAmt
+			const rate = pairRate()
+			const feeAmt = fromAmt * FEE
+			const netFrom = fromAmt - feeAmt
+			const toAmt = netFrom * rate
 
+			if ((wallet[from] || 0) < fromAmt) {
+				$('reserve').textContent = 'Ошибка: недостаточно средств'
+				return
+			}
+
+			// 3. Токен = квант времени + данные сделки
+			const token = buildToken(quantum, from, fromAmt, rate, to, toAmt)
+
+			// 4. Внутренний обмен + комиссия 1% на кошелёк приложения
+			wallet[from] = +(wallet[from] - fromAmt).toFixed(10)
+			wallet[to] = +((wallet[to] || 0) + toAmt).toFixed(10)
+			appWallet[from] = +((appWallet[from] || 0) + feeAmt).toFixed(10)
+
+			orders.unshift({ id: quantum, token, from, fromAmt, to, toAmt, rate, feeAmt })
+
+			$('tokenCard').classList.add('show')
+			$('tokenBody').innerHTML =
+				`<span class="t">${token}</span>`
+
+			$('ordersBlock').style.display = 'block'
+			$('ordersList').innerHTML = orders.map(o =>
+				`<li>${o.token}<br><span style="color:#8b8b9e">комиссия ${fmt(o.feeAmt)} ${o.from} → приложение</span></li>`
+			).join('')
+
+			renderBalances()
+			renderAppWallet()
+
+			reserve = null
 			$('fromAmount').value = ''
 			$('toAmount').value = ''
-			renderBalances()
-			updateSwap()
+			updateReserve()
 		}
 
 		async function fetchRates() {
 			try {
-				const ids = Object.values(CG).join(',')
 				const res = await fetch(
-					`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`
+					`https://api.coingecko.com/api/v3/simple/price?ids=${Object.values(CG).join(',')}&vs_currencies=usd`
 				)
-				if (!res.ok) throw new Error('HTTP ' + res.status)
+				if (!res.ok) throw new Error('HTTP')
 				const data = await res.json()
 				prevUsd = { ...usd }
 				for (const [sym, id] of Object.entries(CG)) {
@@ -350,17 +533,18 @@
 				prevUsd = { ...usd }
 				for (const k of Object.keys(usd)) {
 					if (k === 'USDT' || k === 'USDC') continue
-					usd[k] = +(usd[k] * (1 + (Math.random() - 0.5) * 0.003)).toFixed(4)
+					usd[k] = +(usd[k] * (1 + (Math.random() - 0.5) * 0.004)).toFixed(4)
 				}
 			}
 			renderRates()
-			recalc()
+			recalc() // курс изменился → резерв и суммы обновляются
 		}
 
 		renderBalances()
 		renderRates()
+		renderAppWallet()
 		fetchRates()
-		setInterval(fetchRates, 10000)
+		setInterval(fetchRates, 8000)
 	</script>
 </body>
 </html>
