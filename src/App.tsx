@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import './App.css'
 
-// Демо-кошельки и балансы (позже заменим на реальное подключение)
+// Тип кошелька
 type Wallet = {
   id: string
   name: string
@@ -9,6 +9,19 @@ type Wallet = {
   balances: Record<string, number>
 }
 
+// Токен / ордер на основе кванта времени
+type TimeToken = {
+  id: string          // квант времени (timestamp)
+  timestamp: number
+  fromCoin: string
+  fromAmount: number
+  toCoin: string
+  toAmount: number
+  rate: number
+  wallets: string[]   // id кошельков, участвовавших в обмене
+}
+
+// Демо-кошельки
 const DEMO_WALLETS: Wallet[] = [
   {
     id: 'w1',
@@ -24,7 +37,7 @@ const DEMO_WALLETS: Wallet[] = [
   },
 ]
 
-// Курсы (демо; позже — CoinGecko / DEX)
+// Курсы в USD (демо; позже можно заменить на CoinGecko)
 const RATES: Record<string, number> = {
   BTC: 95000,
   ETH: 3200,
@@ -42,67 +55,136 @@ export default function App() {
   const [toCoin, setToCoin] = useState('USDT')
   const [fromAmount, setFromAmount] = useState('')
   const [toAmount, setToAmount] = useState('')
+  const [orders, setOrders] = useState<TimeToken[]>([])
+  const [lastToken, setLastToken] = useState<TimeToken | null>(null)
 
-  // Список монет, которыми владеет пользователь (из подключённых кошельков)
+  // Список монет, которыми владеет пользователь
   const availableCoins = useMemo(() => {
     if (connectedWallets.length === 0) return ALL_COINS
     const set = new Set<string>()
     connectedWallets.forEach((w) => {
-      Object.keys(w.balances).forEach((c) => set.add(c))
+      Object.keys(w.balances).forEach((c) => {
+        if ((w.balances[c] || 0) > 0) set.add(c)
+      })
     })
     return Array.from(set)
   }, [connectedWallets])
 
-  // Баланс выбранной монеты
+  // Общий баланс выбранной монеты
   const fromBalance = useMemo(() => {
     return connectedWallets.reduce((sum, w) => sum + (w.balances[fromCoin] || 0), 0)
   }, [connectedWallets, fromCoin])
 
-  // Курс
+  // Курс: 1 fromCoin = X toCoin
   const rate = useMemo(() => {
     const fromUsd = RATES[fromCoin] || 1
     const toUsd = RATES[toCoin] || 1
     return fromUsd / toUsd
   }, [fromCoin, toCoin])
 
-  // Пересчёт суммы «в»
+  // Автоматический пересчёт суммы «получаете»
   useEffect(() => {
     if (!fromAmount || isNaN(Number(fromAmount))) {
       setToAmount('')
       return
     }
     const result = Number(fromAmount) * rate
-    setToAmount(result.toFixed(6).replace(/\.?0+$/, ''))
+    setToAmount(result.toFixed(8).replace(/\.?0+$/, ''))
   }, [fromAmount, rate])
 
+  // Подключение / отключение кошелька
   const connectWallet = (wallet: Wallet) => {
     if (connectedWallets.find((w) => w.id === wallet.id)) {
       setConnectedWallets((prev) => prev.filter((w) => w.id !== wallet.id))
     } else {
-      setConnectedWallets((prev) => [...prev, wallet])
+      // Клонируем, чтобы можно было менять балансы
+      setConnectedWallets((prev) => [...prev, { ...wallet, balances: { ...wallet.balances } }])
     }
   }
 
+  // === Главная логика обмена ===
   const handleSwap = () => {
-    if (!fromAmount || Number(fromAmount) <= 0) return
+    const amount = Number(fromAmount)
+    if (!amount || amount <= 0) return
+
     if (connectedWallets.length === 0) {
-      alert('Сначала подключите кошелёк')
+      alert('Сначала подключите хотя бы один кошелёк')
       return
     }
-    if (Number(fromAmount) > fromBalance) {
+
+    if (amount > fromBalance) {
       alert(`Недостаточно ${fromCoin}. Доступно: ${fromBalance}`)
       return
     }
-    alert(`Обмен ${fromAmount} ${fromCoin} → ${toAmount} ${toCoin}\n(демо — реальный обмен появится позже)`)
+
+    // 1. Фиксируем квант времени — это и есть токен
+    const quantum = Date.now()
+    const received = Number(toAmount)
+
+    const token: TimeToken = {
+      id: String(quantum),
+      timestamp: quantum,
+      fromCoin,
+      fromAmount: amount,
+      toCoin,
+      toAmount: received,
+      rate,
+      wallets: connectedWallets.map((w) => w.id),
+    }
+
+    // 2. Внутренний обмен: списываем и зачисляем средства
+    setConnectedWallets((prev) => {
+      let remainingToDeduct = amount
+      return prev.map((w) => {
+        const newBalances = { ...w.balances }
+
+        // Списание fromCoin пропорционально (или полностью с первого подходящего)
+        if (remainingToDeduct > 0 && (newBalances[fromCoin] || 0) > 0) {
+          const canTake = Math.min(newBalances[fromCoin], remainingToDeduct)
+          newBalances[fromCoin] = +(newBalances[fromCoin] - canTake).toFixed(8)
+          remainingToDeduct -= canTake
+        }
+
+        // Зачисление toCoin (на первый кошелёк для простоты, или распределяем)
+        // Здесь зачисляем на тот же кошелёк, с которого списали
+        if (canTake > 0) {
+          const proportion = canTake / amount
+          newBalances[toCoin] = +((newBalances[toCoin] || 0) + received * proportion).toFixed(8)
+        }
+
+        return { ...w, balances: newBalances }
+      })
+    })
+
+    // 3. Сохраняем токен в архив ордеров
+    setOrders((prev) => [token, ...prev])
+    setLastToken(token)
+
+    // Очищаем поле ввода
+    setFromAmount('')
+    setToAmount('')
+  }
+
+  const formatTime = (ts: number) => {
+    return new Date(ts).toLocaleString('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      fractionalSecondDigits: 3,
+    })
   }
 
   return (
     <div className="app">
       <header className="header">
         <h1>Nemo</h1>
-        <p>Обмен криптовалют</p>
+        <p>Обмен криптовалют · токен = квант времени</p>
       </header>
 
+      {/* Подключение кошельков */}
       <div className="wallets-bar">
         {DEMO_WALLETS.map((w) => {
           const isConnected = connectedWallets.some((c) => c.id === w.id)
@@ -118,6 +200,7 @@ export default function App() {
         })}
       </div>
 
+      {/* Карточка обмена */}
       <div className="card">
         <div className="row">
           <div className="field">
@@ -128,9 +211,7 @@ export default function App() {
               onChange={(e) => setFromCoin(e.target.value)}
             >
               {availableCoins.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
+                <option key={c} value={c}>{c}</option>
               ))}
             </select>
             <input
@@ -143,7 +224,7 @@ export default function App() {
               step="any"
             />
             {connectedWallets.length > 0 && (
-              <div className="balance">Баланс: {fromBalance} {fromCoin}</div>
+              <div className="balance">Баланс: {fromBalance.toFixed(6)} {fromCoin}</div>
             )}
           </div>
 
@@ -155,9 +236,7 @@ export default function App() {
               onChange={(e) => setToCoin(e.target.value)}
             >
               {ALL_COINS.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
+                <option key={c} value={c}>{c}</option>
               ))}
             </select>
             <input
@@ -171,7 +250,7 @@ export default function App() {
         </div>
 
         <div className="rate">
-          1 {fromCoin} = <strong>{rate.toFixed(6)}</strong> {toCoin}
+          1 {fromCoin} ≈ <strong>{rate.toFixed(6)}</strong> {toCoin}
         </div>
 
         <button
@@ -182,6 +261,36 @@ export default function App() {
           Обменять
         </button>
       </div>
+
+      {/* Последний созданный токен */}
+      {lastToken && (
+        <div className="token-card">
+          <div className="token-title">Токен создан (квант времени)</div>
+          <div className="token-id">ID: {lastToken.id}</div>
+          <div className="token-details">
+            {lastToken.fromAmount} {lastToken.fromCoin} → {lastToken.toAmount} {lastToken.toCoin}
+            <br />
+            <span className="token-time">{formatTime(lastToken.timestamp)}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Архив ордеров */}
+      {orders.length > 0 && (
+        <div className="orders">
+          <h3>Архив ордеров (токены)</h3>
+          <ul>
+            {orders.map((o) => (
+              <li key={o.id}>
+                <span className="order-time">{formatTime(o.timestamp)}</span>
+                <span className="order-pair">
+                  {o.fromAmount} {o.fromCoin} → {o.toAmount.toFixed(6)} {o.toCoin}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <footer className="footer">
         {connectedWallets.length > 0

@@ -165,6 +165,83 @@
   margin-top: 4px;
 }
 
+/* Токен */
+.token-card {
+  margin-top: 24px;
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 16px;
+  padding: 16px 20px;
+  text-align: center;
+}
+
+.token-title {
+  font-size: 0.8rem;
+  color: #00d4ff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.token-id {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #b0b0c8;
+  word-break: break-all;
+}
+
+.token-details {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  color: #e8e8e8;
+}
+
+.token-time {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #8b8b9e;
+}
+
+/* Архив ордеров */
+.orders {
+  margin-top: 32px;
+}
+
+.orders h3 {
+  font-size: 0.9rem;
+  color: #8b8b9e;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.orders ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.orders li {
+  background: rgba(30, 30, 50, 0.7);
+  border: 1px solid #2a2a45;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.order-time {
+  font-size: 0.75rem;
+  color: #6b6b80;
+}
+
+.order-pair {
+  font-size: 0.9rem;
+  color: #e8e8e8;
+}
+
 .footer {
   margin-top: 24px;
   text-align: center;
