@@ -36,8 +36,29 @@
 			text-align: center;
 			font-size: 0.75rem;
 			color: #6b6b80;
-			margin-bottom: 16px;
+			margin-bottom: 12px;
 		}
+
+		/* Лог действий */
+		.log {
+			background: #0d0d18;
+			border: 1px solid #2a2a45;
+			border-radius: 12px;
+			padding: 10px 12px;
+			max-height: 140px;
+			overflow-y: auto;
+			font-family: ui-monospace, monospace;
+			font-size: 0.68rem;
+			color: #9a9ab0;
+			margin-bottom: 14px;
+			line-height: 1.45;
+		}
+		.log .line { margin-bottom: 2px; }
+		.log .line .ts { color: #5a5a70; }
+		.log .line.step { color: #c4b5fd; }
+		.log .line.ok { color: #22c55e; }
+		.log .line.warn { color: #fbbf24; }
+
 		.block {
 			background: #12121f;
 			border: 1px solid #2a2a45;
@@ -60,27 +81,65 @@
 		}
 		.row:last-child { margin-bottom: 0; }
 		.wrap { position: relative; }
+
+		/* Кнопка валюты: название + баланс + цифры */
 		button.currency {
-			min-width: 100px;
-			padding: 12px 14px;
+			min-width: 112px;
+			padding: 10px 12px;
 			border-radius: 12px;
 			border: 1px solid #3a3a5c;
 			background: #252540;
 			color: #fff;
-			font-weight: 700;
 			cursor: pointer;
+			text-align: left;
+			line-height: 1.25;
 		}
 		button.currency:hover { border-color: #7c5cff; }
-		.balance {
+		button.currency .sym {
+			display: block;
+			font-weight: 800;
+			font-size: 1rem;
+		}
+		button.currency .bal-label {
+			display: block;
+			font-size: 0.62rem;
+			color: #8b8b9e;
+			font-weight: 500;
+			text-transform: uppercase;
+			letter-spacing: 0.03em;
+			margin-top: 2px;
+		}
+		button.currency .bal-val {
+			display: block;
+			font-size: 0.78rem;
+			font-family: ui-monospace, monospace;
+			font-weight: 600;
+			color: #c8c8d8;
+			margin-top: 1px;
+		}
+
+		/* Курс — справа от кнопки */
+		.rate-side {
 			flex: 1;
 			text-align: right;
-			font-family: ui-monospace, monospace;
-			font-size: 0.88rem;
-			color: #9a9ab0;
 		}
-		.balance b { color: #e8e8e8; }
+		.rate-price {
+			font-family: ui-monospace, monospace;
+			font-size: 0.95rem;
+			color: #00d4ff;
+			font-weight: 600;
+		}
+		.rate-tick {
+			font-size: 0.8rem;
+			font-weight: 700;
+			margin-top: 2px;
+		}
+		.rate-tick.up { color: #22c55e; }
+		.rate-tick.down { color: #ef4444; }
+		.rate-tick.flat { color: #6b6b80; }
+
 		input[type="number"] {
-			flex: 1;
+			width: 100%;
 			padding: 12px 14px;
 			border-radius: 12px;
 			border: 1px solid #3a3a5c;
@@ -89,28 +148,9 @@
 			font-size: 1.1rem;
 			font-weight: 600;
 			outline: none;
-			min-width: 0;
 		}
 		input:focus { border-color: #7c5cff; }
-		.rate-box {
-			flex-shrink: 0;
-			text-align: right;
-			min-width: 110px;
-		}
-		.rate-price {
-			font-family: ui-monospace, monospace;
-			font-size: 0.9rem;
-			color: #00d4ff;
-			font-weight: 600;
-		}
-		.rate-tick {
-			font-size: 0.85rem;
-			font-weight: 700;
-			margin-top: 2px;
-		}
-		.rate-tick.up { color: #22c55e; }
-		.rate-tick.down { color: #ef4444; }
-		.rate-tick.flat { color: #6b6b80; }
+
 		.reserve {
 			font-size: 0.72rem;
 			color: #8b8b9e;
@@ -137,6 +177,7 @@
 			cursor: pointer;
 		}
 		button.swap:disabled { opacity: 0.4; cursor: not-allowed; }
+
 		.token-card {
 			margin-top: 14px;
 			padding: 12px 14px;
@@ -157,10 +198,10 @@
 			font-family: ui-monospace, monospace;
 			font-size: 0.78rem;
 			line-height: 1.5;
-			color: #e8e8e8;
 			word-break: break-word;
 		}
 		.token-body .t { color: #fbbf24; }
+
 		.app-wallet {
 			margin-top: 14px;
 			padding: 12px;
@@ -182,9 +223,8 @@
 			padding: 2px 0;
 			color: #c8c8d8;
 		}
-		.orders {
-			margin-top: 14px;
-		}
+
+		.orders { margin-top: 14px; }
 		.orders h3 {
 			font-size: 0.75rem;
 			color: #8b8b9e;
@@ -203,6 +243,7 @@
 			line-height: 1.4;
 			color: #c8c8d8;
 		}
+
 		.menu {
 			position: absolute;
 			top: 100%;
@@ -214,7 +255,7 @@
 			padding: 6px;
 			z-index: 20;
 			display: none;
-			min-width: 120px;
+			min-width: 130px;
 			box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 		}
 		.menu.open { display: block; }
@@ -236,23 +277,28 @@
 <body>
 	<div class="box">
 		<h1>Nemo</h1>
-		<p class="sub">Резерв → кнопка = ордер · токен = квант времени</p>
+		<p class="sub">Резерв → ордер · токен = квант времени</p>
+
+		<div class="log" id="log"></div>
 
 		<div class="block">
 			<div class="block-label">Отдаёте</div>
 			<div class="row">
 				<div class="wrap">
-					<button type="button" class="currency" id="fromBtn">BTC</button>
+					<button type="button" class="currency" id="fromBtn">
+						<span class="sym">BTC</span>
+						<span class="bal-label">баланс</span>
+						<span class="bal-val" id="fromBalVal">0</span>
+					</button>
 					<div class="menu" id="fromMenu"></div>
 				</div>
-				<div class="balance" id="fromBal">Баланс: <b>0</b></div>
-			</div>
-			<div class="row">
-				<input type="number" id="fromAmount" placeholder="0.0" min="0" step="any" />
-				<div class="rate-box">
+				<div class="rate-side">
 					<div class="rate-price" id="fromPrice">—</div>
 					<div class="rate-tick flat" id="fromTick">●</div>
 				</div>
+			</div>
+			<div class="row">
+				<input type="number" id="fromAmount" placeholder="0.0" min="0" step="any" />
 			</div>
 		</div>
 
@@ -260,17 +306,20 @@
 			<div class="block-label">Получаете</div>
 			<div class="row">
 				<div class="wrap">
-					<button type="button" class="currency" id="toBtn">USDT</button>
+					<button type="button" class="currency" id="toBtn">
+						<span class="sym">USDT</span>
+						<span class="bal-label">баланс</span>
+						<span class="bal-val" id="toBalVal">0</span>
+					</button>
 					<div class="menu" id="toMenu"></div>
 				</div>
-				<div class="balance" id="toBal">Баланс: <b>0</b></div>
-			</div>
-			<div class="row">
-				<input type="number" id="toAmount" placeholder="0.0" min="0" step="any" />
-				<div class="rate-box">
+				<div class="rate-side">
 					<div class="rate-price" id="toPrice">—</div>
 					<div class="rate-tick flat" id="toTick">●</div>
 				</div>
+			</div>
+			<div class="row">
+				<input type="number" id="toAmount" placeholder="0.0" min="0" step="any" />
 			</div>
 		</div>
 
@@ -300,17 +349,17 @@
 			BTC: 'bitcoin', ETH: 'ethereum', USDT: 'tether',
 			USDC: 'usd-coin', SOL: 'solana', BNB: 'binancecoin',
 		}
-		const FEE = 0.01 // 1%
+		const FEE = 0.01
 
 		let wallet = { BTC: 0.5, ETH: 4.2, USDT: 2500, USDC: 1000, SOL: 35, BNB: 8 }
-		let appWallet = {} // комиссия 1%
+		let appWallet = {}
 		let usd = { BTC: 95000, ETH: 3200, USDT: 1, USDC: 1, SOL: 180, BNB: 580 }
 		let prevUsd = { ...usd }
 
 		let fromCoin = 'BTC'
 		let toCoin = 'USDT'
 		let editSide = 'from'
-		let reserve = null // { from, to, fromAmt, toAmt, rate } — до кнопки
+		let reserve = null
 		let orders = []
 
 		const $ = id => document.getElementById(id)
@@ -318,6 +367,15 @@
 		function fmt(n, d = 8) {
 			if (n == null || !isFinite(n)) return '0'
 			return (+Number(n).toFixed(d)).toString()
+		}
+
+		function log(msg, cls = '') {
+			const el = document.createElement('div')
+			el.className = 'line' + (cls ? ' ' + cls : '')
+			const ts = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 })
+			el.innerHTML = `<span class="ts">[${ts}]</span> ${msg}`
+			$('log').prepend(el)
+			while ($('log').children.length > 60) $('log').lastChild.remove()
 		}
 
 		function pairRate() {
@@ -336,23 +394,21 @@
 			return d === 'up' ? '▲' : d === 'down' ? '▼' : '●'
 		}
 
-		/** Человекочитаемый токен: мс · сек · мин · час · день · год | сделка */
 		function buildToken(ms, from, fromAmt, rate, to, toAmt) {
 			const d = new Date(ms)
 			const p = (n, l = 2) => String(n).padStart(l, '0')
-			const msec = p(d.getMilliseconds(), 3)
-			const sec = p(d.getSeconds())
-			const min = p(d.getMinutes())
-			const hour = p(d.getHours())
-			const day = p(d.getDate())
-			const year = d.getFullYear()
-			// мс.сек.мин.час.день.год | fromAmt FROM @ rate → toAmt TO
-			return `${msec}.${sec}.${min}.${hour}.${day}.${year} | ${fmt(fromAmt)} ${from} @ ${fmt(rate, 6)} → ${fmt(toAmt)} ${to}`
+			return `${p(d.getMilliseconds(), 3)}.${p(d.getSeconds())}.${p(d.getMinutes())}.${p(d.getHours())}.${p(d.getDate())}.${d.getFullYear()} | ${fmt(fromAmt)} ${from} @ ${fmt(rate, 6)} → ${fmt(toAmt)} ${to}`
+		}
+
+		function setCurrencyBtn(btnId, coin, balId) {
+			const btn = $(btnId)
+			btn.querySelector('.sym').textContent = coin
+			$(balId).textContent = fmt(wallet[coin] || 0)
 		}
 
 		function renderBalances() {
-			$('fromBal').innerHTML = `Баланс: <b>${fmt(wallet[fromCoin] || 0)} ${fromCoin}</b>`
-			$('toBal').innerHTML = `Баланс: <b>${fmt(wallet[toCoin] || 0)} ${toCoin}</b>`
+			setCurrencyBtn('fromBtn', fromCoin, 'fromBalVal')
+			setCurrencyBtn('toBtn', toCoin, 'toBalVal')
 		}
 
 		function renderRates() {
@@ -399,14 +455,7 @@
 				return
 			}
 
-			// Резерв: данные сделки собраны, кошельки ещё не тронуты
-			reserve = {
-				from: fromCoin,
-				to: toCoin,
-				fromAmt,
-				toAmt,
-				rate: r,
-			}
+			reserve = { from: fromCoin, to: toCoin, fromAmt, toAmt, rate: r }
 			$('reserve').textContent =
 				`Резерв: ${fmt(fromAmt)} ${fromCoin} → ${fmt(toAmt)} ${toCoin} @ ${fmt(r, 6)}`
 			$('reserve').className = 'reserve on'
@@ -418,13 +467,10 @@
 			if (editSide === 'from') {
 				const v = parseFloat($('fromAmount').value)
 				if (!v || v <= 0) { $('toAmount').value = ''; updateReserve(); return }
-				// пользователь получает net после 1% комиссии с отдаваемой стороны
-				const netFrom = v * (1 - FEE)
-				$('toAmount').value = fmt(netFrom * r)
+				$('toAmount').value = fmt(v * (1 - FEE) * r)
 			} else {
 				const v = parseFloat($('toAmount').value)
 				if (!v || v <= 0) { $('fromAmount').value = ''; updateReserve(); return }
-				// сколько нужно отдать, чтобы после 1% получить v
 				$('fromAmount').value = fmt(v / (r * (1 - FEE)))
 			}
 			updateReserve()
@@ -447,8 +493,9 @@
 			e.stopPropagation()
 			$('toMenu').classList.remove('open')
 			fillMenu($('fromMenu'), fromCoin, (c) => {
-				fromCoin = c; $('fromBtn').textContent = c
+				fromCoin = c
 				renderBalances(); renderRates(); recalc()
+				log(`Выбрана валюта отдачи: ${c}`)
 			})
 			$('fromMenu').classList.toggle('open')
 		}
@@ -456,8 +503,9 @@
 			e.stopPropagation()
 			$('fromMenu').classList.remove('open')
 			fillMenu($('toMenu'), toCoin, (c) => {
-				toCoin = c; $('toBtn').textContent = c
+				toCoin = c
 				renderBalances(); renderRates(); recalc()
+				log(`Выбрана валюта получения: ${c}`)
 			})
 			$('toMenu').classList.toggle('open')
 		}
@@ -466,17 +514,27 @@
 			$('toMenu').classList.remove('open')
 		})
 
-		$('fromAmount').addEventListener('input', () => { editSide = 'from'; recalc() })
-		$('toAmount').addEventListener('input', () => { editSide = 'to'; recalc() })
+		$('fromAmount').addEventListener('input', () => {
+			editSide = 'from'
+			recalc()
+			if (reserve) log(`Резерв обновлён: ${fmt(reserve.fromAmt)} ${reserve.from}`, 'warn')
+		})
+		$('toAmount').addEventListener('input', () => {
+			editSide = 'to'
+			recalc()
+			if (reserve) log(`Резерв обновлён: ${fmt(reserve.toAmt)} ${reserve.to}`, 'warn')
+		})
 
-		/** Ордер открывается ТОЛЬКО здесь — момент нажатия = квант времени */
 		$('swapBtn').onclick = () => {
 			if (!reserve) return
 
-			// 1. Фиксируем момент нажатия
-			const quantum = Date.now()
+			log('——— Старт обмена ———', 'step')
 
-			// 2. Актуальные данные на этот момент (резерв + текущий курс)
+			// 1
+			const quantum = Date.now()
+			log(`1. Фиксирую время нажатия кнопки: ${quantum}`, 'step')
+
+			// 2
 			const from = reserve.from
 			const to = reserve.to
 			const fromAmt = reserve.fromAmt
@@ -484,25 +542,42 @@
 			const feeAmt = fromAmt * FEE
 			const netFrom = fromAmt - feeAmt
 			const toAmt = netFrom * rate
+			log(`2. Собираю информацию: ${fmt(fromAmt)} ${from} → ${fmt(toAmt)} ${to}, курс ${fmt(rate, 6)}`, 'step')
 
 			if ((wallet[from] || 0) < fromAmt) {
-				$('reserve').textContent = 'Ошибка: недостаточно средств'
+				log('Ошибка: недостаточно средств — обмен отменён', 'warn')
 				return
 			}
 
-			// 3. Токен = квант времени + данные сделки
+			// 3
 			const token = buildToken(quantum, from, fromAmt, rate, to, toAmt)
+			log(`3. Создаю токен (квант времени + сделка)`, 'step')
 
-			// 4. Внутренний обмен + комиссия 1% на кошелёк приложения
+			// 4
+			log('4. Открываю ордер', 'step')
+
+			// 5
 			wallet[from] = +(wallet[from] - fromAmt).toFixed(10)
-			wallet[to] = +((wallet[to] || 0) + toAmt).toFixed(10)
-			appWallet[from] = +((appWallet[from] || 0) + feeAmt).toFixed(10)
+			log(`5. Снимаю ${fmt(fromAmt)} ${from} с кошелька пользователя`, 'step')
 
+			// 6
+			wallet[to] = +((wallet[to] || 0) + toAmt).toFixed(10)
+			log(`6. Произвожу обмен, пополняю баланс: +${fmt(toAmt)} ${to}`, 'step')
+
+			// 7
+			appWallet[from] = +((appWallet[from] || 0) + feeAmt).toFixed(10)
+			log(`7. Комиссия 1%: +${fmt(feeAmt)} ${from} → кошелёк приложения`, 'step')
+
+			// 8
+			log('8. Закрываю ордер', 'step')
+
+			// 9
 			orders.unshift({ id: quantum, token, from, fromAmt, to, toAmt, rate, feeAmt })
+			log('9. Отправляю копию токена в архив', 'step')
+			log('Обмен завершён', 'ok')
 
 			$('tokenCard').classList.add('show')
-			$('tokenBody').innerHTML =
-				`<span class="t">${token}</span>`
+			$('tokenBody').innerHTML = `<span class="t">${token}</span>`
 
 			$('ordersBlock').style.display = 'block'
 			$('ordersList').innerHTML = orders.map(o =>
@@ -537,9 +612,10 @@
 				}
 			}
 			renderRates()
-			recalc() // курс изменился → резерв и суммы обновляются
+			recalc()
 		}
 
+		log('Nemo готов · лог действий для тестирования')
 		renderBalances()
 		renderRates()
 		renderAppWallet()
