@@ -16,10 +16,7 @@
 			align-items: flex-start;
 			padding: 24px 16px;
 		}
-		.app {
-			width: 100%;
-			max-width: 420px;
-		}
+		.app { width: 100%; max-width: 420px; }
 		h1 {
 			text-align: center;
 			font-size: 1.75rem;
@@ -92,14 +89,32 @@
 		}
 		.rate {
 			text-align: center;
-			padding: 12px;
+			padding: 14px 12px;
 			background: rgba(124, 92, 255, 0.1);
 			border-radius: 12px;
 			margin-bottom: 20px;
 			font-size: 0.95rem;
 			color: #b0b0c8;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 6px;
 		}
-		.rate strong { color: #00d4ff; }
+		.rate-main strong { color: #00d4ff; font-size: 1.05rem; }
+		.rate-tick {
+			font-size: 0.85rem;
+			font-weight: 600;
+			display: flex;
+			align-items: center;
+			gap: 4px;
+		}
+		.rate-tick.up { color: #22c55e; }
+		.rate-tick.down { color: #ef4444; }
+		.rate-tick.flat { color: #8b8b9e; }
+		.rate-meta {
+			font-size: 0.7rem;
+			color: #6b6b80;
+		}
 		button {
 			width: 100%;
 			background: linear-gradient(90deg, #7c5cff, #5b8def);
@@ -124,13 +139,11 @@
 <body>
 	<div class="app">
 		<h1>Nemo</h1>
-		<p class="subtitle">Модуль 1 · $mol-прототип (браузерная версия)</p>
+		<p class="subtitle">Модуль 1 · живые курсы · тики ↑↓</p>
 
-		<!-- Информационное окошко лога -->
 		<div class="log" id="log"></div>
 
 		<div class="card">
-			<!-- Селекты валют -->
 			<div class="row">
 				<div class="field">
 					<label>Отдаёте</label>
@@ -142,7 +155,6 @@
 				</div>
 			</div>
 
-			<!-- Поля суммы -->
 			<div class="row">
 				<div class="field">
 					<label>Сумма</label>
@@ -154,24 +166,44 @@
 				</div>
 			</div>
 
-			<div class="rate" id="rate">—</div>
+			<div class="rate" id="rateBox">
+				<div class="rate-main" id="rateMain">—</div>
+				<div class="rate-tick flat" id="rateTick">—</div>
+				<div class="rate-meta" id="rateMeta">загрузка курса...</div>
+			</div>
 
 			<button id="swap" disabled>Обменять</button>
 		</div>
 
-		<p class="footer">Лог сверху показывает последовательность действий · токен = квант времени</p>
+		<p class="footer">Курсы обновляются каждые 8 сек · стрелка = направление тика · сумма «получаете» пересчитывается автоматически</p>
 	</div>
 
 	<script>
 		const COINS = ['BTC', 'ETH', 'USDT', 'USDC', 'SOL', 'BNB']
-		const RATES = { BTC: 95000, ETH: 3200, USDT: 1, USDC: 1, SOL: 180, BNB: 580 }
+		// CoinGecko ids
+		const CG_IDS = {
+			BTC: 'bitcoin',
+			ETH: 'ethereum',
+			USDT: 'tether',
+			USDC: 'usd-coin',
+			SOL: 'solana',
+			BNB: 'binancecoin',
+		}
+
+		// fallback если API недоступен
+		let ratesUsd = { BTC: 95000, ETH: 3200, USDT: 1, USDC: 1, SOL: 180, BNB: 580 }
+		let prevPairRate = null
+		let lastUpdate = null
+		let liveMode = false
 
 		const logEl = document.getElementById('log')
 		const fromEl = document.getElementById('from')
 		const toEl = document.getElementById('to')
 		const fromAmountEl = document.getElementById('fromAmount')
 		const toAmountEl = document.getElementById('toAmount')
-		const rateEl = document.getElementById('rate')
+		const rateMain = document.getElementById('rateMain')
+		const rateTick = document.getElementById('rateTick')
+		const rateMeta = document.getElementById('rateMeta')
 		const swapBtn = document.getElementById('swap')
 
 		function log(msg) {
@@ -179,7 +211,7 @@
 			const line = document.createElement('div')
 			line.textContent = `[${time}] ${msg}`
 			logEl.prepend(line)
-			while (logEl.children.length > 25) logEl.lastChild.remove()
+			while (logEl.children.length > 30) logEl.lastChild.remove()
 		}
 
 		function fillSelects() {
@@ -191,20 +223,10 @@
 			toEl.value = 'USDT'
 		}
 
-		function getRate() {
-			const from = fromEl.value
-			const to = toEl.value
-			return (RATES[from] || 1) / (RATES[to] || 1)
-		}
-
-		function updateRate() {
-			const from = fromEl.value
-			const to = toEl.value
-			const r = getRate()
-			rateEl.innerHTML = `1 ${from} ≈ <strong>${r.toFixed(6)}</strong> ${to}`
-			log(`Курс обновлён: 1 ${from} = ${r.toFixed(6)} ${to}`)
-			calcToAmount()
-			updateButton()
+		function getPairRate() {
+			const from = ratesUsd[fromEl.value] || 1
+			const to = ratesUsd[toEl.value] || 1
+			return from / to
 		}
 
 		function calcToAmount() {
@@ -213,7 +235,7 @@
 				toAmountEl.value = ''
 				return
 			}
-			const result = amount * getRate()
+			const result = amount * getPairRate()
 			toAmountEl.value = result.toFixed(8).replace(/\.?0+$/, '')
 		}
 
@@ -223,13 +245,104 @@
 			swapBtn.disabled = same || !amount || amount <= 0
 		}
 
+		function renderRate(tickDir) {
+			const from = fromEl.value
+			const to = toEl.value
+			const r = getPairRate()
+			rateMain.innerHTML = `1 ${from} ≈ <strong>${r.toFixed(6)}</strong> ${to}`
+
+			rateTick.className = 'rate-tick ' + (tickDir || 'flat')
+			if (tickDir === 'up') {
+				rateTick.textContent = '▲ вверх'
+			} else if (tickDir === 'down') {
+				rateTick.textContent = '▼ вниз'
+			} else {
+				rateTick.textContent = '● без изменений'
+			}
+
+			const src = liveMode ? 'CoinGecko (live)' : 'демо-курсы'
+			const t = lastUpdate
+				? lastUpdate.toLocaleTimeString('ru-RU')
+				: '—'
+			rateMeta.textContent = `${src} · обновлено ${t}`
+
+			calcToAmount()
+			updateButton()
+		}
+
+		function applyRates(newRates, sourceLive) {
+			const pairBefore = getPairRate()
+			ratesUsd = { ...ratesUsd, ...newRates }
+			const pairAfter = getPairRate()
+			lastUpdate = new Date()
+			liveMode = sourceLive
+
+			let dir = 'flat'
+			if (prevPairRate !== null) {
+				const diff = pairAfter - prevPairRate
+				if (diff > 1e-12) dir = 'up'
+				else if (diff < -1e-12) dir = 'down'
+			}
+			prevPairRate = pairAfter
+
+			renderRate(dir)
+
+			if (dir === 'up') {
+				log(`Тик ▲ курс вырос: 1 ${fromEl.value} = ${pairAfter.toFixed(6)} ${toEl.value}`)
+			} else if (dir === 'down') {
+				log(`Тик ▼ курс упал: 1 ${fromEl.value} = ${pairAfter.toFixed(6)} ${toEl.value}`)
+			} else if (sourceLive) {
+				log(`Курс обновлён (без изменения): 1 ${fromEl.value} = ${pairAfter.toFixed(6)} ${toEl.value}`)
+			}
+		}
+
+		// Симуляция микродвижения (если live API не ответил)
+		function simulateTick() {
+			const keys = Object.keys(ratesUsd)
+			const next = { ...ratesUsd }
+			keys.forEach(k => {
+				if (k === 'USDT' || k === 'USDC') return
+				const jitter = 1 + (Math.random() - 0.5) * 0.004 // ±0.2%
+				next[k] = +(ratesUsd[k] * jitter).toFixed(4)
+			})
+			applyRates(next, false)
+		}
+
+		async function fetchLiveRates() {
+			try {
+				const ids = Object.values(CG_IDS).join(',')
+				const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd`
+				const res = await fetch(url)
+				if (!res.ok) throw new Error('HTTP ' + res.status)
+				const data = await res.json()
+				const mapped = {}
+				for (const [sym, id] of Object.entries(CG_IDS)) {
+					if (data[id] && data[id].usd != null) mapped[sym] = data[id].usd
+				}
+				if (Object.keys(mapped).length) {
+					applyRates(mapped, true)
+					return true
+				}
+			} catch (e) {
+				log(`API недоступен (${e.message}), режим симуляции тиков`)
+			}
+			return false
+		}
+
+		async function refreshRates() {
+			const ok = await fetchLiveRates()
+			if (!ok) simulateTick()
+		}
+
 		fromEl.addEventListener('change', () => {
 			log(`Выбрана валюта «из»: ${fromEl.value}`)
-			updateRate()
+			prevPairRate = null
+			renderRate('flat')
 		})
 		toEl.addEventListener('change', () => {
 			log(`Выбрана валюта «в»: ${toEl.value}`)
-			updateRate()
+			prevPairRate = null
+			renderRate('flat')
 		})
 
 		fromAmountEl.addEventListener('input', () => {
@@ -243,17 +356,20 @@
 			const quantum = Date.now()
 			const fromAmt = fromAmountEl.value
 			const toAmt = toAmountEl.value
+			const r = getPairRate()
 			log(`Нажата кнопка «Обменять»`)
 			log(`Создан токен (квант времени): ${quantum}`)
-			log(`Ордер: ${fromAmt} ${fromEl.value} → ${toAmt} ${toEl.value}`)
+			log(`Ордер: ${fromAmt} ${fromEl.value} → ${toAmt} ${toEl.value} (курс ${r.toFixed(6)})`)
 			log(`Внутренний обмен выполнен (демо)`)
 		})
 
 		// init
 		fillSelects()
 		log('Модуль 1 загружен')
-		log('Ожидание действий пользователя...')
-		updateRate()
+		log('Запрос курсов...')
+		renderRate('flat')
+		refreshRates()
+		setInterval(refreshRates, 8000)
 	</script>
 </body>
 </html>

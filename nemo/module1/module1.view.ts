@@ -6,6 +6,7 @@ namespace $.$$ {
 		from_currency( next?: string ) {
 			if ( next !== undefined ) {
 				this.log( `Выбрана валюта «из»: ${next}` )
+				this.prev_pair_rate( null )
 				return next
 			}
 			return 'ETH'
@@ -15,6 +16,7 @@ namespace $.$$ {
 		to_currency( next?: string ) {
 			if ( next !== undefined ) {
 				this.log( `Выбрана валюта «в»: ${next}` )
+				this.prev_pair_rate( null )
 				return next
 			}
 			return 'USDT'
@@ -31,40 +33,48 @@ namespace $.$$ {
 
 		@ $mol_mem
 		currency_options() {
-			return [
-				'BTC',
-				'ETH',
-				'USDT',
-				'USDC',
-				'SOL',
-				'BNB',
-			]
+			return [ 'BTC', 'ETH', 'USDT', 'USDC', 'SOL', 'BNB' ]
 		}
 
 		@ $mol_mem
-		rates_usd() {
-			return {
+		rates_usd( next?: Record<string, number> ) {
+			return next ?? {
 				BTC: 95000,
 				ETH: 3200,
 				USDT: 1,
 				USDC: 1,
 				SOL: 180,
 				BNB: 580,
-			} as Record<string, number>
+			}
+		}
+
+		@ $mol_mem
+		prev_pair_rate( next?: number | null ) {
+			return next !== undefined ? next : null as number | null
 		}
 
 		@ $mol_mem
 		rate() {
 			const from = this.rates_usd()[ this.from_currency() ] || 1
 			const to = this.rates_usd()[ this.to_currency() ] || 1
-			const r = from / to
-			this.log( `Курс обновлён: 1 ${this.from_currency()} = ${r.toFixed(6)} ${this.to_currency()}` )
-			return r
+			return from / to
+		}
+
+		@ $mol_mem
+		tick_dir() {
+			const prev = this.prev_pair_rate()
+			const cur = this.rate()
+			if ( prev == null ) return 'flat' as const
+			if ( cur > prev ) return 'up' as const
+			if ( cur < prev ) return 'down' as const
+			return 'flat' as const
 		}
 
 		@ $mol_mem
 		rate_text() {
-			return `1 ${this.from_currency()} ≈ ${this.rate().toFixed(6)} ${this.to_currency()}`
+			const dir = this.tick_dir()
+			const arrow = dir === 'up' ? '▲' : dir === 'down' ? '▼' : '●'
+			return `1 ${this.from_currency()} ≈ ${this.rate().toFixed(6)} ${this.to_currency()}  ${arrow}`
 		}
 
 		@ $mol_mem
@@ -92,7 +102,7 @@ namespace $.$$ {
 
 		@ $mol_mem
 		log_rows() {
-			return this.logs().map( ( text, i ) => this.Log_row( i ) )
+			return this.logs().map( ( _, i ) => this.Log_row( i ) )
 		}
 
 		@ $mol_mem_key
@@ -100,6 +110,29 @@ namespace $.$$ {
 			const row = new this.$.$mol_text
 			row.text = () => this.logs()[ index ]
 			return row
+		}
+
+		/** Тик: лёгкое случайное изменение курса (симуляция live) */
+		@ $mol_mem
+		rate_tick( next?: number ) {
+			const stamp = next ?? Date.now()
+			const rates = { ...this.rates_usd() }
+			const prev = this.rate()
+
+			for ( const k of Object.keys( rates ) ) {
+				if ( k === 'USDT' || k === 'USDC' ) continue
+				const jitter = 1 + ( Math.random() - 0.5 ) * 0.004
+				rates[ k ] = +( rates[ k ] * jitter ).toFixed( 4 )
+			}
+
+			this.rates_usd( rates )
+			const cur = this.rate()
+			this.prev_pair_rate( prev )
+
+			if ( cur > prev ) this.log( `Тик ▲ курс вырос: 1 ${this.from_currency()} = ${cur.toFixed(6)} ${this.to_currency()}` )
+			else if ( cur < prev ) this.log( `Тик ▼ курс упал: 1 ${this.from_currency()} = ${cur.toFixed(6)} ${this.to_currency()}` )
+
+			return stamp
 		}
 
 		event_swap( next?: Event ) {
@@ -111,7 +144,7 @@ namespace $.$$ {
 
 			this.log( `Нажата кнопка «Обменять»` )
 			this.log( `Создан токен (квант времени): ${quantum}` )
-			this.log( `Ордер: ${fromAmt} ${this.from_currency()} → ${toAmt} ${this.to_currency()}` )
+			this.log( `Ордер: ${fromAmt} ${this.from_currency()} → ${toAmt} ${this.to_currency()} (курс ${this.rate().toFixed(6)})` )
 			this.log( `Внутренний обмен выполнен (демо)` )
 
 			return null as any
