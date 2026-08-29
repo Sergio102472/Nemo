@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Nemo — обмен</title>
+	<style>
+		* { box-sizing: border-box; margin: 0; padding: 0; }
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+			background: #0f0f1a;
+			color: #e8e8e8;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: flex-start;
+			padding: 40px 16px;
+		}
+		.box {
+			width: 100%;
+			max-width: 400px;
+			background: #1a1a2e;
+			border: 1px solid #2a2a45;
+			border-radius: 16px;
+			padding: 24px 20px;
+		}
+		h1 {
+			text-align: center;
+			font-size: 1.5rem;
+			margin-bottom: 24px;
+			background: linear-gradient(90deg, #7c5cff, #00d4ff);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+		.row {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			margin-bottom: 14px;
+		}
+		button.currency {
+			min-width: 100px;
+			padding: 12px 14px;
+			border-radius: 12px;
+			border: 1px solid #3a3a5c;
+			background: #252540;
+			color: #fff;
+			font-weight: 700;
+			font-size: 0.95rem;
+			cursor: pointer;
+		}
+		button.currency:hover { border-color: #7c5cff; }
+		input[type="number"] {
+			flex: 1;
+			padding: 12px 14px;
+			border-radius: 12px;
+			border: 1px solid #3a3a5c;
+			background: #12121f;
+			color: #fff;
+			font-size: 1.1rem;
+			font-weight: 600;
+			outline: none;
+		}
+		input[type="number"]:focus { border-color: #7c5cff; }
+		.fee {
+			text-align: center;
+			margin-top: 8px;
+			color: #a78bfa;
+			font-size: 0.95rem;
+		}
+		.hint {
+			text-align: center;
+			margin-top: 16px;
+			font-size: 0.75rem;
+			color: #6b6b80;
+		}
+		.menu {
+			position: absolute;
+			background: #252540;
+			border: 1px solid #3a3a5c;
+			border-radius: 12px;
+			padding: 6px;
+			z-index: 10;
+			display: none;
+			min-width: 120px;
+			box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+		}
+		.menu.open { display: block; }
+		.menu button {
+			display: block;
+			width: 100%;
+			text-align: left;
+			background: transparent;
+			border: none;
+			color: #e8e8e8;
+			padding: 10px 12px;
+			border-radius: 8px;
+			cursor: pointer;
+			font-weight: 600;
+		}
+		.menu button:hover { background: rgba(124,92,255,0.25); }
+		.wrap { position: relative; }
+	</style>
+</head>
+<body>
+	<div class="box">
+		<h1>Nemo</h1>
+
+		<div class="row">
+			<div class="wrap">
+				<button type="button" class="currency" id="fromBtn">BTC</button>
+				<div class="menu" id="fromMenu"></div>
+			</div>
+			<input type="number" id="fromAmount" placeholder="0.0" min="0" step="any" />
+		</div>
+
+		<div class="row">
+			<div class="wrap">
+				<button type="button" class="currency" id="toBtn">USDT</button>
+				<div class="menu" id="toMenu"></div>
+			</div>
+			<input type="number" id="toAmount" placeholder="0.0" min="0" step="any" />
+		</div>
+
+		<div class="fee">Комиссия 2%</div>
+		<p class="hint">Оба поля активны. Меняете сумму «отдаёте» или «получаете» — вторая пересчитывается.</p>
+	</div>
+
+	<script>
+		const COINS = ['BTC', 'ETH', 'USDT', 'USDC', 'SOL', 'BNB']
+		const USD = { BTC: 95000, ETH: 3200, USDT: 1, USDC: 1, SOL: 180, BNB: 580 }
+		const FEE = 0.02
+
+		let fromCoin = 'BTC'
+		let toCoin = 'USDT'
+		let editSide = 'from' // last edited field
+
+		const fromBtn = document.getElementById('fromBtn')
+		const toBtn = document.getElementById('toBtn')
+		const fromAmount = document.getElementById('fromAmount')
+		const toAmount = document.getElementById('toAmount')
+		const fromMenu = document.getElementById('fromMenu')
+		const toMenu = document.getElementById('toMenu')
+
+		function rate() {
+			return (USD[fromCoin] || 1) / (USD[toCoin] || 1)
+		}
+
+		function fmt(n) {
+			if (!n || !isFinite(n)) return ''
+			return (+n.toFixed(8)).toString()
+		}
+
+		function recalc() {
+			const r = rate()
+			if (editSide === 'from') {
+				const v = parseFloat(fromAmount.value)
+				if (!v || v <= 0) { toAmount.value = ''; return }
+				toAmount.value = fmt(v * r * (1 - FEE))
+			} else {
+				const v = parseFloat(toAmount.value)
+				if (!v || v <= 0) { fromAmount.value = ''; return }
+				fromAmount.value = fmt(v / (r * (1 - FEE)))
+			}
+		}
+
+		function fillMenu(menu, current, onPick) {
+			menu.innerHTML = COINS.map(c =>
+				`<button type="button" data-c="${c}">${c}${c === current ? ' ✓' : ''}</button>`
+			).join('')
+			menu.querySelectorAll('button').forEach(b => {
+				b.onclick = (e) => {
+					e.stopPropagation()
+					onPick(b.dataset.c)
+					menu.classList.remove('open')
+				}
+			})
+		}
+
+		fromBtn.onclick = (e) => {
+			e.stopPropagation()
+			toMenu.classList.remove('open')
+			fillMenu(fromMenu, fromCoin, (c) => { fromCoin = c; fromBtn.textContent = c; recalc() })
+			fromMenu.classList.toggle('open')
+		}
+		toBtn.onclick = (e) => {
+			e.stopPropagation()
+			fromMenu.classList.remove('open')
+			fillMenu(toMenu, toCoin, (c) => { toCoin = c; toBtn.textContent = c; recalc() })
+			toMenu.classList.toggle('open')
+		}
+		document.addEventListener('click', () => {
+			fromMenu.classList.remove('open')
+			toMenu.classList.remove('open')
+		})
+
+		fromAmount.addEventListener('input', () => { editSide = 'from'; recalc() })
+		toAmount.addEventListener('input', () => { editSide = 'to'; recalc() })
+	</script>
+</body>
+</html>
