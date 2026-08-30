@@ -38,8 +38,6 @@
 			color: #6b6b80;
 			margin-bottom: 12px;
 		}
-
-		/* Лог действий */
 		.log {
 			background: #0d0d18;
 			border: 1px solid #2a2a45;
@@ -58,7 +56,6 @@
 		.log .line.step { color: #c4b5fd; }
 		.log .line.ok { color: #22c55e; }
 		.log .line.warn { color: #fbbf24; }
-
 		.block {
 			background: #12121f;
 			border: 1px solid #2a2a45;
@@ -81,8 +78,6 @@
 		}
 		.row:last-child { margin-bottom: 0; }
 		.wrap { position: relative; }
-
-		/* Кнопка валюты: название + баланс + цифры */
 		button.currency {
 			min-width: 112px;
 			padding: 10px 12px;
@@ -95,181 +90,108 @@
 			line-height: 1.25;
 		}
 		button.currency:hover { border-color: #7c5cff; }
-		button.currency .sym {
-			display: block;
-			font-weight: 800;
-			font-size: 1rem;
-		}
+		button.currency .sym { display: block; font-weight: 800; font-size: 1rem; }
 		button.currency .bal-label {
-			display: block;
-			font-size: 0.62rem;
-			color: #8b8b9e;
-			font-weight: 500;
-			text-transform: uppercase;
-			letter-spacing: 0.03em;
-			margin-top: 2px;
+			display: block; font-size: 0.62rem; color: #8b8b9e; font-weight: 500;
+			text-transform: uppercase; letter-spacing: 0.03em; margin-top: 2px;
 		}
 		button.currency .bal-val {
-			display: block;
-			font-size: 0.78rem;
-			font-family: ui-monospace, monospace;
-			font-weight: 600;
-			color: #c8c8d8;
-			margin-top: 1px;
+			display: block; font-size: 0.78rem; font-family: ui-monospace, monospace;
+			font-weight: 600; color: #c8c8d8; margin-top: 1px;
 		}
-
-		/* Курс — справа от кнопки */
-		.rate-side {
-			flex: 1;
-			text-align: right;
-		}
+		.rate-side { flex: 1; text-align: right; }
 		.rate-price {
-			font-family: ui-monospace, monospace;
-			font-size: 0.95rem;
-			color: #00d4ff;
-			font-weight: 600;
+			font-family: ui-monospace, monospace; font-size: 0.95rem;
+			color: #00d4ff; font-weight: 600;
 		}
-		.rate-tick {
-			font-size: 0.8rem;
-			font-weight: 700;
-			margin-top: 2px;
-		}
+		.rate-tick { font-size: 0.8rem; font-weight: 700; margin-top: 2px; }
 		.rate-tick.up { color: #22c55e; }
 		.rate-tick.down { color: #ef4444; }
 		.rate-tick.flat { color: #6b6b80; }
-
 		input[type="number"] {
-			width: 100%;
-			padding: 12px 14px;
-			border-radius: 12px;
-			border: 1px solid #3a3a5c;
-			background: #1a1a2e;
-			color: #fff;
-			font-size: 1.1rem;
-			font-weight: 600;
-			outline: none;
+			width: 100%; padding: 12px 14px; border-radius: 12px;
+			border: 1px solid #3a3a5c; background: #1a1a2e; color: #fff;
+			font-size: 1.1rem; font-weight: 600; outline: none;
 		}
 		input:focus { border-color: #7c5cff; }
-
 		.reserve {
-			font-size: 0.72rem;
-			color: #8b8b9e;
-			text-align: center;
-			margin: 10px 0 6px;
-			min-height: 1.3em;
+			font-size: 0.72rem; color: #8b8b9e; text-align: center;
+			margin: 10px 0 6px; min-height: 1.3em;
 		}
 		.reserve.on { color: #fbbf24; }
 		.fee {
-			text-align: center;
-			color: #a78bfa;
-			font-size: 0.9rem;
-			margin-bottom: 12px;
+			text-align: center; color: #a78bfa; font-size: 0.9rem; margin-bottom: 12px;
 		}
 		button.swap {
-			width: 100%;
-			padding: 14px;
-			border: none;
-			border-radius: 14px;
+			width: 100%; padding: 14px; border: none; border-radius: 14px;
 			background: linear-gradient(90deg, #7c5cff, #5b8def);
-			color: #fff;
-			font-size: 1.1rem;
-			font-weight: 700;
-			cursor: pointer;
+			color: #fff; font-size: 1.1rem; font-weight: 700; cursor: pointer;
 		}
 		button.swap:disabled { opacity: 0.4; cursor: not-allowed; }
-
 		.token-card {
-			margin-top: 14px;
-			padding: 12px 14px;
+			margin-top: 14px; padding: 12px 14px;
 			background: rgba(0, 212, 255, 0.08);
 			border: 1px solid rgba(0, 212, 255, 0.3);
-			border-radius: 12px;
-			display: none;
+			border-radius: 12px; display: none;
 		}
 		.token-card.show { display: block; }
 		.token-title {
-			font-size: 0.7rem;
-			color: #00d4ff;
-			text-transform: uppercase;
-			margin-bottom: 6px;
-			text-align: center;
+			font-size: 0.7rem; color: #00d4ff; text-transform: uppercase;
+			margin-bottom: 6px; text-align: center;
 		}
 		.token-body {
-			font-family: ui-monospace, monospace;
-			font-size: 0.78rem;
-			line-height: 1.5;
-			word-break: break-word;
+			font-family: ui-monospace, monospace; font-size: 0.78rem;
+			line-height: 1.5; word-break: break-word;
 		}
 		.token-body .t { color: #fbbf24; }
-
 		.app-wallet {
-			margin-top: 14px;
-			padding: 12px;
+			margin-top: 14px; padding: 14px;
 			background: rgba(167, 139, 250, 0.1);
 			border: 1px solid rgba(167, 139, 250, 0.3);
-			border-radius: 12px;
-			font-size: 0.8rem;
+			border-radius: 12px; font-size: 0.8rem;
 		}
 		.app-wallet h3 {
-			font-size: 0.75rem;
-			color: #c4b5fd;
-			margin-bottom: 8px;
-			text-align: center;
+			font-size: 0.75rem; color: #c4b5fd; margin-bottom: 10px; text-align: center;
 		}
 		.app-wallet .row-bal {
-			display: flex;
-			justify-content: space-between;
-			font-family: ui-monospace, monospace;
-			padding: 2px 0;
-			color: #c8c8d8;
+			display: flex; justify-content: space-between; align-items: baseline;
+			font-family: ui-monospace, monospace; padding: 4px 0; color: #c8c8d8;
+			gap: 8px;
 		}
-
+		.app-wallet .row-bal .coin { color: #a78bfa; min-width: 48px; }
+		.app-wallet .row-bal .amt { flex: 1; text-align: right; color: #e8e8e8; }
+		.app-wallet .row-bal .usd { color: #22c55e; min-width: 72px; text-align: right; font-size: 0.75rem; }
+		.app-wallet .total {
+			margin-top: 10px; padding-top: 10px;
+			border-top: 1px solid rgba(167, 139, 250, 0.35);
+			display: flex; justify-content: space-between; align-items: center;
+			font-weight: 700;
+		}
+		.app-wallet .total span { color: #c4b5fd; font-size: 0.85rem; }
+		.app-wallet .total b {
+			color: #22c55e; font-size: 1.15rem;
+			font-family: ui-monospace, monospace;
+		}
 		.orders { margin-top: 14px; }
 		.orders h3 {
-			font-size: 0.75rem;
-			color: #8b8b9e;
-			text-align: center;
-			margin-bottom: 8px;
+			font-size: 0.75rem; color: #8b8b9e; text-align: center; margin-bottom: 8px;
 		}
 		.orders li {
-			list-style: none;
-			font-family: ui-monospace, monospace;
-			font-size: 0.7rem;
-			background: #12121f;
-			border: 1px solid #2a2a45;
-			border-radius: 10px;
-			padding: 10px;
-			margin-bottom: 6px;
-			line-height: 1.4;
-			color: #c8c8d8;
+			list-style: none; font-family: ui-monospace, monospace; font-size: 0.7rem;
+			background: #12121f; border: 1px solid #2a2a45; border-radius: 10px;
+			padding: 10px; margin-bottom: 6px; line-height: 1.4; color: #c8c8d8;
 		}
-
 		.menu {
-			position: absolute;
-			top: 100%;
-			left: 0;
-			margin-top: 4px;
-			background: #252540;
-			border: 1px solid #3a3a5c;
-			border-radius: 12px;
-			padding: 6px;
-			z-index: 20;
-			display: none;
-			min-width: 130px;
+			position: absolute; top: 100%; left: 0; margin-top: 4px;
+			background: #252540; border: 1px solid #3a3a5c; border-radius: 12px;
+			padding: 6px; z-index: 20; display: none; min-width: 130px;
 			box-shadow: 0 8px 24px rgba(0,0,0,0.4);
 		}
 		.menu.open { display: block; }
 		.menu button {
-			display: block;
-			width: 100%;
-			text-align: left;
-			background: transparent;
-			border: none;
-			color: #e8e8e8;
-			padding: 10px 12px;
-			border-radius: 8px;
-			cursor: pointer;
-			font-weight: 600;
+			display: block; width: 100%; text-align: left; background: transparent;
+			border: none; color: #e8e8e8; padding: 10px 12px; border-radius: 8px;
+			cursor: pointer; font-weight: 600;
 		}
 		.menu button:hover { background: rgba(124,92,255,0.25); }
 	</style>
@@ -332,14 +254,18 @@
 			<div class="token-body" id="tokenBody"></div>
 		</div>
 
-		<div class="app-wallet">
-			<h3>Кошелёк приложения (монетизация 1%)</h3>
-			<div id="appBal"></div>
-		</div>
-
 		<div class="orders" id="ordersBlock" style="display:none">
 			<h3>Архив ордеров</h3>
 			<ul id="ordersList"></ul>
+		</div>
+
+		<div class="app-wallet">
+			<h3>Кошелёк приложения (комиссия 1%)</h3>
+			<div id="appBal"></div>
+			<div class="total">
+				<span>Итого</span>
+				<b id="appTotal">$0.00</b>
+			</div>
 		</div>
 	</div>
 
@@ -367,6 +293,11 @@
 		function fmt(n, d = 8) {
 			if (n == null || !isFinite(n)) return '0'
 			return (+Number(n).toFixed(d)).toString()
+		}
+
+		function fmtUsd(n) {
+			if (n == null || !isFinite(n)) return '$0.00'
+			return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 		}
 
 		function log(msg, cls = '') {
@@ -424,13 +355,27 @@
 
 		function renderAppWallet() {
 			const entries = Object.entries(appWallet).filter(([, v]) => v > 1e-12)
+			let totalUsd = 0
+
 			if (!entries.length) {
-				$('appBal').innerHTML = '<div class="row-bal"><span>пока пусто</span><b>0</b></div>'
-				return
+				$('appBal').innerHTML = '<div class="row-bal"><span class="coin">—</span><span class="amt">пусто</span><span class="usd">$0.00</span></div>'
+			} else {
+				$('appBal').innerHTML = entries.map(([c, v]) => {
+					const inUsd = v * (usd[c] || 0)
+					totalUsd += inUsd
+					return `<div class="row-bal">
+						<span class="coin">${c}</span>
+						<span class="amt">${fmt(v)}</span>
+						<span class="usd">${fmtUsd(inUsd)}</span>
+					</div>`
+				}).join('')
 			}
-			$('appBal').innerHTML = entries.map(([c, v]) =>
-				`<div class="row-bal"><span>${c}</span><b>${fmt(v)}</b></div>`
-			).join('')
+
+			// пересчёт итого на случай пустого списка с уже посчитанным totalUsd
+			if (entries.length) {
+				totalUsd = entries.reduce((s, [c, v]) => s + v * (usd[c] || 0), 0)
+			}
+			$('appTotal').textContent = fmtUsd(totalUsd)
 		}
 
 		function updateReserve() {
@@ -529,12 +474,9 @@
 			if (!reserve) return
 
 			log('——— Старт обмена ———', 'step')
-
-			// 1
 			const quantum = Date.now()
 			log(`1. Фиксирую время нажатия кнопки: ${quantum}`, 'step')
 
-			// 2
 			const from = reserve.from
 			const to = reserve.to
 			const fromAmt = reserve.fromAmt
@@ -549,29 +491,21 @@
 				return
 			}
 
-			// 3
 			const token = buildToken(quantum, from, fromAmt, rate, to, toAmt)
 			log(`3. Создаю токен (квант времени + сделка)`, 'step')
-
-			// 4
 			log('4. Открываю ордер', 'step')
 
-			// 5
 			wallet[from] = +(wallet[from] - fromAmt).toFixed(10)
 			log(`5. Снимаю ${fmt(fromAmt)} ${from} с кошелька пользователя`, 'step')
 
-			// 6
 			wallet[to] = +((wallet[to] || 0) + toAmt).toFixed(10)
 			log(`6. Произвожу обмен, пополняю баланс: +${fmt(toAmt)} ${to}`, 'step')
 
-			// 7
 			appWallet[from] = +((appWallet[from] || 0) + feeAmt).toFixed(10)
-			log(`7. Комиссия 1%: +${fmt(feeAmt)} ${from} → кошелёк приложения`, 'step')
+			const feeUsd = feeAmt * (usd[from] || 0)
+			log(`7. Комиссия 1%: +${fmt(feeAmt)} ${from} (≈ ${fmtUsd(feeUsd)}) → кошелёк приложения`, 'step')
 
-			// 8
 			log('8. Закрываю ордер', 'step')
-
-			// 9
 			orders.unshift({ id: quantum, token, from, fromAmt, to, toAmt, rate, feeAmt })
 			log('9. Отправляю копию токена в архив', 'step')
 			log('Обмен завершён', 'ok')
@@ -612,6 +546,7 @@
 				}
 			}
 			renderRates()
+			renderAppWallet() // итого в $ пересчитывается с актуальным курсом
 			recalc()
 		}
 
