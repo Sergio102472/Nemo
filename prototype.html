@@ -17,42 +17,24 @@
 			padding: 28px 16px 72px;
 		}
 		.box {
-			width: 100%;
-			max-width: 420px;
-			background: #1a1a2e;
-			border: 1px solid #2a2a45;
-			border-radius: 16px;
-			padding: 22px 18px;
+			width: 100%; max-width: 420px;
+			background: #1a1a2e; border: 1px solid #2a2a45;
+			border-radius: 16px; padding: 22px 18px;
 		}
 		h1 {
-			text-align: center;
-			font-size: 1.5rem;
-			margin-bottom: 6px;
+			text-align: center; font-size: 1.5rem; margin-bottom: 6px;
 			background: linear-gradient(90deg, #7c5cff, #00d4ff);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
+			-webkit-background-clip: text; -webkit-text-fill-color: transparent;
 		}
-		.sub {
-			text-align: center;
-			font-size: 0.75rem;
-			color: #6b6b80;
-			margin-bottom: 12px;
-		}
+		.sub { text-align: center; font-size: 0.75rem; color: #6b6b80; margin-bottom: 12px; }
 		.page { display: none; }
 		.page.active { display: block; }
 
 		.log {
-			background: #0d0d18;
-			border: 1px solid #2a2a45;
-			border-radius: 12px;
-			padding: 10px 12px;
-			max-height: 120px;
-			overflow-y: auto;
-			font-family: ui-monospace, monospace;
-			font-size: 0.68rem;
-			color: #9a9ab0;
-			margin-bottom: 14px;
-			line-height: 1.45;
+			background: #0d0d18; border: 1px solid #2a2a45; border-radius: 12px;
+			padding: 10px 12px; max-height: 120px; overflow-y: auto;
+			font-family: ui-monospace, monospace; font-size: 0.68rem;
+			color: #9a9ab0; margin-bottom: 14px; line-height: 1.45;
 		}
 		.log .line { margin-bottom: 2px; }
 		.log .line .ts { color: #5a5a70; }
@@ -61,71 +43,46 @@
 		.log .line.warn { color: #fbbf24; }
 
 		.block {
-			background: #12121f;
-			border: 1px solid #2a2a45;
-			border-radius: 14px;
-			padding: 14px;
-			margin-bottom: 12px;
+			background: #12121f; border: 1px solid #2a2a45;
+			border-radius: 14px; padding: 14px; margin-bottom: 12px;
 		}
 		.block-label {
-			font-size: 0.7rem;
-			color: #8b8b9e;
-			text-transform: uppercase;
-			letter-spacing: 0.04em;
-			margin-bottom: 10px;
+			font-size: 0.7rem; color: #8b8b9e; text-transform: uppercase;
+			letter-spacing: 0.04em; margin-bottom: 10px;
 		}
-		.row {
-			display: flex;
-			gap: 10px;
-			align-items: center;
-			margin-bottom: 10px;
-		}
+		.row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
 		.row:last-child { margin-bottom: 0; }
 		.wrap { position: relative; }
 		button.currency {
-			min-width: 112px;
-			padding: 10px 12px;
-			border-radius: 12px;
-			border: 1px solid #3a3a5c;
-			background: #252540;
-			color: #fff;
-			cursor: pointer;
-			text-align: left;
-			line-height: 1.25;
+			min-width: 112px; padding: 10px 12px; border-radius: 12px;
+			border: 1px solid #3a3a5c; background: #252540; color: #fff;
+			cursor: pointer; text-align: left; line-height: 1.25;
 		}
 		button.currency:hover { border-color: #7c5cff; }
 		button.currency .sym { display: block; font-weight: 800; font-size: 1rem; }
 		button.currency .bal-label {
 			display: block; font-size: 0.62rem; color: #8b8b9e; font-weight: 500;
-			text-transform: uppercase; letter-spacing: 0.03em; margin-top: 2px;
+			text-transform: uppercase; margin-top: 2px;
 		}
 		button.currency .bal-val {
 			display: block; font-size: 0.78rem; font-family: ui-monospace, monospace;
 			font-weight: 600; color: #c8c8d8; margin-top: 1px;
 		}
 		.rate-side { flex: 1; text-align: right; }
-		.rate-price {
-			font-family: ui-monospace, monospace; font-size: 0.95rem;
-			color: #00d4ff; font-weight: 600;
-		}
+		.rate-price { font-family: ui-monospace, monospace; font-size: 0.95rem; color: #00d4ff; font-weight: 600; }
 		.rate-tick { font-size: 0.8rem; font-weight: 700; margin-top: 2px; }
 		.rate-tick.up { color: #22c55e; }
 		.rate-tick.down { color: #ef4444; }
 		.rate-tick.flat { color: #6b6b80; }
-		input[type="number"] {
+		input[type="number"], input[type="text"] {
 			width: 100%; padding: 12px 14px; border-radius: 12px;
 			border: 1px solid #3a3a5c; background: #1a1a2e; color: #fff;
-			font-size: 1.1rem; font-weight: 600; outline: none;
+			font-size: 1rem; font-weight: 600; outline: none;
 		}
 		input:focus { border-color: #7c5cff; }
-		.reserve {
-			font-size: 0.72rem; color: #8b8b9e; text-align: center;
-			margin: 10px 0 6px; min-height: 1.3em;
-		}
+		.reserve { font-size: 0.72rem; color: #8b8b9e; text-align: center; margin: 10px 0 6px; min-height: 1.3em; }
 		.reserve.on { color: #fbbf24; }
-		.fee {
-			text-align: center; color: #a78bfa; font-size: 0.9rem; margin-bottom: 12px;
-		}
+		.fee { text-align: center; color: #a78bfa; font-size: 0.9rem; margin-bottom: 12px; }
 		button.swap, button.primary {
 			width: 100%; padding: 14px; border: none; border-radius: 14px;
 			background: linear-gradient(90deg, #7c5cff, #5b8def);
@@ -133,116 +90,139 @@
 		}
 		button.swap:disabled, button.primary:disabled { opacity: 0.4; cursor: not-allowed; }
 		button.ghost {
-			width: 100%; padding: 12px; border-radius: 12px;
-			border: 1px solid #3a3a5c; background: #252540; color: #e8e8e8;
-			font-weight: 600; cursor: pointer; margin-top: 8px;
+			width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #3a3a5c;
+			background: #252540; color: #e8e8e8; font-weight: 600; cursor: pointer; margin-top: 8px;
 		}
 		button.ghost:hover { border-color: #7c5cff; }
 		button.danger {
-			width: 100%; padding: 10px; border-radius: 10px; margin-top: 8px;
-			border: 1px solid #7f1d1d; background: rgba(239,68,68,0.15);
-			color: #fca5a5; font-weight: 600; cursor: pointer;
+			padding: 8px 12px; border-radius: 8px; border: 1px solid #7f1d1d;
+			background: rgba(239,68,68,0.15); color: #fca5a5; font-weight: 600;
+			cursor: pointer; font-size: 0.75rem;
 		}
 
 		.token-card {
-			margin-top: 14px; padding: 12px 14px;
-			background: rgba(0, 212, 255, 0.08);
-			border: 1px solid rgba(0, 212, 255, 0.3);
-			border-radius: 12px; display: none;
+			margin-top: 14px; padding: 12px 14px; background: rgba(0, 212, 255, 0.08);
+			border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 12px; display: none;
 		}
 		.token-card.show { display: block; }
-		.token-title {
-			font-size: 0.7rem; color: #00d4ff; text-transform: uppercase;
-			margin-bottom: 6px; text-align: center;
-		}
-		.token-body {
-			font-family: ui-monospace, monospace; font-size: 0.78rem;
-			line-height: 1.5; word-break: break-word;
-		}
+		.token-title { font-size: 0.7rem; color: #00d4ff; text-transform: uppercase; margin-bottom: 6px; text-align: center; }
+		.token-body { font-family: ui-monospace, monospace; font-size: 0.78rem; line-height: 1.5; word-break: break-word; }
 		.token-body .t { color: #fbbf24; }
 
 		.app-wallet {
-			margin-top: 14px; padding: 14px;
-			background: rgba(167, 139, 250, 0.1);
-			border: 1px solid rgba(167, 139, 250, 0.3);
-			border-radius: 12px; font-size: 0.8rem;
+			margin-top: 14px; padding: 14px; background: rgba(167, 139, 250, 0.1);
+			border: 1px solid rgba(167, 139, 250, 0.3); border-radius: 12px; font-size: 0.8rem;
 		}
-		.app-wallet h3 {
-			font-size: 0.75rem; color: #c4b5fd; margin-bottom: 10px; text-align: center;
-		}
+		.app-wallet h3 { font-size: 0.75rem; color: #c4b5fd; margin-bottom: 10px; text-align: center; }
 		.app-wallet .row-bal {
 			display: flex; justify-content: space-between; align-items: baseline;
 			font-family: ui-monospace, monospace; padding: 4px 0; color: #c8c8d8; gap: 8px;
 		}
 		.app-wallet .row-bal .coin { color: #a78bfa; min-width: 48px; }
-		.app-wallet .row-bal .amt { flex: 1; text-align: right; color: #e8e8e8; }
+		.app-wallet .row-bal .amt { flex: 1; text-align: right; }
 		.app-wallet .row-bal .usd { color: #22c55e; min-width: 72px; text-align: right; font-size: 0.75rem; }
 		.app-wallet .total {
-			margin-top: 10px; padding-top: 10px;
-			border-top: 1px solid rgba(167, 139, 250, 0.35);
+			margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(167, 139, 250, 0.35);
 			display: flex; justify-content: space-between; align-items: center; font-weight: 700;
 		}
 		.app-wallet .total span { color: #c4b5fd; font-size: 0.85rem; }
-		.app-wallet .total b {
-			color: #22c55e; font-size: 1.15rem; font-family: ui-monospace, monospace;
-		}
+		.app-wallet .total b { color: #22c55e; font-size: 1.15rem; font-family: ui-monospace, monospace; }
 		.orders { margin-top: 14px; }
-		.orders h3 {
-			font-size: 0.75rem; color: #8b8b9e; text-align: center; margin-bottom: 8px;
-		}
+		.orders h3 { font-size: 0.75rem; color: #8b8b9e; text-align: center; margin-bottom: 8px; }
 		.orders li {
 			list-style: none; font-family: ui-monospace, monospace; font-size: 0.7rem;
 			background: #12121f; border: 1px solid #2a2a45; border-radius: 10px;
 			padding: 10px; margin-bottom: 6px; line-height: 1.4; color: #c8c8d8;
 		}
 
-		/* Страница кошельков */
-		.w-card {
-			background: #12121f;
-			border: 1px solid #2a2a45;
-			border-radius: 14px;
-			padding: 14px;
+		/* Кошельки */
+		.section-head {
+			display: flex; align-items: center; justify-content: space-between;
 			margin-bottom: 12px;
 		}
-		.w-card .name { font-weight: 700; margin-bottom: 4px; }
+		.section-head h2 { font-size: 1rem; font-weight: 700; }
+		.btn-plus {
+			width: 40px; height: 40px; border-radius: 12px;
+			border: 1px solid #3a3a5c; background: #252540; color: #fff;
+			font-size: 1.5rem; line-height: 1; cursor: pointer; font-weight: 300;
+		}
+		.btn-plus:hover { border-color: #7c5cff; background: #2e2e50; }
+		.w-empty {
+			text-align: center; color: #6b6b80; font-size: 0.85rem;
+			padding: 20px 12px; border: 1px dashed #2a2a45; border-radius: 12px;
+			margin-bottom: 12px;
+		}
+		.w-card {
+			background: #12121f; border: 1px solid #2a2a45;
+			border-radius: 14px; padding: 14px; margin-bottom: 10px;
+		}
+		.w-card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+		.w-card .name { font-weight: 700; }
+		.w-card .badge {
+			font-size: 0.65rem; padding: 2px 8px; border-radius: 999px;
+			background: rgba(124,92,255,0.2); color: #c4b5fd;
+		}
+		.w-card .badge.wc { background: rgba(51,150,255,0.2); color: #7dd3fc; }
+		.w-card .badge.virtual { background: rgba(34,197,94,0.15); color: #86efac; }
 		.w-card .addr {
 			font-family: ui-monospace, monospace; font-size: 0.72rem;
-			color: #8b8b9e; word-break: break-all; margin-bottom: 8px;
+			color: #8b8b9e; word-break: break-all; margin: 6px 0 8px;
 		}
 		.w-card .bal-line {
 			font-family: ui-monospace, monospace; font-size: 0.85rem;
 			display: flex; justify-content: space-between; padding: 2px 0;
 		}
-		.w-status {
-			text-align: center; font-size: 0.8rem; color: #8b8b9e; margin: 12px 0;
-		}
-		.w-status.ok { color: #22c55e; }
 		.hint-box {
 			font-size: 0.75rem; color: #8b8b9e; line-height: 1.45;
 			margin-top: 12px; padding: 12px; background: #0d0d18; border-radius: 10px;
 		}
 
-		/* Нижнее меню */
+		/* Модалка */
+		.overlay {
+			position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+			z-index: 100; display: none; align-items: flex-end; justify-content: center;
+			padding: 16px;
+		}
+		.overlay.open { display: flex; }
+		.modal {
+			width: 100%; max-width: 400px; background: #1a1a2e;
+			border: 1px solid #2a2a45; border-radius: 18px 18px 12px 12px;
+			padding: 18px; margin-bottom: 56px;
+		}
+		.modal h3 { text-align: center; margin-bottom: 14px; font-size: 1.1rem; }
+		.opt {
+			display: flex; align-items: center; gap: 12px; width: 100%;
+			padding: 14px; margin-bottom: 8px; border-radius: 12px;
+			border: 1px solid #3a3a5c; background: #12121f; color: #e8e8e8;
+			cursor: pointer; text-align: left; font-weight: 600;
+		}
+		.opt:hover { border-color: #7c5cff; }
+		.opt .ico {
+			width: 36px; height: 36px; border-radius: 10px; display: flex;
+			align-items: center; justify-content: center; font-size: 1.1rem;
+			background: #252540; flex-shrink: 0;
+		}
+		.opt .desc { display: block; font-size: 0.7rem; color: #8b8b9e; font-weight: 500; margin-top: 2px; }
+		.modal .close {
+			width: 100%; margin-top: 8px; padding: 12px; border: none;
+			background: transparent; color: #8b8b9e; cursor: pointer; font-weight: 600;
+		}
+		.wc-setup { margin-top: 10px; display: none; }
+		.wc-setup.show { display: block; }
+		.wc-setup label { font-size: 0.75rem; color: #8b8b9e; display: block; margin-bottom: 6px; }
+
 		.bottom-nav {
-			position: fixed;
-			bottom: 0; left: 0; right: 0;
-			display: flex; justify-content: center; gap: 0;
-			background: #12121f;
-			border-top: 1px solid #2a2a45;
-			padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-			z-index: 50;
+			position: fixed; bottom: 0; left: 0; right: 0;
+			display: flex; justify-content: center;
+			background: #12121f; border-top: 1px solid #2a2a45;
+			padding: 8px 12px calc(8px + env(safe-area-inset-bottom)); z-index: 50;
 		}
-		.bottom-nav .inner {
-			display: flex; width: 100%; max-width: 420px; gap: 8px;
-		}
+		.bottom-nav .inner { display: flex; width: 100%; max-width: 420px; gap: 8px; }
 		.bottom-nav button {
-			flex: 1; padding: 12px 8px; border-radius: 12px;
-			border: 1px solid transparent; background: transparent;
-			color: #8b8b9e; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+			flex: 1; padding: 12px 8px; border-radius: 12px; border: 1px solid transparent;
+			background: transparent; color: #8b8b9e; font-weight: 700; font-size: 0.9rem; cursor: pointer;
 		}
-		.bottom-nav button.active {
-			background: #252540; color: #fff; border-color: #3a3a5c;
-		}
+		.bottom-nav button.active { background: #252540; color: #fff; border-color: #3a3a5c; }
 
 		.menu {
 			position: absolute; top: 100%; left: 0; margin-top: 4px;
@@ -261,7 +241,6 @@
 </head>
 <body>
 	<div class="box">
-		<!-- ===== ОБМЕН ===== -->
 		<div class="page active" id="pageExchange">
 			<h1>Nemo</h1>
 			<p class="sub">Резерв → ордер · токен = квант времени</p>
@@ -283,9 +262,7 @@
 						<div class="rate-tick flat" id="fromTick">●</div>
 					</div>
 				</div>
-				<div class="row">
-					<input type="number" id="fromAmount" placeholder="0.0" min="0" step="any" />
-				</div>
+				<div class="row"><input type="number" id="fromAmount" placeholder="0.0" min="0" step="any" /></div>
 			</div>
 
 			<div class="block">
@@ -304,9 +281,7 @@
 						<div class="rate-tick flat" id="toTick">●</div>
 					</div>
 				</div>
-				<div class="row">
-					<input type="number" id="toAmount" placeholder="0.0" min="0" step="any" />
-				</div>
+				<div class="row"><input type="number" id="toAmount" placeholder="0.0" min="0" step="any" /></div>
 			</div>
 
 			<div class="reserve" id="reserve">Нет резерва — введите сумму</div>
@@ -317,49 +292,56 @@
 				<div class="token-title">Токен ордера (квант времени)</div>
 				<div class="token-body" id="tokenBody"></div>
 			</div>
-
 			<div class="orders" id="ordersBlock" style="display:none">
 				<h3>Архив ордеров</h3>
 				<ul id="ordersList"></ul>
 			</div>
-
 			<div class="app-wallet">
 				<h3>Кошелёк приложения (комиссия 1%)</h3>
 				<div id="appBal"></div>
-				<div class="total">
-					<span>Итого</span>
-					<b id="appTotal">$0.00</b>
-				</div>
+				<div class="total"><span>Итого</span><b id="appTotal">$0.00</b></div>
 			</div>
 		</div>
 
-		<!-- ===== КОШЕЛЬКИ ===== -->
+		<!-- КОШЕЛЬКИ -->
 		<div class="page" id="pageWallets">
 			<h1>Кошельки</h1>
 			<p class="sub">Подключение криптокошельков</p>
 
-			<div class="w-status" id="mmStatus">MetaMask не подключён</div>
-
-			<button type="button" class="primary" id="connectMmBtn">Подключить MetaMask</button>
-			<button type="button" class="ghost" id="refreshMmBtn" style="display:none">Обновить баланс</button>
-			<button type="button" class="danger" id="disconnectMmBtn" style="display:none">Отключить MetaMask</button>
-
-			<div id="connectedList" style="margin-top:16px"></div>
-
-			<div class="w-card" id="virtualCard">
-				<div class="name">Виртуальный кошелёк Nemo</div>
-				<div class="addr">демо · для тестов обмена без блокчейна</div>
-				<div id="virtualBals"></div>
+			<div class="section-head">
+				<h2>Подключённые кошельки</h2>
+				<button type="button" class="btn-plus" id="btnAddWallet" title="Добавить кошелёк">+</button>
 			</div>
+
+			<div id="connectedList"></div>
 
 			<div class="hint-box">
-				<strong>Как подключить MetaMask</strong><br>
-				1. Установите <a href="https://metamask.io/download/" target="_blank" rel="noopener" style="color:#7c5cff">расширение</a> в Chrome / Brave / Edge<br>
-				2. Разблокируйте кошелёк<br>
-				3. Нажмите «Подключить MetaMask» и подтвердите в окне расширения<br><br>
-				На телефоне откройте сайт внутри браузера MetaMask.<br>
-				Обмен пока работает с <b>виртуальным</b> балансом; MetaMask даёт адрес и ETH on-chain.
+				<strong>MetaMask</strong> — расширение браузера.<br>
+				<strong>WalletConnect</strong> — мобильные кошельки через QR (нужен Project ID с
+				<a href="https://cloud.reown.com/" target="_blank" rel="noopener" style="color:#7c5cff">cloud.reown.com</a>, бесплатно).<br>
+				Обмен идёт по виртуальному балансу Nemo; on-chain адрес читается из подключённого кошелька.
 			</div>
+		</div>
+	</div>
+
+	<!-- Модалка: добавить кошелёк -->
+	<div class="overlay" id="addOverlay">
+		<div class="modal">
+			<h3>Добавить кошелёк</h3>
+			<button type="button" class="opt" id="optMetaMask">
+				<span class="ico">🦊</span>
+				<span>MetaMask<span class="desc">расширение браузера</span></span>
+			</button>
+			<button type="button" class="opt" id="optWalletConnect">
+				<span class="ico">🔗</span>
+				<span>WalletConnect<span class="desc">QR · Trust, Rainbow, Ledger…</span></span>
+			</button>
+			<div class="wc-setup" id="wcSetup">
+				<label>WalletConnect Project ID</label>
+				<input type="text" id="wcProjectId" placeholder="вставьте Project ID" />
+				<button type="button" class="primary" id="wcConnectGo" style="margin-top:10px">Подключить WalletConnect</button>
+			</div>
+			<button type="button" class="close" id="addClose">Отмена</button>
 		</div>
 	</div>
 
@@ -370,32 +352,29 @@
 		</div>
 	</nav>
 
-	<script>
+	<script type="module">
 		const COINS = ['BTC', 'ETH', 'USDT', 'USDC', 'SOL', 'BNB']
 		const CG = {
 			BTC: 'bitcoin', ETH: 'ethereum', USDT: 'tether',
 			USDC: 'usd-coin', SOL: 'solana', BNB: 'binancecoin',
 		}
 		const FEE = 0.01
+		const WC_KEY = 'nemo_wc_project_id'
 
 		let wallet = { BTC: 0.5, ETH: 4.2, USDT: 2500, USDC: 1000, SOL: 35, BNB: 8 }
 		let appWallet = {}
 		let usd = { BTC: 95000, ETH: 3200, USDT: 1, USDC: 1, SOL: 180, BNB: 580 }
 		let prevUsd = { ...usd }
+		let fromCoin = 'BTC', toCoin = 'USDT', editSide = 'from'
+		let reserve = null, orders = []
 
-		let fromCoin = 'BTC'
-		let toCoin = 'USDT'
-		let editSide = 'from'
-		let reserve = null
-		let orders = []
-
-		// MetaMask
-		let mmAddress = null
-		let mmEthBalance = 0
-		let mmChainId = null
+		/** @type {{id:string, type:'metamask'|'walletconnect'|'virtual', name:string, address:string, eth:number, chainId:string|null}[]} */
+		let connected = [
+			{ id: 'virtual', type: 'virtual', name: 'Виртуальный Nemo', address: 'demo · тест обмена', eth: 0, chainId: null },
+		]
+		let wcProvider = null
 
 		const $ = id => document.getElementById(id)
-
 		function fmt(n, d = 8) {
 			if (n == null || !isFinite(n)) return '0'
 			return (+Number(n).toFixed(d)).toString()
@@ -405,10 +384,9 @@
 			return '$' + Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 		}
 		function shortAddr(a) {
-			if (!a) return ''
+			if (!a || a.length < 12) return a || ''
 			return a.slice(0, 6) + '…' + a.slice(-4)
 		}
-
 		function log(msg, cls = '') {
 			const el = document.createElement('div')
 			el.className = 'line' + (cls ? ' ' + cls : '')
@@ -418,20 +396,17 @@
 			while ($('log').children.length > 60) $('log').lastChild.remove()
 		}
 
-		/* Навигация */
 		function showPage(name) {
 			$('pageExchange').classList.toggle('active', name === 'exchange')
 			$('pageWallets').classList.toggle('active', name === 'wallets')
 			$('navExchange').classList.toggle('active', name === 'exchange')
 			$('navWallets').classList.toggle('active', name === 'wallets')
-			if (name === 'wallets') renderWalletsPage()
+			if (name === 'wallets') renderConnected()
 		}
 		$('navExchange').onclick = () => showPage('exchange')
 		$('navWallets').onclick = () => showPage('wallets')
 
-		function pairRate() {
-			return (usd[fromCoin] || 1) / (usd[toCoin] || 1)
-		}
+		function pairRate() { return (usd[fromCoin] || 1) / (usd[toCoin] || 1) }
 		function tickDir(coin) {
 			const a = usd[coin], b = prevUsd[coin]
 			if (b == null) return 'flat'
@@ -439,22 +414,18 @@
 			if (a < b - 1e-12) return 'down'
 			return 'flat'
 		}
-		function tickSym(d) {
-			return d === 'up' ? '▲' : d === 'down' ? '▼' : '●'
-		}
+		function tickSym(d) { return d === 'up' ? '▲' : d === 'down' ? '▼' : '●' }
 		function buildToken(ms, from, fromAmt, rate, to, toAmt) {
 			const d = new Date(ms)
 			const p = (n, l = 2) => String(n).padStart(l, '0')
 			return `${p(d.getMilliseconds(), 3)}.${p(d.getSeconds())}.${p(d.getMinutes())}.${p(d.getHours())}.${p(d.getDate())}.${d.getFullYear()} | ${fmt(fromAmt)} ${from} @ ${fmt(rate, 6)} → ${fmt(toAmt)} ${to}`
 		}
 
-		function setCurrencyBtn(btnId, coin, balId) {
-			$(btnId).querySelector('.sym').textContent = coin
-			$(balId).textContent = fmt(wallet[coin] || 0)
-		}
 		function renderBalances() {
-			setCurrencyBtn('fromBtn', fromCoin, 'fromBalVal')
-			setCurrencyBtn('toBtn', toCoin, 'toBalVal')
+			$('fromBtn').querySelector('.sym').textContent = fromCoin
+			$('fromBalVal').textContent = fmt(wallet[fromCoin] || 0)
+			$('toBtn').querySelector('.sym').textContent = toCoin
+			$('toBalVal').textContent = fmt(wallet[toCoin] || 0)
 		}
 		function renderRates() {
 			const df = tickDir(fromCoin), dt = tickDir(toCoin)
@@ -480,118 +451,185 @@
 			$('appTotal').textContent = fmtUsd(totalUsd)
 		}
 
-		function renderVirtualCard() {
-			$('virtualBals').innerHTML = COINS.map(c =>
-				`<div class="bal-line"><span>${c}</span><span>${fmt(wallet[c] || 0)}</span></div>`
-			).join('')
-		}
-
-		function renderWalletsPage() {
-			renderVirtualCard()
+		function renderConnected() {
 			const list = $('connectedList')
-			if (!mmAddress) {
-				list.innerHTML = ''
-				$('mmStatus').textContent = hasProvider() ? 'MetaMask найден · не подключён' : 'MetaMask не найден (нужно расширение)'
-				$('mmStatus').className = 'w-status'
-				$('connectMmBtn').style.display = ''
-				$('connectMmBtn').textContent = 'Подключить MetaMask'
-				$('refreshMmBtn').style.display = 'none'
-				$('disconnectMmBtn').style.display = 'none'
+			if (!connected.length) {
+				list.innerHTML = '<div class="w-empty">Нет подключённых кошельков.<br>Нажмите <b>+</b> чтобы добавить.</div>'
 				return
 			}
-			$('mmStatus').textContent = 'MetaMask подключён'
-			$('mmStatus').className = 'w-status ok'
-			$('connectMmBtn').style.display = 'none'
-			$('refreshMmBtn').style.display = ''
-			$('disconnectMmBtn').style.display = ''
-			const ethUsd = mmEthBalance * (usd.ETH || 0)
-			list.innerHTML = `
-				<div class="w-card">
-					<div class="name">MetaMask</div>
-					<div class="addr">${mmAddress}</div>
-					<div class="bal-line"><span>ETH</span><span>${fmt(mmEthBalance, 6)}</span></div>
-					<div class="bal-line"><span>≈ USD</span><span style="color:#22c55e">${fmtUsd(ethUsd)}</span></div>
-					<div class="bal-line" style="margin-top:6px;color:#8b8b9e"><span>сеть</span><span>${mmChainId || '—'}</span></div>
+			list.innerHTML = connected.map(w => {
+				const badge = w.type === 'metamask' ? 'MetaMask' : w.type === 'walletconnect' ? 'WalletConnect' : 'Virtual'
+				const badgeCls = w.type === 'walletconnect' ? 'wc' : w.type === 'virtual' ? 'virtual' : ''
+				let body = ''
+				if (w.type === 'virtual') {
+					body = COINS.map(c => `<div class="bal-line"><span>${c}</span><span>${fmt(wallet[c] || 0)}</span></div>`).join('')
+				} else {
+					const ethUsd = w.eth * (usd.ETH || 0)
+					body = `
+						<div class="bal-line"><span>ETH</span><span>${fmt(w.eth, 6)}</span></div>
+						<div class="bal-line"><span>≈ USD</span><span style="color:#22c55e">${fmtUsd(ethUsd)}</span></div>
+						<div class="bal-line" style="color:#8b8b9e"><span>сеть</span><span>${w.chainId || '—'}</span></div>`
+				}
+				const canRemove = w.type !== 'virtual'
+				return `<div class="w-card" data-id="${w.id}">
+					<div class="top">
+						<div class="name">${w.name}</div>
+						<span class="badge ${badgeCls}">${badge}</span>
+					</div>
+					<div class="addr">${w.address}</div>
+					${body}
+					${canRemove ? `<button type="button" class="danger" data-remove="${w.id}" style="margin-top:10px">Отключить</button>` : ''}
 				</div>`
-		}
+			}).join('')
 
-		function hasProvider() {
-			return typeof window.ethereum !== 'undefined'
-		}
-
-		async function getEthBalance(address) {
-			const hex = await window.ethereum.request({
-				method: 'eth_getBalance',
-				params: [address, 'latest'],
+			list.querySelectorAll('[data-remove]').forEach(btn => {
+				btn.onclick = () => disconnectWallet(btn.getAttribute('data-remove'))
 			})
+		}
+
+		function openAddModal() {
+			$('wcSetup').classList.remove('show')
+			$('wcProjectId').value = localStorage.getItem(WC_KEY) || ''
+			$('addOverlay').classList.add('open')
+		}
+		function closeAddModal() {
+			$('addOverlay').classList.remove('open')
+		}
+		$('btnAddWallet').onclick = openAddModal
+		$('addClose').onclick = closeAddModal
+		$('addOverlay').onclick = (e) => { if (e.target === $('addOverlay')) closeAddModal() }
+
+		function hasInjected() { return typeof window.ethereum !== 'undefined' }
+
+		async function ethBalanceVia(provider, address) {
+			const hex = await provider.request({ method: 'eth_getBalance', params: [address, 'latest'] })
 			return parseInt(hex, 16) / 1e18
 		}
 
 		async function connectMetaMask() {
-			if (!hasProvider()) {
-				log('MetaMask не найден — установите расширение браузера', 'warn')
-				alert('MetaMask не найден.\n\nУстановите расширение: https://metamask.io/download/\nЗатем обновите страницу (Ctrl+F5).')
+			if (!hasInjected()) {
+				alert('MetaMask не найден.\nУстановите: https://metamask.io/download/')
 				return
 			}
 			try {
-				log('Запрос подключения MetaMask…', 'step')
-				$('connectMmBtn').disabled = true
+				log('Подключение MetaMask…', 'step')
 				const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
-				if (!accounts || !accounts.length) throw new Error('Аккаунт не выбран')
-				mmAddress = accounts[0]
-				mmChainId = await window.ethereum.request({ method: 'eth_chainId' })
-				mmEthBalance = await getEthBalance(mmAddress)
-				// подтягиваем ETH в виртуальный кошелёк для демо-обмена (можно менять)
-				if (mmEthBalance > 0) {
-					wallet.ETH = Math.max(wallet.ETH || 0, +mmEthBalance.toFixed(6))
-				}
-				log(`MetaMask подключён: ${shortAddr(mmAddress)} · ${fmt(mmEthBalance, 6)} ETH`, 'ok')
-				renderBalances()
-				renderWalletsPage()
+				if (!accounts?.length) throw new Error('Аккаунт не выбран')
+				const address = accounts[0]
+				const chainId = await window.ethereum.request({ method: 'eth_chainId' })
+				const eth = await ethBalanceVia(window.ethereum, address)
+				connected = connected.filter(w => w.type !== 'metamask')
+				connected.push({ id: 'mm-' + address, type: 'metamask', name: 'MetaMask', address, eth, chainId })
+				if (eth > 0) wallet.ETH = Math.max(wallet.ETH || 0, +eth.toFixed(6))
+				log(`MetaMask: ${shortAddr(address)} · ${fmt(eth, 6)} ETH`, 'ok')
+				renderBalances(); renderConnected(); closeAddModal()
 			} catch (err) {
-				const msg = err?.message || String(err)
-				log('Ошибка MetaMask: ' + msg, 'warn')
-				alert('Не удалось подключить: ' + msg)
-			} finally {
-				$('connectMmBtn').disabled = false
+				log('MetaMask: ' + (err?.message || err), 'warn')
+				alert('Ошибка: ' + (err?.message || err))
 			}
 		}
 
-		async function refreshMetaMask() {
-			if (!mmAddress || !hasProvider()) return
+		$('optMetaMask').onclick = connectMetaMask
+
+		$('optWalletConnect').onclick = () => {
+			$('wcSetup').classList.add('show')
+		}
+
+		async function connectWalletConnect() {
+			const projectId = ($('wcProjectId').value || '').trim()
+			if (!projectId) {
+				alert('Вставьте Project ID с https://cloud.reown.com/ (бесплатно)')
+				return
+			}
+			localStorage.setItem(WC_KEY, projectId)
+			$('wcConnectGo').disabled = true
+			log('WalletConnect: загрузка провайдера…', 'step')
 			try {
-				mmChainId = await window.ethereum.request({ method: 'eth_chainId' })
-				mmEthBalance = await getEthBalance(mmAddress)
-				log(`Баланс обновлён: ${fmt(mmEthBalance, 6)} ETH`, 'ok')
-				renderWalletsPage()
+				const mod = await import('https://esm.sh/@walletconnect/ethereum-provider@2.17.0')
+				const EthereumProvider = mod.EthereumProvider || mod.default
+				if (wcProvider) {
+					try { await wcProvider.disconnect() } catch {}
+				}
+				wcProvider = await EthereumProvider.init({
+					projectId,
+					showQrModal: true,
+					chains: [1],
+					optionalChains: [1, 137, 56, 10, 42161],
+					methods: ['eth_sendTransaction', 'personal_sign'],
+					events: ['chainChanged', 'accountsChanged'],
+					metadata: {
+						name: 'Nemo',
+						description: 'Nemo crypto exchange',
+						url: location.origin || 'https://nemo.app',
+						icons: ['https://walletconnect.com/walletconnect-logo.png'],
+					},
+				})
+				await wcProvider.enable()
+				const accounts = wcProvider.accounts || []
+				if (!accounts.length) throw new Error('Нет аккаунтов после подключения')
+				const address = accounts[0]
+				const chainId = '0x' + Number(wcProvider.chainId || 1).toString(16)
+				let eth = 0
+				try { eth = await ethBalanceVia(wcProvider, address) } catch {}
+				connected = connected.filter(w => w.type !== 'walletconnect')
+				connected.push({
+					id: 'wc-' + address,
+					type: 'walletconnect',
+					name: 'WalletConnect',
+					address,
+					eth,
+					chainId,
+				})
+				if (eth > 0) wallet.ETH = Math.max(wallet.ETH || 0, +eth.toFixed(6))
+				log(`WalletConnect: ${shortAddr(address)} · ${fmt(eth, 6)} ETH`, 'ok')
+
+				wcProvider.on('accountsChanged', (accs) => {
+					if (!accs?.length) disconnectWallet(connected.find(w => w.type === 'walletconnect')?.id)
+				})
+				wcProvider.on('disconnect', () => {
+					connected = connected.filter(w => w.type !== 'walletconnect')
+					renderConnected()
+				})
+
+				renderBalances(); renderConnected(); closeAddModal()
 			} catch (err) {
-				log('Ошибка обновления: ' + (err?.message || err), 'warn')
+				console.error(err)
+				log('WalletConnect: ' + (err?.message || err), 'warn')
+				alert('WalletConnect ошибка:\n' + (err?.message || err) + '\n\nПроверьте Project ID и что сайт открыт по HTTPS (или localhost).')
+			} finally {
+				$('wcConnectGo').disabled = false
 			}
 		}
+		$('wcConnectGo').onclick = connectWalletConnect
 
-		function disconnectMetaMask() {
-			mmAddress = null
-			mmEthBalance = 0
-			mmChainId = null
-			log('MetaMask отключён в приложении', 'warn')
-			renderWalletsPage()
+		async function disconnectWallet(id) {
+			const w = connected.find(x => x.id === id)
+			if (!w) return
+			if (w.type === 'walletconnect' && wcProvider) {
+				try { await wcProvider.disconnect() } catch {}
+				wcProvider = null
+			}
+			connected = connected.filter(x => x.id !== id)
+			log(`Отключён: ${w.name} ${shortAddr(w.address)}`, 'warn')
+			renderConnected()
 		}
-
-		$('connectMmBtn').onclick = connectMetaMask
-		$('refreshMmBtn').onclick = refreshMetaMask
-		$('disconnectMmBtn').onclick = disconnectMetaMask
 
 		if (typeof window.ethereum !== 'undefined') {
 			window.ethereum.on?.('accountsChanged', (accs) => {
-				if (!accs || !accs.length) disconnectMetaMask()
-				else {
-					mmAddress = accs[0]
-					refreshMetaMask()
-					log('Смена аккаунта MetaMask: ' + shortAddr(mmAddress), 'step')
+				if (!accs?.length) {
+					connected = connected.filter(w => w.type !== 'metamask')
+					renderConnected()
+				} else {
+					const mm = connected.find(w => w.type === 'metamask')
+					if (mm) {
+						mm.address = accs[0]
+						mm.id = 'mm-' + accs[0]
+						ethBalanceVia(window.ethereum, accs[0]).then(eth => {
+							mm.eth = eth
+							renderConnected()
+						}).catch(() => renderConnected())
+					}
 				}
-			})
-			window.ethereum.on?.('chainChanged', () => {
-				refreshMetaMask()
 			})
 		}
 
@@ -599,9 +637,8 @@
 			const fromAmt = parseFloat($('fromAmount').value)
 			const toAmt = parseFloat($('toAmount').value)
 			const r = pairRate()
-			const same = fromCoin === toCoin
 			const bal = wallet[fromCoin] || 0
-			if (!fromAmt || fromAmt <= 0 || same || !toAmt) {
+			if (!fromAmt || fromAmt <= 0 || fromCoin === toCoin || !toAmt) {
 				reserve = null
 				$('reserve').textContent = 'Нет резерва — введите сумму'
 				$('reserve').className = 'reserve'
@@ -616,12 +653,10 @@
 				return
 			}
 			reserve = { from: fromCoin, to: toCoin, fromAmt, toAmt, rate: r }
-			$('reserve').textContent =
-				`Резерв: ${fmt(fromAmt)} ${fromCoin} → ${fmt(toAmt)} ${toCoin} @ ${fmt(r, 6)}`
+			$('reserve').textContent = `Резерв: ${fmt(fromAmt)} ${fromCoin} → ${fmt(toAmt)} ${toCoin} @ ${fmt(r, 6)}`
 			$('reserve').className = 'reserve on'
 			$('swapBtn').disabled = false
 		}
-
 		function recalc() {
 			const r = pairRate()
 			if (editSide === 'from') {
@@ -635,104 +670,63 @@
 			}
 			updateReserve()
 		}
-
 		function fillMenu(menu, current, onPick) {
-			menu.innerHTML = COINS.map(c =>
-				`<button type="button" data-c="${c}">${c}${c === current ? ' ✓' : ''}</button>`
-			).join('')
+			menu.innerHTML = COINS.map(c => `<button type="button" data-c="${c}">${c}${c === current ? ' ✓' : ''}</button>`).join('')
 			menu.querySelectorAll('button').forEach(b => {
-				b.onclick = (e) => {
-					e.stopPropagation()
-					onPick(b.dataset.c)
-					menu.classList.remove('open')
-				}
+				b.onclick = (e) => { e.stopPropagation(); onPick(b.dataset.c); menu.classList.remove('open') }
 			})
 		}
-
 		$('fromBtn').onclick = (e) => {
-			e.stopPropagation()
-			$('toMenu').classList.remove('open')
-			fillMenu($('fromMenu'), fromCoin, (c) => {
-				fromCoin = c
-				renderBalances(); renderRates(); recalc()
-				log(`Выбрана валюта отдачи: ${c}`)
-			})
+			e.stopPropagation(); $('toMenu').classList.remove('open')
+			fillMenu($('fromMenu'), fromCoin, (c) => { fromCoin = c; renderBalances(); renderRates(); recalc(); log('Отдача: ' + c) })
 			$('fromMenu').classList.toggle('open')
 		}
 		$('toBtn').onclick = (e) => {
-			e.stopPropagation()
-			$('fromMenu').classList.remove('open')
-			fillMenu($('toMenu'), toCoin, (c) => {
-				toCoin = c
-				renderBalances(); renderRates(); recalc()
-				log(`Выбрана валюта получения: ${c}`)
-			})
+			e.stopPropagation(); $('fromMenu').classList.remove('open')
+			fillMenu($('toMenu'), toCoin, (c) => { toCoin = c; renderBalances(); renderRates(); recalc(); log('Получение: ' + c) })
 			$('toMenu').classList.toggle('open')
 		}
 		document.addEventListener('click', () => {
-			$('fromMenu').classList.remove('open')
-			$('toMenu').classList.remove('open')
+			$('fromMenu').classList.remove('open'); $('toMenu').classList.remove('open')
 		})
-
-		$('fromAmount').addEventListener('input', () => {
-			editSide = 'from'; recalc()
-			if (reserve) log(`Резерв обновлён: ${fmt(reserve.fromAmt)} ${reserve.from}`, 'warn')
-		})
-		$('toAmount').addEventListener('input', () => {
-			editSide = 'to'; recalc()
-			if (reserve) log(`Резерв обновлён: ${fmt(reserve.toAmt)} ${reserve.to}`, 'warn')
-		})
+		$('fromAmount').addEventListener('input', () => { editSide = 'from'; recalc() })
+		$('toAmount').addEventListener('input', () => { editSide = 'to'; recalc() })
 
 		$('swapBtn').onclick = () => {
 			if (!reserve) return
 			log('——— Старт обмена ———', 'step')
 			const quantum = Date.now()
-			log(`1. Фиксирую время нажатия кнопки: ${quantum}`, 'step')
+			log(`1. Фиксирую время: ${quantum}`, 'step')
 			const from = reserve.from, to = reserve.to, fromAmt = reserve.fromAmt
-			const rate = pairRate()
-			const feeAmt = fromAmt * FEE
-			const toAmt = (fromAmt - feeAmt) * rate
-			log(`2. Собираю информацию: ${fmt(fromAmt)} ${from} → ${fmt(toAmt)} ${to}, курс ${fmt(rate, 6)}`, 'step')
-			if ((wallet[from] || 0) < fromAmt) {
-				log('Ошибка: недостаточно средств — обмен отменён', 'warn')
-				return
-			}
+			const rate = pairRate(), feeAmt = fromAmt * FEE, toAmt = (fromAmt - feeAmt) * rate
+			log(`2. Собираю данные: ${fmt(fromAmt)} ${from} → ${fmt(toAmt)} ${to}`, 'step')
+			if ((wallet[from] || 0) < fromAmt) { log('Недостаточно средств', 'warn'); return }
 			const token = buildToken(quantum, from, fromAmt, rate, to, toAmt)
-			log('3. Создаю токен (квант времени + сделка)', 'step')
-			log('4. Открываю ордер', 'step')
+			log('3. Создаю токен', 'step'); log('4. Открываю ордер', 'step')
 			wallet[from] = +(wallet[from] - fromAmt).toFixed(10)
-			log(`5. Снимаю ${fmt(fromAmt)} ${from} с кошелька пользователя`, 'step')
+			log(`5. Снимаю ${fmt(fromAmt)} ${from}`, 'step')
 			wallet[to] = +((wallet[to] || 0) + toAmt).toFixed(10)
-			log(`6. Произвожу обмен, пополняю баланс: +${fmt(toAmt)} ${to}`, 'step')
+			log(`6. Пополняю +${fmt(toAmt)} ${to}`, 'step')
 			appWallet[from] = +((appWallet[from] || 0) + feeAmt).toFixed(10)
-			log(`7. Комиссия 1%: +${fmt(feeAmt)} ${from} (≈ ${fmtUsd(feeAmt * (usd[from] || 0))}) → приложение`, 'step')
+			log(`7. Комиссия 1% → приложение`, 'step')
 			log('8. Закрываю ордер', 'step')
 			orders.unshift({ id: quantum, token, from, fromAmt, to, toAmt, rate, feeAmt })
-			log('9. Отправляю копию токена в архив', 'step')
-			log('Обмен завершён', 'ok')
+			log('9. Токен в архив', 'step'); log('Обмен завершён', 'ok')
 			$('tokenCard').classList.add('show')
 			$('tokenBody').innerHTML = `<span class="t">${token}</span>`
 			$('ordersBlock').style.display = 'block'
-			$('ordersList').innerHTML = orders.map(o =>
-				`<li>${o.token}<br><span style="color:#8b8b9e">комиссия ${fmt(o.feeAmt)} ${o.from}</span></li>`
-			).join('')
-			renderBalances(); renderAppWallet(); renderVirtualCard()
-			reserve = null
-			$('fromAmount').value = ''; $('toAmount').value = ''
-			updateReserve()
+			$('ordersList').innerHTML = orders.map(o => `<li>${o.token}</li>`).join('')
+			renderBalances(); renderAppWallet(); renderConnected()
+			reserve = null; $('fromAmount').value = ''; $('toAmount').value = ''; updateReserve()
 		}
 
 		async function fetchRates() {
 			try {
-				const res = await fetch(
-					`https://api.coingecko.com/api/v3/simple/price?ids=${Object.values(CG).join(',')}&vs_currencies=usd`
-				)
+				const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${Object.values(CG).join(',')}&vs_currencies=usd`)
 				if (!res.ok) throw new Error('HTTP')
 				const data = await res.json()
 				prevUsd = { ...usd }
-				for (const [sym, id] of Object.entries(CG)) {
-					if (data[id]?.usd != null) usd[sym] = data[id].usd
-				}
+				for (const [sym, id] of Object.entries(CG)) if (data[id]?.usd != null) usd[sym] = data[id].usd
 			} catch {
 				prevUsd = { ...usd }
 				for (const k of Object.keys(usd)) {
@@ -741,11 +735,11 @@
 				}
 			}
 			renderRates(); renderAppWallet(); recalc()
-			if (mmAddress) renderWalletsPage()
+			if ($('pageWallets').classList.contains('active')) renderConnected()
 		}
 
-		log('Nemo готов · лог действий для тестирования')
-		renderBalances(); renderRates(); renderAppWallet(); renderVirtualCard()
+		log('Nemo готов')
+		renderBalances(); renderRates(); renderAppWallet(); renderConnected()
 		fetchRates()
 		setInterval(fetchRates, 8000)
 	</script>
